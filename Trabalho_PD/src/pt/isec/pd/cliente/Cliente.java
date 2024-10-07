@@ -1,12 +1,7 @@
 package pt.isec.pd.cliente;
 
 import pt.isec.pd.cliente.ligacao.Ligacao;
-import pt.isec.pd.formularios.UserCommandManager;
 
-import java.io.IOException;
-import java.net.InetAddress;
-import java.net.Socket;
-import java.net.UnknownHostException;
 import java.util.Scanner;
 
 public class Cliente {
@@ -53,6 +48,7 @@ public class Cliente {
         }
 
         Ligacao ligacao = new Ligacao(args[0],args[1]);
+        ligacao.enviaMensagem();
 
 
 

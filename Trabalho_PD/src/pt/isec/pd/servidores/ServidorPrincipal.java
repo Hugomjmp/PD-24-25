@@ -1,6 +1,9 @@
 package pt.isec.pd.servidores;
 import java.awt.desktop.SystemEventListener;
+import java.io.BufferedInputStream;
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.net.ServerSocket;
 import java.net.Socket;
 
@@ -11,6 +14,7 @@ public class ServidorPrincipal {
 
         int argc = args.length;
         int serverPort;
+        String msg = null;
         //System.out.println("Recebi: " + argc + " argumentos");
 
         if (argc != 2){
@@ -25,10 +29,17 @@ public class ServidorPrincipal {
         serverPort = Integer.parseInt(args[0]);
 
 
-        try{
-            ServerSocket socketServidor = new ServerSocket(serverPort);
+        try (ServerSocket socketServidor = new ServerSocket(serverPort)){
+
             System.out.println("O Servidor Principal foi inciado com sucesso!");
-            while (true);
+            while (true) {
+                Socket socketCliente = socketServidor.accept();
+                System.out.println("Entrou um cliente!");
+                BufferedReader reader = new BufferedReader(new InputStreamReader(socketCliente.getInputStream()));
+                msg = reader.readLine();
+                System.out.println("Recebi do Cliente: " + msg);
+                socketCliente.close();
+            }
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
