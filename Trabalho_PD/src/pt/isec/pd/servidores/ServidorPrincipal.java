@@ -1,5 +1,4 @@
 package pt.isec.pd.servidores;
-
 import java.awt.desktop.SystemEventListener;
 import java.io.IOException;
 import java.net.ServerSocket;
