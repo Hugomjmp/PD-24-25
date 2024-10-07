@@ -1,5 +1,6 @@
 package pt.isec.pd.cliente;
 
+import pt.isec.pd.cliente.ligacao.Ligacao;
 import pt.isec.pd.formularios.UserCommandManager;
 
 import java.io.IOException;
@@ -43,8 +44,7 @@ public class Cliente {
 
     public static void main(String[] args) {
 
-        InetAddress servidorAddress;
-        int servidorPorto;
+
         int argc = args.length;
         String escolhaMenuPrincipal;
 
@@ -52,13 +52,12 @@ public class Cliente {
             System.out.println("java Cliente IPAdress PORT");
         }
 
-        try{
+        Ligacao ligacao = new Ligacao(args[0],args[1]);
 
-            servidorAddress = InetAddress.getByName(args[0]);
-            servidorPorto = Integer.parseInt(args[1]);
-            try (Socket socket = new Socket(servidorAddress,servidorPorto)){
 
-                System.out.println("Ligacao ao Servidor com sucesso!");
+
+
+              /*  System.out.println("Ligacao ao Servidor com sucesso!");
                 Cliente cliente = new Cliente();
                 UserCommandManager command = new UserCommandManager();
                 escolhaMenuPrincipal = cliente.menu();
@@ -70,16 +69,12 @@ public class Cliente {
                     System.out.println("REGISTO");
                     command.setComando(escolhaMenuPrincipal);
                     System.out.println(command);
-                }
+                }*/
 
 
 
-            }
-        } catch (UnknownHostException e) {
-            System.out.println("Destino desconhecido:\n\t" + e);
-        } catch (IOException e) {
-            System.out.println("Ocorreu um erro no acesso ao socket:\n\t" + e);
-        }
+
+
 
 
     }
