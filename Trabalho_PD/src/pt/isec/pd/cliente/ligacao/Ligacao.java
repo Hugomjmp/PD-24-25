@@ -1,5 +1,7 @@
 package pt.isec.pd.cliente.ligacao;
 
+import pt.isec.pd.comum.Mensagem;
+
 import java.io.IOException;
 import java.io.ObjectOutputStream;
 import java.io.OutputStream;
@@ -29,12 +31,13 @@ public class Ligacao {
             System.out.println("Ocorreu um erro no acesso ao socket:\n\t" + e);
         }
     }
-    public void enviaMensagem(){ // para teste
+    public void enviaMensagem(){
         try {
-            OutputStream out = socket.getOutputStream();
+            Mensagem msg = new Mensagem();
+            /*OutputStream out = socket.getOutputStream();// para teste
             PrintStream pout = new PrintStream(out);
             pout.println("ENTREI :)");
-            pout.flush();
+            pout.flush();*/
 
         } catch (IOException e) {
             throw new RuntimeException(e);
