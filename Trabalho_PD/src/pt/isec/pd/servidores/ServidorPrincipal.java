@@ -6,11 +6,33 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.sql.*;
 
 import static java.lang.Integer.parseInt;
 
 public class ServidorPrincipal {
-    public static void main(String[] args) {
+    public void consultaBD(String bd) throws SQLException {
+        Connection con = DriverManager.getConnection(
+                "jdbc:mysql://localhost:3306/myDatabase:" + bd,
+                "username",
+                "password");
+        Statement stmt = con.createStatement();
+        ResultSet rs = stmt.executeQuery(
+                "SELECT ID,NOME,PASSWORD,E-MAIL,N_TELEFONE FROM USERS");
+        while (rs.next()){
+            int id = rs.getInt("ID");
+            String nome = rs.getString("NOME");
+            String pass = rs.getString("PASSWORD");
+            String email = rs.getString("E-MAIL");
+            String nTelefone = rs.getString("N_TELEFONE");
+            System.out.println(id + nome + nTelefone + email+ pass );
+        }
+
+
+    }
+
+
+    public static void main(String[] args) throws SQLException {
 
         int argc = args.length;
         int serverPort;
@@ -27,8 +49,8 @@ public class ServidorPrincipal {
         System.out.println("--------------");
 
         serverPort = Integer.parseInt(args[0]);
-
-
+        ServidorPrincipal serv = new ServidorPrincipal();
+        serv.consultaBD(args[1]);
         try (ServerSocket socketServidor = new ServerSocket(serverPort)){
 
             System.out.println("O Servidor Principal foi inciado com sucesso!");
@@ -43,6 +65,7 @@ public class ServidorPrincipal {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+
 
     }
 }

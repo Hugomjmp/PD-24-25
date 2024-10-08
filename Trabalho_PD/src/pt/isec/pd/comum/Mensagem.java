@@ -6,7 +6,10 @@ package pt.isec.pd.comum;
 
 import pt.isec.pd.enumeracoes.Tipomensagemenum;
 
+import java.io.IOException;
+import java.io.ObjectOutputStream;
 import java.io.Serializable;
+import java.net.Socket;
 
 public class Mensagem implements Serializable {
 
@@ -17,4 +20,5 @@ public class Mensagem implements Serializable {
         this.tipo = tipo;
         this.conteudo = conteudo;
     }
+
 }

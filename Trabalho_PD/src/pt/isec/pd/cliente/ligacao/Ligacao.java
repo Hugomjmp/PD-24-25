@@ -2,10 +2,7 @@ package pt.isec.pd.cliente.ligacao;
 
 import pt.isec.pd.comum.Mensagem;
 
-import java.io.IOException;
-import java.io.ObjectOutputStream;
-import java.io.OutputStream;
-import java.io.PrintStream;
+import java.io.*;
 import java.net.InetAddress;
 import java.net.Socket;
 import java.net.UnknownHostException;
@@ -31,18 +28,34 @@ public class Ligacao {
             System.out.println("Ocorreu um erro no acesso ao socket:\n\t" + e);
         }
     }
-    public void enviaMensagem(){
+    //metodo que recebe o socket e a serialização do conteudo do objecto
+    public void enviaMensagem(Socket socket, Serializable mensagem){
         try {
-            Mensagem msg = new Mensagem();
-            /*OutputStream out = socket.getOutputStream();// para teste
-            PrintStream pout = new PrintStream(out);
-            pout.println("ENTREI :)");
-            pout.flush();*/
-
+            ObjectOutputStream out;
+            out = new ObjectOutputStream(socket.getOutputStream());
+            out.writeObject(mensagem); //colocar o objecto aqui serlizado a enviar
+            out.flush();
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
 
     }
+    //método que recebe o socket e a serialização do conteudo da mensagem
+    //rever isto, porque não estou a fazer a parte da serealizaçao
+    //ver bem isto depois..
+    public Mensagem recebeMensagem(Socket socket, Serializable mensagem){
+
+        try{
+            ObjectInputStream in;
+            in = new ObjectInputStream(socket.getInputStream());
+            return (Mensagem) in.readObject();
+
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
 
 }
