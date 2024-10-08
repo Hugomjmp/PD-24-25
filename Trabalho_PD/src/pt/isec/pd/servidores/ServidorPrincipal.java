@@ -11,7 +11,7 @@ import java.sql.*;
 import static java.lang.Integer.parseInt;
 
 public class ServidorPrincipal {
-    public void consultaBD(String bd) throws SQLException {
+    public void consultaBD(String bd) throws SQLException { //VER ISTO QũE NÃO FUNCIONA o problema está no DRIVER!!!!
         Connection con = DriverManager.getConnection(
                 "jdbc:mysql://localhost:3306/myDatabase:" + bd,
                 "username",
