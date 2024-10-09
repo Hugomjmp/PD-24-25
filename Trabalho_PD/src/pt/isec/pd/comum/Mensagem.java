@@ -13,12 +13,15 @@ import java.net.Socket;
 
 public class Mensagem implements Serializable {
 
-    private Tipomensagemenum tipo;  //tipo de mensagem que vai ser passada para o servidor  ou para cliente
+    private Tipomensagemenum tipomensagemenum;  //tipo de mensagem que vai ser passada para o servidor  ou para cliente
     private Serializable conteudo;  //conteudo do objecto, em Array de bytes, a ser passado
 
     public  Mensagem(Tipomensagemenum tipo, Serializable conteudo){
-        this.tipo = tipo;
+        this.tipomensagemenum = tipo;
         this.conteudo = conteudo;
     }
 
+    public Tipomensagemenum getTipoMensagem(){
+        return tipomensagemenum;
+    }
 }

@@ -1,6 +1,7 @@
 package pt.isec.pd.cliente.ligacao;
 
 import pt.isec.pd.comum.Mensagem;
+import pt.isec.pd.comum.User;
 
 import java.io.*;
 import java.net.InetAddress;
@@ -28,6 +29,9 @@ public class Ligacao {
             System.out.println("Ocorreu um erro no acesso ao socket:\n\t" + e);
         }
     }
+    public Ligacao(){
+
+    }
     //metodo que recebe o socket e a serialização do conteudo do objecto
     public void enviaMensagem(Socket socket, Serializable mensagem){
         try {
@@ -40,14 +44,18 @@ public class Ligacao {
         }
 
     }
+    public Socket getSocket(){
+        return socket;
+    }
     //método que recebe o socket e a serialização do conteudo da mensagem
     //rever isto, porque não estou a fazer a parte da serealizaçao
     //ver bem isto depois..
-    public Mensagem recebeMensagem(Socket socket, Serializable mensagem){
+    public Mensagem recebeMensagem(Socket socket){
 
         try{
             ObjectInputStream in;
             in = new ObjectInputStream(socket.getInputStream());
+
             return (Mensagem) in.readObject();
 
         } catch (IOException e) {
