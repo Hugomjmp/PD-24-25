@@ -11,22 +11,40 @@ import java.sql.*;
 import static java.lang.Integer.parseInt;
 
 public class ServidorPrincipal {
+    String link = "jdbc:sqlite:";
+
+    Connection conn = null;
+    Statement stmt = null;
+    ResultSet rs = null;
+
     public void consultaBD(String bd) throws SQLException { //VER ISTO QũE NÃO FUNCIONA o problema está no DRIVER!!!!
-        Connection con = DriverManager.getConnection(
-                "jdbc:mysql://localhost:3306/myDatabase:" + bd,
-                "username",
-                "password");
-        Statement stmt = con.createStatement();
-        ResultSet rs = stmt.executeQuery(
-                "SELECT ID,NOME,PASSWORD,E-MAIL,N_TELEFONE FROM USERS");
+
+
+        System.out.println("A ligar à base de dados...");
+        bd = "src/pt/isec/pd/db/" + bd + ".db";
+        System.out.println(bd);
+
+        conn = DriverManager.getConnection(link + bd);
+
+        System.out.println("Creating statement...");
+        stmt = conn.createStatement();
+        String sql = "SELECT * FROM USERS";
+        System.out.println("Creating ResultSet...");
+        rs = stmt.executeQuery(sql);
+
+        System.out.println("Imprimir resultado...");
+        System.out.println("ID NOME PASSWORD N_TELEFONE");
+
         while (rs.next()){
             int id = rs.getInt("ID");
             String nome = rs.getString("NOME");
             String pass = rs.getString("PASSWORD");
-            String email = rs.getString("E-MAIL");
+            String email = rs.getString("EMAIL");
             String nTelefone = rs.getString("N_TELEFONE");
-            System.out.println(id + nome + nTelefone + email+ pass );
+            System.out.println(id);
+            System.out.println("'"+id +"' "+ "'"+ nome +"' "+ "'" + nTelefone + "' " + /*email +*/ "'" + pass + "'" );
         }
+
 
 
     }
@@ -51,6 +69,7 @@ public class ServidorPrincipal {
         serverPort = Integer.parseInt(args[0]);
         ServidorPrincipal serv = new ServidorPrincipal();
         serv.consultaBD(args[1]);
+
         try (ServerSocket socketServidor = new ServerSocket(serverPort)){
 
             System.out.println("O Servidor Principal foi inciado com sucesso!");

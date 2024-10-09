@@ -48,7 +48,7 @@ public class Cliente {
         }
 
         Ligacao ligacao = new Ligacao(args[0],args[1]);
-        ligacao.enviaMensagem();
+        //ligacao.enviaMensagem();
 
 
 
