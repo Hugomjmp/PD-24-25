@@ -1,22 +1,16 @@
 package pt.isec.pd.servidores;
 import pt.isec.pd.cliente.ligacao.Ligacao;
-import pt.isec.pd.comum.Mensagem;
 import pt.isec.pd.comum.modelos.EditaConta;
 import pt.isec.pd.comum.modelos.Login;
-import pt.isec.pd.comum.modelos.Registo;
-import pt.isec.pd.db.Bd;
 import pt.isec.pd.servidores.controladores.ControladorAutenticacao;
 
-import java.awt.desktop.SystemEventListener;
-import java.io.BufferedInputStream;
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.sql.*;
 
 import static java.lang.Integer.parseInt;
+import static pt.isec.pd.servidores.controladores.ControladorMensagem.RespostaServidor;
 
 public class ServidorPrincipal {
 
@@ -36,7 +30,7 @@ public class ServidorPrincipal {
         System.out.println("DB: " + args[1]);
         System.out.println("--------------");
 
-        serverPort = Integer.parseInt(args[0]);
+        serverPort = parseInt(args[0]);
         //teste de ligar à BD
         //Bd.ligaBD(args[1]); // ligar à bd
         Login login = new Login("a21220079@isec.pt","1234");
@@ -60,12 +54,16 @@ public class ServidorPrincipal {
         try (ServerSocket socketServidor = new ServerSocket(serverPort)){
             System.out.println("depois do try!");
             System.out.println("O Servidor Principal foi inciado com sucesso!");
+            int num = 0;
             while (true) {
                 try(Socket socketCliente = socketServidor.accept()){
 
                     System.out.println("Entrou um cliente!");
-
+                    //ControladorThreads thread = new ControladorThreads(num);
+                    //num++;
+                    //System.out.println("thread number: " + num);
                     System.out.println(lig.recebeMensagem(socketCliente).toString());
+                    System.out.println();
                     socketCliente.close();
                 }
 

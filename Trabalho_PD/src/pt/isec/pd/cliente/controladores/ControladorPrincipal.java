@@ -2,10 +2,9 @@ package pt.isec.pd.cliente.controladores;
 
 import pt.isec.pd.cliente.ligacao.Ligacao;
 import pt.isec.pd.cliente.vistas.Vista;
+import pt.isec.pd.comum.modelos.Mensagem;
 import pt.isec.pd.comum.User;
-import pt.isec.pd.comum.modelos.Login;
-import pt.isec.pd.db.Bd;
-import pt.isec.pd.servidores.controladores.ControladorAutenticacao;
+import pt.isec.pd.servidores.controladores.ControladorMensagem;
 
 import java.util.Scanner;
 
@@ -58,12 +57,12 @@ public class ControladorPrincipal {
 
     private static String[] login(){
         Scanner scanner = new Scanner(System.in);
-        String [] dados = {email,password};
-
+        String [] dados = {nome,password};
         System.out.print("Login E-mail: ");
         email = scanner.nextLine();
         System.out.print("Password: ");
         password = scanner.nextLine();
+        System.out.println(dados[0]+dados[1]);
         return dados;
     }
 
@@ -74,6 +73,7 @@ public class ControladorPrincipal {
         String [] dados;
         escolhaMenuPrincipal = Vista.menuPrincipal();
         User user = new User();
+
         System.out.println(escolhaMenuPrincipal);
 
 
@@ -81,15 +81,14 @@ public class ControladorPrincipal {
             case "registo": {
                 ControladorPrincipal.registo(user);
                 System.out.println(user);
-                ligacao.enviaMensagem(ligacao.getSocket(), user);
+                //ligacao.enviaMensagem(ligacao.getSocket(), user);
 
             }
             case "login": {
                 System.out.println("AQUI");
                 dados = ControladorPrincipal.login();
-
-                Bd.ligaBD("Base_de_dados");
-
+                System.out.println(dados[0] + dados[1]);
+                ControladorAutenticacaoCliente.login(ligacao,dados);
                 //Login login = new Login("a21220079@isec.pt", "1234");
                 //ControladorAutenticacao.login(login);
 

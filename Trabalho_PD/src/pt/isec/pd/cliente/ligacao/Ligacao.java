@@ -1,7 +1,6 @@
 package pt.isec.pd.cliente.ligacao;
 
-import pt.isec.pd.comum.Mensagem;
-import pt.isec.pd.comum.User;
+import pt.isec.pd.comum.modelos.Mensagem;
 
 import java.io.*;
 import java.net.InetAddress;
@@ -47,6 +46,8 @@ public class Ligacao {
     public Socket getSocket(){
         return socket;
     }
+
+
     //método que recebe o socket e a serialização do conteudo da mensagem
     //rever isto, porque não estou a fazer a parte da serealizaçao
     //ver bem isto depois..

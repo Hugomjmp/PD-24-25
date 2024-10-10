@@ -17,4 +17,12 @@ public class Login implements Serializable {
     public String getPassword(){
         return password;
     }
+
+    @Override
+    public String toString() {
+        return "Login{" +
+                "email='" + email + '\'' +
+                ", password='" + password + '\'' +
+                '}';
+    }
 }
