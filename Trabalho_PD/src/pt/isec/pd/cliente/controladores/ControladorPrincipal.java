@@ -1,6 +1,7 @@
 package pt.isec.pd.cliente.controladores;
 
 import pt.isec.pd.cliente.ligacao.Ligacao;
+import pt.isec.pd.cliente.vistas.Vista;
 import pt.isec.pd.comum.User;
 import pt.isec.pd.comum.modelos.Login;
 import pt.isec.pd.db.Bd;
@@ -65,30 +66,13 @@ public class ControladorPrincipal {
         password = scanner.nextLine();
         return dados;
     }
-    private static String menu(){
-        Scanner entrada = new Scanner(System.in);
-        while (true) {
-            System.out.println("MENU - Cliente");
-            System.out.println("1 - login");
-            System.out.println("2 - Registo");
-            System.out.print("#> ");
-            int opcao = entrada.nextInt();
-            if (opcao == 1) {
-                return "login";
-            } else if (opcao == 2) {
-                return "registo";
-            } else {
-                System.out.println("Escolha Invalida");
 
-            }
-        }
-    }
 
     public static void main(/*String[] args*/) {
 
         String escolhaMenuPrincipal;
         String [] dados;
-        escolhaMenuPrincipal = ControladorPrincipal.menu();
+        escolhaMenuPrincipal = Vista.menuPrincipal();
         User user = new User();
         System.out.println(escolhaMenuPrincipal);
 

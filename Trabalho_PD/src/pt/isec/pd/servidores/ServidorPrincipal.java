@@ -1,7 +1,11 @@
 package pt.isec.pd.servidores;
 import pt.isec.pd.cliente.ligacao.Ligacao;
 import pt.isec.pd.comum.Mensagem;
+import pt.isec.pd.comum.modelos.EditaConta;
+import pt.isec.pd.comum.modelos.Login;
+import pt.isec.pd.comum.modelos.Registo;
 import pt.isec.pd.db.Bd;
+import pt.isec.pd.servidores.controladores.ControladorAutenticacao;
 
 import java.awt.desktop.SystemEventListener;
 import java.io.BufferedInputStream;
@@ -34,9 +38,21 @@ public class ServidorPrincipal {
 
         serverPort = Integer.parseInt(args[0]);
         //teste de ligar à BD
-        Bd.ligaBD(args[1]); // ligar à bd
-        Bd.getUserDB("'a21220079@isec.pt'", "1234"); //test
-        Bd.setUserDB("Maria Jaquelina", 159753123,"maria@jaque.com", "jaquelina2");
+        //Bd.ligaBD(args[1]); // ligar à bd
+        Login login = new Login("a21220079@isec.pt","1234");
+        ControladorAutenticacao.login(login); //controlador do sistema de autenticação
+        //Registo registo = new Registo("batatas@gmail.com","batatas-fritas",124321021,"Batatas Friend");
+        //ControladorAutenticacao.registo(registo); //controlador do sistema de autenticação
+        EditaConta edita = new EditaConta("batatas@gmail.com", "nopotatoes4u",null);
+        ControladorAutenticacao.edita(edita); //controlador do sistema de autenticação
+        //Bd.getUserDB("'a21220079@isec.pt'", "1234"); //test
+        //Bd.setUserDB("Maria Jaquelina", 159753123,"maria@jaque.com", "jaquelina2");
+        //Bd.editaUserBD(123459876,"maria@jaque.com", "jaquelina2");    //test edita db
+        //Bd.editaUserBD(1234,"maria@jaque.com", null);                 //test edita db
+        //Bd.editaUserBD(null,"maria@jaque.com", "jaquelina5");         //test edita db
+        //Bd.editaUserBD(999999999,"maria@jaque.com", "omgisjaquelina");//test edita db
+
+
         Ligacao lig = new Ligacao();
         System.out.println("Antes do try!");
 
