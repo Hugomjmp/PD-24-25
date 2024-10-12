@@ -1,9 +1,9 @@
 package pt.isec.pd.servidores.controladores;
 
-import pt.isec.pd.comum.RespostaServidorMensagem;
-import pt.isec.pd.comum.modelos.Login;
+import pt.isec.pd.comum.modelos.RespostaServidorMensagem;
+import pt.isec.pd.comum.modelos.mensagens.Login;
 import pt.isec.pd.comum.modelos.Mensagem;
-import pt.isec.pd.comum.modelos.Registo;
+import pt.isec.pd.comum.modelos.mensagens.Registo;
 
 public class ControladorMensagem {
     private static String msg;

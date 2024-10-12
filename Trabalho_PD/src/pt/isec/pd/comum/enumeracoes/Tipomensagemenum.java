@@ -1,4 +1,4 @@
-package pt.isec.pd.enumeracoes;
+package pt.isec.pd.comum.enumeracoes;
 
 public enum Tipomensagemenum {
     LOGIN,

@@ -2,9 +2,7 @@ package pt.isec.pd.cliente.controladores;
 
 import pt.isec.pd.cliente.ligacao.Ligacao;
 import pt.isec.pd.cliente.vistas.Vista;
-import pt.isec.pd.comum.RespostaServidorMensagem;
-import pt.isec.pd.comum.User;
-import pt.isec.pd.comum.modelos.Mensagem;
+import pt.isec.pd.comum.modelos.User;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -111,7 +109,15 @@ public class ControladorPrincipal {
             }
 
         }
-        //System.out.println("[RECEBI]:" + ligacao.recebeMensagem(ligacao.getSocket()));
-        while (true);
+        while (true){
+            Vista.menuCliente();
+            System.out.print("Escolha #> ");
+
+            Scanner scanner = new Scanner(System.in);
+            System.out.println("\n");
+            int opcao = scanner.nextInt();
+
+
+        }
     }
 }

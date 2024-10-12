@@ -2,12 +2,6 @@ package pt.isec.pd.cliente;
 
 import pt.isec.pd.cliente.controladores.ControladorPrincipal;
 import pt.isec.pd.cliente.ligacao.Ligacao;
-import pt.isec.pd.cliente.vistas.Vista;
-import pt.isec.pd.comum.User;
-import pt.isec.pd.comum.modelos.Login;
-import pt.isec.pd.servidores.controladores.ControladorAutenticacao;
-
-import java.util.Scanner;
 
 public class Cliente {
 

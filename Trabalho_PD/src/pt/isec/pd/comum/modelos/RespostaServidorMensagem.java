@@ -1,6 +1,4 @@
-package pt.isec.pd.comum;
-
-import pt.isec.pd.enumeracoes.Tipomensagemenum;
+package pt.isec.pd.comum.modelos;
 
 import java.io.Serializable;
 

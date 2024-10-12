@@ -1,28 +1,28 @@
 package pt.isec.pd.cliente.modelos;
 
-import pt.isec.pd.comum.User;
+import pt.isec.pd.comum.modelos.User;
 import java.util.List;
 
 
 public class Dados {
-    private User estado;
+    private User utilizadorLogado;
     List<User> utilizadores;
 
     public Dados(){
-        this.estado = null;
+        this.utilizadorLogado = null;
     }
 
-    public User getEstado(){
-        return estado;
+    public User getUtilizadorLogado(){
+        return utilizadorLogado;
     }
-    public void setEstado(User estado){
-        this.estado = estado;
+    public void setUtilizadorLogado(User estado){
+        this.utilizadorLogado = estado;
     }
 
-    public List<User> getUserSet(){
+    public List<User> getUtilizadores(){
         return  utilizadores;
     }
-    public void setUserSet(List<User> conteudo){
+    public void setUtilizadores(List<User> conteudo){
         this.utilizadores = conteudo;
     }
 

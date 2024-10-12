@@ -1,15 +1,11 @@
 package pt.isec.pd.servidores;
-import pt.isec.pd.cliente.ligacao.Ligacao;
-import pt.isec.pd.comum.modelos.Mensagem;
 import pt.isec.pd.db.Bd;
 import pt.isec.pd.servidores.threads.ClienteThread;
 
 
 import java.io.IOException;
-import java.io.ObjectInputStream;
 import java.net.InetAddress;
 import java.net.ServerSocket;
-import java.net.Socket;
 import java.net.UnknownHostException;
 import java.sql.*;
 
@@ -80,6 +76,7 @@ public class ServidorPrincipal {
         //ControladorAutenticacao.edita(edita); //controlador do sistema de autenticação
         //Bd.getUserDB("'a21220079@isec.pt'", "1234"); //test
         //Bd.setUserDB("Maria Jaquelina", 159753123,"maria@jaque.com", "jaquelina2");
+        //Bd.ligaBD(args[1]);
         //Bd.editaUserBD(123459876,"maria@jaque.com", "jaquelina2");    //test edita db
         //Bd.editaUserBD(1234,"maria@jaque.com", null);                 //test edita db
         //Bd.editaUserBD(null,"maria@jaque.com", "jaquelina5");         //test edita db
@@ -100,7 +97,6 @@ public class ServidorPrincipal {
                         //cria uma thread e atribui ao cliente que acabou de entrar
                         new ClienteThread(socketServidor.accept()).start();
                         System.out.println("Entrou um cliente!");
-                        System.out.println("Vindo de:" );
                         i++;
                     } else {
                         break;

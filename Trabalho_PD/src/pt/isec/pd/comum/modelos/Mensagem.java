@@ -4,7 +4,7 @@ package pt.isec.pd.comum.modelos;
 //esta classe está responsável para fazer a serialização para o objecto!!!!!
 
 
-import pt.isec.pd.enumeracoes.Tipomensagemenum;
+import pt.isec.pd.comum.enumeracoes.Tipomensagemenum;
 
 import java.io.Serializable;
 

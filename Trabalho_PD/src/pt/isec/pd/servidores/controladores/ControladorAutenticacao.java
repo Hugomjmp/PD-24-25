@@ -1,9 +1,8 @@
 package pt.isec.pd.servidores.controladores;
 
-import pt.isec.pd.comum.User;
-import pt.isec.pd.comum.modelos.EditaConta;
-import pt.isec.pd.comum.modelos.Login;
-import pt.isec.pd.comum.modelos.Registo;
+import pt.isec.pd.comum.modelos.mensagens.EditaConta;
+import pt.isec.pd.comum.modelos.mensagens.Login;
+import pt.isec.pd.comum.modelos.mensagens.Registo;
 import pt.isec.pd.db.Bd;
 
 public class ControladorAutenticacao {
@@ -14,7 +13,7 @@ public class ControladorAutenticacao {
     }
     public static void login(Login login){
         //System.out.println("\nRECEBI: "+login.getEmail() + " "+ login.getPassword());
-        Bd.ligaBD("Base_de_dados");
+        //Bd.ligaBD("Base_de_dados");
 
         Bd.getUserDB(login.getEmail(), login.getPassword());
 

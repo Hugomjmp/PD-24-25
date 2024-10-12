@@ -1,11 +1,11 @@
 package pt.isec.pd.cliente.controladores;
 
 import pt.isec.pd.cliente.ligacao.Ligacao;
-import pt.isec.pd.comum.User;
-import pt.isec.pd.comum.modelos.Login;
+import pt.isec.pd.comum.modelos.User;
+import pt.isec.pd.comum.modelos.mensagens.Login;
 import pt.isec.pd.comum.modelos.Mensagem;
-import pt.isec.pd.comum.modelos.Registo;
-import pt.isec.pd.enumeracoes.Tipomensagemenum;
+import pt.isec.pd.comum.modelos.mensagens.Registo;
+import pt.isec.pd.comum.enumeracoes.Tipomensagemenum;
 
 public class ControladorAutenticacaoCliente {
     public static void registo(Ligacao ligacao, User user){

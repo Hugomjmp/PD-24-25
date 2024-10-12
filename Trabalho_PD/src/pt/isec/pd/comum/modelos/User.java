@@ -1,4 +1,4 @@
-package pt.isec.pd.comum;
+package pt.isec.pd.comum.modelos;
 
 import java.io.Serializable;
 
