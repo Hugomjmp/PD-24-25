@@ -1,3 +1,7 @@
+# Ignore ficheiros de configuração do IntelliJ
+/.idea/
+/*.iml
+
 # Compiled class file
 *.class
 
