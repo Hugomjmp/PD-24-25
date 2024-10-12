@@ -1,5 +1,6 @@
 package pt.isec.pd.comum.modelos;
 
+import javax.swing.plaf.basic.BasicDesktopIconUI;
 import java.util.List;
 
 public class Grupo {
