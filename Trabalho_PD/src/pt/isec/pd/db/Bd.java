@@ -8,7 +8,7 @@ public class Bd {
 
 
     private static Connection conn = null;
-
+    private static boolean estaConectado = false;
 
     public static void ligaBD(String bd){
        try {
@@ -16,11 +16,20 @@ public class Bd {
            System.out.println("A ligar à base de dados...");
            bd = "src/pt/isec/pd/db/" + bd + ".db";
            conn = DriverManager.getConnection(link + bd);
-           System.out.println(conn);
+           //System.out.println(conn);
            System.out.println("Ligação efectuada com sucesso!");
+           setEstaConectado(true);
        } catch (SQLException e) {
            throw new RuntimeException(e);
        }
+    }
+
+    public static boolean isEstaConectado() {
+        return estaConectado;
+    }
+
+    public static void setEstaConectado(boolean estaConectado) {
+        Bd.estaConectado = estaConectado;
     }
 
     public static void setUserDB(String nome, int nTelefone, String Email, String password){
@@ -63,8 +72,8 @@ public class Bd {
         }
     }
 
-    public static void getUserDB(String email, String password){
-        User user = new User();
+    public static User getUserDB(String email, String password){
+        User user = null;
         try {
             Statement stmt = conn.createStatement();
             ResultSet rs = stmt.executeQuery("SELECT * FROM USERS WHERE EMAIL='" +
@@ -74,20 +83,20 @@ public class Bd {
                 String nomeDB = rs.getString("NOME");
                 String passDB = rs.getString("PASSWORD");
                 String telefoneDB = rs.getString("N_TELEFONE");
-                System.out.println( "\nTABELA: \n" + nomeDB + "\n" + emailDB + "\n"+ passDB + "\n" + telefoneDB + "\n");
+                //System.out.println( "\nTABELA: \n" + nomeDB + "\n" + emailDB + "\n"+ passDB + "\n" + telefoneDB + "\n");
+                user = new User();
                 user.setNome(nomeDB);
                 user.setEmail(emailDB);
                 user.setnTelefone(Integer.parseInt(telefoneDB));
                 user.setPassword(passDB);
+
             }
+
+            rs.close();
+            stmt.close();
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-    }
-
-
-
-    public static void main(String[] args) {
-
+        return user;
     }
 }

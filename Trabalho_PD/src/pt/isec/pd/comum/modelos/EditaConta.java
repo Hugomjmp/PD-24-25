@@ -1,6 +1,8 @@
 package pt.isec.pd.comum.modelos;
 
-public class EditaConta {
+import java.io.Serializable;
+
+public class EditaConta implements Serializable {
     private String email;
     private String password;
     private String nome;

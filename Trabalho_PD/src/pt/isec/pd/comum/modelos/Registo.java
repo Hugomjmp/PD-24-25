@@ -1,6 +1,8 @@
 package pt.isec.pd.comum.modelos;
 
-public class Registo {
+import java.io.Serializable;
+
+public class Registo implements Serializable {
     private String email;
     private String password;
     private String nome;

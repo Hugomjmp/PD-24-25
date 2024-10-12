@@ -2,10 +2,12 @@ package pt.isec.pd.cliente.controladores;
 
 import pt.isec.pd.cliente.ligacao.Ligacao;
 import pt.isec.pd.cliente.vistas.Vista;
-import pt.isec.pd.comum.modelos.Mensagem;
+import pt.isec.pd.comum.RespostaServidorMensagem;
 import pt.isec.pd.comum.User;
-import pt.isec.pd.servidores.controladores.ControladorMensagem;
+import pt.isec.pd.comum.modelos.Mensagem;
 
+import java.io.IOException;
+import java.io.ObjectInputStream;
 import java.util.Scanner;
 
 public class ControladorPrincipal {
@@ -57,44 +59,59 @@ public class ControladorPrincipal {
 
     private static String[] login(){
         Scanner scanner = new Scanner(System.in);
-        String [] dados = {nome,password};
+        String [] dados = {email,password};
         System.out.print("Login E-mail: ");
-        email = scanner.nextLine();
+        dados[0] = scanner.nextLine();
         System.out.print("Password: ");
-        password = scanner.nextLine();
-        System.out.println(dados[0]+dados[1]);
+        dados[1] = scanner.nextLine();
+
+        //System.out.println(dados[0]+dados[1]);
         return dados;
     }
 
 
     public static void main(/*String[] args*/) {
 
+
         String escolhaMenuPrincipal;
-        String [] dados;
+        String [] dadosLogin;
+
         escolhaMenuPrincipal = Vista.menuPrincipal();
         User user = new User();
 
-        System.out.println(escolhaMenuPrincipal);
-
+        //System.out.println(escolhaMenuPrincipal);
 
         switch (escolhaMenuPrincipal) {
             case "registo": {
                 ControladorPrincipal.registo(user);
                 System.out.println(user);
+                ControladorAutenticacaoCliente.registo(ligacao,user);
                 //ligacao.enviaMensagem(ligacao.getSocket(), user);
 
             }
             case "login": {
-                System.out.println("AQUI");
-                dados = ControladorPrincipal.login();
-                System.out.println(dados[0] + dados[1]);
-                ControladorAutenticacaoCliente.login(ligacao,dados);
+
+                dadosLogin = ControladorPrincipal.login();
+                //System.out.println(dados[0] + dados[1]);
+                ControladorAutenticacaoCliente.login(ligacao,dadosLogin);
+
+                try {
+                    ObjectInputStream oin = new ObjectInputStream(ligacao.getSocket().getInputStream());
+                    System.out.println(oin.readObject());
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                } catch (ClassNotFoundException e) {
+                    throw new RuntimeException(e);
+                }
+
                 //Login login = new Login("a21220079@isec.pt", "1234");
                 //ControladorAutenticacao.login(login);
+
 
             }
 
         }
+        //System.out.println("[RECEBI]:" + ligacao.recebeMensagem(ligacao.getSocket()));
         while (true);
     }
 }

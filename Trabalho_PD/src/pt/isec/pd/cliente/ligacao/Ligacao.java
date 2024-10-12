@@ -1,5 +1,6 @@
 package pt.isec.pd.cliente.ligacao;
 
+import pt.isec.pd.comum.RespostaServidorMensagem;
 import pt.isec.pd.comum.modelos.Mensagem;
 
 import java.io.*;
@@ -51,7 +52,7 @@ public class Ligacao {
     //método que recebe o socket e a serialização do conteudo da mensagem
     //rever isto, porque não estou a fazer a parte da serealizaçao
     //ver bem isto depois..
-    public Mensagem recebeMensagem(Socket socket){
+/*    public Mensagem recebeMensagem(Socket socket){
 
         try{
             ObjectInputStream in;
@@ -62,6 +63,18 @@ public class Ligacao {
         } catch (IOException e) {
             throw new RuntimeException(e);
         } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        }
+    }*/
+    public RespostaServidorMensagem recebeMensagem(Socket socket){
+
+        try{
+            ObjectInputStream in;
+            in = new ObjectInputStream(socket.getInputStream());
+
+            return (RespostaServidorMensagem) in.readObject();
+
+        } catch (IOException | ClassNotFoundException e) {
             throw new RuntimeException(e);
         }
     }

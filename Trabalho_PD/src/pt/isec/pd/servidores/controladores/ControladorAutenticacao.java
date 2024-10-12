@@ -13,7 +13,7 @@ public class ControladorAutenticacao {
         Bd.setUserDB(registo.getNome(),registo.getnTelefone(),registo.getEmail(),registo.getPassword());
     }
     public static void login(Login login){
-        System.out.println("\nRECEBI: "+login.getEmail() + " "+ login.getPassword());
+        //System.out.println("\nRECEBI: "+login.getEmail() + " "+ login.getPassword());
         Bd.ligaBD("Base_de_dados");
 
         Bd.getUserDB(login.getEmail(), login.getPassword());
