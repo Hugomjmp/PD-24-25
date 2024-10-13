@@ -9,8 +9,8 @@ public class ControladorThreads extends java.lang.Thread{
     {
         System.out.println ("I am thread number " + threadNumber);
         try {
-// SLEEP FOR FIVE THOUSAND MILLISECONDS (5 SECS),
-// TO SIMULATE WORK BEING DONE
+        // SLEEP FOR FIVE THOUSAND MILLISECONDS (5 SECS),
+        // TO SIMULATE WORK BEING DONE
             Thread.sleep(5000);
         }catch (InterruptedException e) {}
         System.out.println (threadNumber + " is finished!");

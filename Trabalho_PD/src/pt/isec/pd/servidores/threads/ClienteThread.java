@@ -1,7 +1,7 @@
 package pt.isec.pd.servidores.threads;
 
 import pt.isec.pd.comum.modelos.Mensagem;
-import pt.isec.pd.servidores.controladores.ControladorMensagem;
+import pt.isec.pd.servidores.controladores.ControladorMensagemServidor;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -23,7 +23,7 @@ public class ClienteThread extends Thread{
                 Mensagem mensagem = (Mensagem) objectInputStream.readObject();
 
                 ObjectOutputStream objectOutputStream = new ObjectOutputStream(socketCliente.getOutputStream());
-                objectOutputStream.writeObject(ControladorMensagem.respostaServidor(mensagem));
+                objectOutputStream.writeObject(ControladorMensagemServidor.respostaServidor(mensagem));
             }
         } catch (IOException e) {
             throw new RuntimeException(e);

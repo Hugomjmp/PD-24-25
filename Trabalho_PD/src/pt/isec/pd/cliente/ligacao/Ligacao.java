@@ -32,11 +32,11 @@ public class Ligacao {
 
     }
     //metodo que recebe o socket e a serialização do conteudo do objecto
-    public void enviaMensagem(Socket socket, Serializable mensagem){
+    public void enviaMensagem(/*Socket socket,*/ Serializable mensagem){
         try {
             ObjectOutputStream out;
             out = new ObjectOutputStream(socket.getOutputStream());
-            out.writeObject(mensagem); //colocar o objecto aqui serlizado a enviar
+            out.writeObject(mensagem); //colocar o objecto aqui serializado a enviar
             out.flush();
         } catch (IOException e) {
             throw new RuntimeException(e);
@@ -65,7 +65,7 @@ public class Ligacao {
             throw new RuntimeException(e);
         }
     }*/
-    public RespostaServidorMensagem recebeMensagem(Socket socket){
+    public RespostaServidorMensagem recebeMensagem(){
 
         try{
             ObjectInputStream in;

@@ -1,29 +1,34 @@
 package pt.isec.pd.servidores.controladores;
 
+import pt.isec.pd.comum.enumeracoes.Estados;
 import pt.isec.pd.comum.modelos.RespostaServidorMensagem;
+import pt.isec.pd.comum.modelos.User;
 import pt.isec.pd.comum.modelos.mensagens.Login;
 import pt.isec.pd.comum.modelos.Mensagem;
 import pt.isec.pd.comum.modelos.mensagens.Registo;
 
-public class ControladorMensagem {
+public class ControladorMensagemServidor {
     private static String msg;
     public static RespostaServidorMensagem respostaServidor(Mensagem mensagem){
 
+        RespostaServidorMensagem resposta;
         switch (mensagem.getTipoMensagem()){
             case USER_REGISTO:
             {
-                ControladorAutenticacao.registo((Registo) mensagem.getConteudo());
+                /*Estados estado = ControladorAutenticacao.registo((Registo) mensagem.getConteudo());
                 msg = "Registo recebido para: " + mensagem.getConteudo();
-                RespostaServidorMensagem resposta = new RespostaServidorMensagem(msg);
-                return resposta;
+                resposta = new RespostaServidorMensagem(estado,estado.getDados());
+                return resposta;*/
             }
             case LOGIN:
             {
+                //User user;
+                Estados estado = ControladorAutenticacao.login((Login) mensagem.getConteudo());
 
-                ControladorAutenticacao.login((Login) mensagem.getConteudo());
+                //msg = "Login recebido para: " + mensagem.getConteudo();
+                //RespostaServidorMensagem resposta = new RespostaServidorMensagem(msg);
 
-                msg = "Login recebido para: " + mensagem.getConteudo();
-                RespostaServidorMensagem resposta = new RespostaServidorMensagem(msg);
+                resposta = new RespostaServidorMensagem(estado,estado.getDados());
                 return resposta;
 
 

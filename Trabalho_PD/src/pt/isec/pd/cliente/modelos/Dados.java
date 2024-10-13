@@ -15,8 +15,8 @@ public class Dados {
     public User getUtilizadorLogado(){
         return utilizadorLogado;
     }
-    public void setUtilizadorLogado(User estado){
-        this.utilizadorLogado = estado;
+    public void setUtilizadorLogado(User utilizadorLogado){
+        this.utilizadorLogado = utilizadorLogado;
     }
 
     public List<User> getUtilizadores(){
