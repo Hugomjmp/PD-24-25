@@ -57,8 +57,8 @@ public class ServidorPrincipal {
 
         int argc = args.length;
         int serverPort;
-
-        if (argc != 4){
+        System.out.println(argc);
+        if (argc != 2){
             System.out.println("java ServidorPrincipal PORT DATA_BASE_FILE");
             return;
         }
