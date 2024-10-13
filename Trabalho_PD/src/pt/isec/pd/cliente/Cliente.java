@@ -16,7 +16,6 @@ public class Cliente {
         }
         Ligacao ligacao = new Ligacao(args[0],args[1]);
         ControladorPrincipal controladorPrincipal = new ControladorPrincipal(ligacao);
-        //Vista vista = new Vista(controladorPrincipal);
         controladorPrincipal.main();
 
 

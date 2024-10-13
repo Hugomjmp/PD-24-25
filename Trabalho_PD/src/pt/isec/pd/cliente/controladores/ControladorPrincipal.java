@@ -74,40 +74,43 @@ public class ControladorPrincipal {
         String escolhaMenuPrincipal;
         String [] dadosLogin;
 
-        escolhaMenuPrincipal = Vista.menuPrincipal();
+
         User user = new User();
 
         //System.out.println(escolhaMenuPrincipal);
+        while (user.isEstado() != true) {
+            escolhaMenuPrincipal = Vista.menuPrincipal();
+            switch (escolhaMenuPrincipal) {
+                case "registo": {
+                    ControladorPrincipal.registo(user);
+                    System.out.println(user);
+                    ControladorAutenticacaoCliente.registo(ligacao, user);
+                    //ligacao.enviaMensagem(ligacao.getSocket(), user);
+                    break;
+                }
+                case "login": {
 
-        switch (escolhaMenuPrincipal) {
-            case "registo": {
-                ControladorPrincipal.registo(user);
-                System.out.println(user);
-                ControladorAutenticacaoCliente.registo(ligacao,user);
-                //ligacao.enviaMensagem(ligacao.getSocket(), user);
+                    dadosLogin = ControladorPrincipal.login();
+                    //System.out.println(dados[0] + dados[1]);
+                    ControladorAutenticacaoCliente.login(ligacao, dadosLogin);
 
-            }
-            case "login": {
+                    try {
+                        ObjectInputStream oin = new ObjectInputStream(ligacao.getSocket().getInputStream());
+                        System.out.println(oin.readObject());
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
+                    } catch (ClassNotFoundException e) {
+                        throw new RuntimeException(e);
+                    }
+                    System.out.println(user.isEstado());
+                    break;
+                    //Login login = new Login("a21220079@isec.pt", "1234");
+                    //ControladorAutenticacao.login(login);
 
-                dadosLogin = ControladorPrincipal.login();
-                //System.out.println(dados[0] + dados[1]);
-                ControladorAutenticacaoCliente.login(ligacao,dadosLogin);
 
-                try {
-                    ObjectInputStream oin = new ObjectInputStream(ligacao.getSocket().getInputStream());
-                    System.out.println(oin.readObject());
-                } catch (IOException e) {
-                    throw new RuntimeException(e);
-                } catch (ClassNotFoundException e) {
-                    throw new RuntimeException(e);
                 }
 
-                //Login login = new Login("a21220079@isec.pt", "1234");
-                //ControladorAutenticacao.login(login);
-
-
             }
-
         }
         while (true){
             Vista.menuCliente();

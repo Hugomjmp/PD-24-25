@@ -7,7 +7,15 @@ public class User implements Serializable {
     private String email;
     private String password;
     private String nome;
+    private boolean estado;
 
+    public boolean isEstado() {
+        return estado;
+    }
+
+    public void setEstado(boolean estado) {
+        this.estado = estado;
+    }
 
     public void setnTelefone(int nTelefone) {
 
@@ -46,6 +54,7 @@ public class User implements Serializable {
         return "Nome: " + nome + "\n" +
                 "Email: " + email + "\n" +
                 "Password: " + password + "\n" +
-                "Número de telefone: "+ nTelefone;
+                "Número de telefone: "+ nTelefone + "\n" +
+                "Estaddo: " + estado;
     }
 }

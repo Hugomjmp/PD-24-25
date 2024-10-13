@@ -31,6 +31,28 @@ public class Bd {
     public static void setEstaConectado(boolean estaConectado) {
         Bd.estaConectado = estaConectado;
     }
+//TERMINAR ISTO DEPOIS
+    private static void criaTabelas(String bd){
+        try {
+            Statement stmt = conn.createStatement();
+            stmt.executeUpdate("");
+            stmt.executeUpdate("");
+            stmt.executeUpdate("");
+            stmt.executeUpdate("");
+            stmt.executeUpdate("");
+            stmt.executeUpdate("");
+            stmt.executeUpdate("CREATE TABLE VERSAO (NUMERO_VERSAO INTEGER NOT NULL PRIMARY KEY);");
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+
+
+
+
+
+
 
     public static void setUserDB(String nome, int nTelefone, String Email, String password){
         try{
@@ -92,13 +114,18 @@ public class Bd {
                 user.setEmail(emailDB);
                 user.setnTelefone(Integer.parseInt(telefoneDB));
                 user.setPassword(passDB);
+                user.setEstado(true);
+
             }
 
             rs.close();
             stmt.close();
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            System.out.println("O Utilizador não existe!");
+            user.setEstado(false);
+            return user;
         }
+
         return user;
     }
     public static void versaoUpdate(){

@@ -67,7 +67,7 @@ public class ServidorPrincipal {
         mostraServidorDados(serverPort,args[0]);
 
 
-
+        //--------------------ISTO JÁ NÃO É NECESSÁRIO----------------
         //Login login = new Login("a21220079@isec.pt","1234");
         //ControladorAutenticacao.login(login); //controlador do sistema de autenticação
         //Registo registo = new Registo("batatas@gmail.com","batatas-fritas",124321021,"Batatas Friend");
@@ -81,7 +81,7 @@ public class ServidorPrincipal {
         //Bd.editaUserBD(1234,"maria@jaque.com", null);                 //test edita db
         //Bd.editaUserBD(null,"maria@jaque.com", "jaquelina5");         //test edita db
         //Bd.editaUserBD(999999999,"maria@jaque.com", "omgisjaquelina");//test edita db
-
+        //--------------------------------------------------------------
 
         /*Ligacao lig = new Ligacao();*/
         int i = 0;
