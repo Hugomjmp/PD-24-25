@@ -9,6 +9,8 @@ public enum Estados {
 
     GRUPO_REGISTADO_COM_SUCESSO("Grupo registado com sucesso"),
 
+    GRUPO_LISTADO_COM_SUCESSO("Grupo Listado com sucesso"),
+
     GRUPO_ELIMINADO_COM_SUCESSO("Grupo Eliminado com sucesso"),
 
     ERRO_AUTENTICACAO("O Utilizador não existe"),

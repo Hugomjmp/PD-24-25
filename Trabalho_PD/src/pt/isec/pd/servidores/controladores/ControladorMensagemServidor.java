@@ -1,12 +1,15 @@
 package pt.isec.pd.servidores.controladores;
 
 import pt.isec.pd.comum.enumeracoes.Estados;
+import pt.isec.pd.comum.modelos.RespostaListagemGrupos;
 import pt.isec.pd.comum.modelos.RespostaServidorMensagem;
-import pt.isec.pd.comum.modelos.mensagens.CriaGrupo;
-import pt.isec.pd.comum.modelos.mensagens.EliminaGrupo;
-import pt.isec.pd.comum.modelos.mensagens.Login;
+import pt.isec.pd.comum.modelos.mensagens.*;
 import pt.isec.pd.comum.modelos.Mensagem;
-import pt.isec.pd.comum.modelos.mensagens.Registo;
+
+
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 public class ControladorMensagemServidor {
     private static String msg;
@@ -41,6 +44,18 @@ public class ControladorMensagemServidor {
                 resposta = new RespostaServidorMensagem(estado, estado.getDados());
                 break;
                 //Estados estado =
+            }
+
+            case USER_LISTA_GRUPOS: {
+                System.out.println("A Listar grupos...");
+                List<String> grupos = ControladorGrupoServidor.listarGrupos((ListarGrupo) mensagem.getConteudo());
+
+
+                if (grupos != null && !grupos.isEmpty()) {
+                    System.out.println("Rumo 1");
+                    resposta = new RespostaListagemGrupos(Estados.GRUPO_LISTADO_COM_SUCESSO, grupos);
+                }
+                break;
             }
 
             case USER_ELIMINA_GRUPO:

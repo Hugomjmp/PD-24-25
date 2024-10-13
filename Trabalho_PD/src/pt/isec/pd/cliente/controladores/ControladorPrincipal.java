@@ -71,6 +71,11 @@ public class ControladorPrincipal {
                         ControladorGrupoCliente.eliminaGrupo(ligacao, grupo, dados.getUtilizadorLogado().getEmail());
                         break;
 
+                    case "lista_grupo":
+                        System.out.println("Envia Listar Grupos:");
+                        ControladorGrupoCliente.listarGrupos(ligacao, dados.getUtilizadorLogado().getEmail());
+                        break;
+
                     default:
                         System.out.println("Opção inválida. Por favor, tente novamente.");
                         break;
@@ -93,6 +98,19 @@ public class ControladorPrincipal {
                 case USER_REGISTADO_COM_SUCESSO -> {
 
 
+                }
+                case GRUPO_LISTADO_COM_SUCESSO -> {
+                    List<String> grupos = (List<String>) resposta.getConteudo();
+
+                    if (grupos != null && !grupos.isEmpty()) {
+                        System.out.println("Grupos disponíveis:");
+                        for (String grupo : grupos) {
+                            System.out.println("- " + grupo);
+                        }
+                    } else {
+                        System.out.println("Nenhum grupo disponível.");
+                    }
+                    return resposta.getEstado();
                 }
             }
         } catch (Exception e) {
@@ -208,9 +226,11 @@ public class ControladorPrincipal {
                         System.out.println("LISTAR CONVITES");
                         break;
                     }
-                    case 4: //LISTAR GRUPOS
+                    case 4: // LISTAR GRUPOS
                     {
                         System.out.println("LISTAR GRUPOS");
+                        enviaMensagem("lista_grupo");
+                        recebeMensagem();
                         break;
                     }
                     case 5: //ELIMINAR GRUPOS

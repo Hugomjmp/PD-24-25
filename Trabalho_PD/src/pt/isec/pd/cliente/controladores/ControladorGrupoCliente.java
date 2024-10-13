@@ -5,6 +5,7 @@ import pt.isec.pd.comum.enumeracoes.Tipomensagemenum;
 import pt.isec.pd.comum.modelos.Mensagem;
 import pt.isec.pd.comum.modelos.mensagens.CriaGrupo;
 import pt.isec.pd.comum.modelos.mensagens.EliminaGrupo;
+import pt.isec.pd.comum.modelos.mensagens.ListarGrupo;
 
 public class ControladorGrupoCliente {
     public static void criaGrupo(Ligacao ligacao, String nomeGrupo , String nomeUser){
@@ -20,4 +21,14 @@ public class ControladorGrupoCliente {
         ligacao.enviaMensagem(mensagem);
         System.out.println(mensagem);
     }
+
+    public static void listarGrupos(Ligacao ligacao, String nomeUser) {
+
+        ListarGrupo listarGrupo = new ListarGrupo(nomeUser);
+        Mensagem mensagem = new Mensagem(Tipomensagemenum.USER_LISTA_GRUPOS, listarGrupo);
+        ligacao.enviaMensagem(mensagem);
+        System.out.println(mensagem);
+    }
+
+    
 }

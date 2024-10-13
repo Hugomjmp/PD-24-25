@@ -4,6 +4,8 @@ import pt.isec.pd.comum.enumeracoes.Estados;
 import pt.isec.pd.comum.modelos.User;
 
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Bd {
 
@@ -67,22 +69,44 @@ public class Bd {
     }
 
     public static Estados eliminarGrupoDB(String grupoNome, String eliminadoPor) {
-        String sql = "DELETE FROM GRUPO WHERE NOME = ?"; // SQL para eliminar o grupo com base no nome
+        String sql = "DELETE FROM GRUPO WHERE NOME = ?";
 
         try (PreparedStatement pstmt = conn.prepareStatement(sql)) {
             pstmt.setString(1, grupoNome);
             int affectedRows = pstmt.executeUpdate();
 
             if (affectedRows > 0) {
-                versaoUpdate(); // Atualiza a versão após a eliminação bem-sucedida
-                return Estados.GRUPO_ELIMINADO_COM_SUCESSO; // Retorna sucesso
+                versaoUpdate();
+                return Estados.GRUPO_ELIMINADO_COM_SUCESSO;
             } else {
-                return Estados.GRUPO_NAO_ENCONTRADO; // Retorna que o grupo não foi encontrado
+                return Estados.GRUPO_NAO_ENCONTRADO;
             }
         } catch (SQLException e) {
             System.err.println("Erro ao eliminar grupo: " + e.getMessage());
             return Estados.ERRO_GRUPO; // Retorna erro em caso de exceção
         }
+    }
+
+    public static List<String> listarGruposDB(String solicitadoPor) {
+        List<String> grupos = new ArrayList<>();
+
+        String sql = "SELECT NOME FROM GRUPO";
+
+        try (Statement stmt = conn.createStatement();
+             ResultSet rs = stmt.executeQuery(sql)) {
+
+
+            while (rs.next()) {
+                String nomeGrupo = rs.getString("NOME");
+                grupos.add(nomeGrupo);
+            }
+
+        } catch (SQLException e) {
+            System.err.println("Erro ao listar grupos: " + e.getMessage());
+            return null;
+        }
+
+        return grupos;
     }
 
 

@@ -4,9 +4,12 @@ import pt.isec.pd.comum.enumeracoes.Estados;
 
 import pt.isec.pd.comum.modelos.mensagens.CriaGrupo;
 import pt.isec.pd.comum.modelos.mensagens.EliminaGrupo;
+import pt.isec.pd.comum.modelos.mensagens.ListarGrupo;
 import pt.isec.pd.db.Bd;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 
 public class ControladorGrupoServidor {
@@ -32,6 +35,18 @@ public class ControladorGrupoServidor {
             return Estados.ERRO_GRUPO; // Retorna erro em caso de exceção
         }
     }
+
+    public static List<String> listarGrupos(ListarGrupo listarGrupo) {
+        List<String> grupos = new ArrayList<>();
+        try {
+            grupos = Bd.listarGruposDB(listarGrupo.getSolicitadoPor());
+        } catch (Exception e) {
+            System.err.println("Erro ao listar grupos: " + e.getMessage());
+        }
+        return grupos;
+    }
+
+
 
 }
 
