@@ -8,9 +8,31 @@ public class Grupo {
     private String criadoPor;
     private List<User> membros;
 
-
-    public void CriaGrupo(){
-
+    public Grupo(String nomeGrupo, String criadoPor){
+        this.criadoPor = criadoPor;
+        this.nomeGrupo = nomeGrupo;
+    }
+    public String getCriadoPor() {
+        return criadoPor;
     }
 
+    public void setCriadoPor(String criadoPor) {
+        this.criadoPor = criadoPor;
+    }
+
+    public String getNomeGrupo() {
+        return nomeGrupo;
+    }
+
+    public void setNomeGrupo(String nomeGrupo) {
+        this.nomeGrupo = nomeGrupo;
+    }
+
+    @Override
+    public String toString() {
+        return "Grupo{" +
+                "criadoPor='" + criadoPor + '\'' +
+                ", nomeGrupo='" + nomeGrupo + '\'' +
+                '}';
+    }
 }

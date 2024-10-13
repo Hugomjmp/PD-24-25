@@ -8,8 +8,9 @@ import pt.isec.pd.comum.modelos.mensagens.Registo;
 import pt.isec.pd.comum.enumeracoes.Tipomensagemenum;
 
 public class ControladorAutenticacaoCliente {
-    public static void registo(Ligacao ligacao, User user){
-        Registo registo = new Registo(user.getEmail(), user.getPassword(), user.getnTelefone(), user.getNome());
+    public static void registo(Ligacao ligacao, String []dados/*User user*/){
+        //Registo registo = new Registo(user.getEmail(), user.getPassword(), user.getnTelefone(), user.getNome());
+        Registo registo = new Registo(dados[0],dados[2],Integer.parseInt(dados[3]),dados[1]);
         Mensagem mensagem = new Mensagem(Tipomensagemenum.USER_REGISTO, registo);
         ligacao.enviaMensagem(/*ligacao.getSocket(),*/mensagem);
     }

@@ -11,15 +11,15 @@ import java.io.Serializable;
 
 public class ControladorAutenticacao {
 
-    public static void registo(Registo registo){
+    public static Estados registo(Registo registo){
         //System.out.println(registo.getNome()+registo.getnTelefone()+registo.getEmail()+registo.getPassword());
         Serializable  userRegisto = null;
         try {
-            //userRegisto = Bd.setUserDB(registo.getNome(),registo.getnTelefone(),registo.getEmail(),registo.getPassword());
+            userRegisto = Bd.setUserDB(registo.getNome(),registo.getnTelefone(),registo.getEmail(),registo.getPassword());
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
-        //return userRegisto == null ? Estados.ERRO_REGISTO : Estados.USER_REGISTADO_COM_SUCESSO.setDados(userRegisto);
+        return userRegisto == null ? Estados.ERRO_REGISTO : Estados.USER_REGISTADO_COM_SUCESSO.setDados(userRegisto);
 
 
     }

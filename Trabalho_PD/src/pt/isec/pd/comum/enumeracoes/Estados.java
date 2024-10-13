@@ -7,12 +7,14 @@ public enum Estados {
     USER_LOGADO_COM_SUCESSO("Utilizador logado com sucesso"),
     USER_REGISTADO_COM_SUCESSO("Utilizador registado com sucesso"),
 
-
+    GRUPO_REGISTADO_COM_SUCESSO("Grupo registado com sucesso"),
 
 
 
     ERRO_AUTENTICACAO("O Utilizador não existe"),
-    ERRO_REGISTO("O Utilizador já existe")
+    ERRO_REGISTO("O Utilizador já existe"),
+
+    ERRO_GRUPO("Grupo já existe")
     ;
 
     String mensagem;

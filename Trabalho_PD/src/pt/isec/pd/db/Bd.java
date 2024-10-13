@@ -1,5 +1,6 @@
 package pt.isec.pd.db;
 
+import pt.isec.pd.comum.enumeracoes.Estados;
 import pt.isec.pd.comum.modelos.User;
 
 import java.sql.*;
@@ -47,14 +48,30 @@ public class Bd {
         }
     }
 
+    public static Estados setGrupoDB(String grupoNome, String nomeUser){
+
+        try{
+            Statement stmt = conn.createStatement();
+
+            stmt.executeUpdate("INSERT INTO GRUPO (NOME, CRIADO_POR)" +
+                    " VALUES ('" +
+                    grupoNome + "','" +
+                    nomeUser +
+                    "')");
+            versaoUpdate();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+        return Estados.GRUPO_REGISTADO_COM_SUCESSO;
+    }
 
 
 
 
 
 
-
-    public static void setUserDB(String nome, int nTelefone, String Email, String password){
+    public static Estados setUserDB(String nome, int nTelefone, String Email, String password){
         try{
             Statement stmt = conn.createStatement();
 
@@ -69,6 +86,12 @@ public class Bd {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
+        User user = new User();
+        user.setNome(nome);
+        user.setEmail(Email);
+        user.setnTelefone(nTelefone);
+        user.setPassword(password);
+        return Estados.USER_REGISTADO_COM_SUCESSO.setDados(user);
     }
 
     public static void editaUserBD(Integer nTelefone, String Email, String password){

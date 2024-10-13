@@ -6,10 +6,7 @@ import pt.isec.pd.cliente.vistas.Vista;
 import pt.isec.pd.comum.enumeracoes.Estados;
 import pt.isec.pd.comum.modelos.RespostaServidorMensagem;
 import pt.isec.pd.comum.modelos.User;
-import pt.isec.pd.comum.modelos.mensagens.Registo;
 
-import java.io.IOException;
-import java.io.ObjectInputStream;
 import java.util.List;
 import java.util.Scanner;
 
@@ -38,6 +35,9 @@ public class ControladorPrincipal {
 
     public static void enviaMensagem(String escolha){
         String [] dadosLogin;
+        String [] dadosRegisto;
+        String grupo;
+        Scanner scanner = new Scanner(System.in);
             if(dados.getUtilizadorLogado() == null){
                 switch (escolha){
                     case "login": { //login
@@ -48,12 +48,23 @@ public class ControladorPrincipal {
                     }
                     case "registo":{ //Registo
                         System.out.println("Envia: Registo");
+                        dadosRegisto = ControladorPrincipal.registo();
+                        ControladorAutenticacaoCliente.registo(ligacao,dadosRegisto);
                         break;
                        // ControladorAutenticacaoCliente.registo(ligacao, user);
                        // ControladorPrincipal.registo(user);
                     }
                 }
+            } else{
+                switch (escolha){
+                    case "cria_grupo":
+                        System.out.println("Envia Cria Grupo:");
+                        System.out.print("Nome do grupo:");
+                        grupo = scanner.nextLine();
+                        ControladorGrupoCliente.criaGrupo(ligacao,grupo,dados.getUtilizadorLogado().getEmail());
+                }
             }
+
 
     }
 
@@ -67,6 +78,9 @@ public class ControladorPrincipal {
                     dados.setUtilizadorLogado((User) resposta.getConteudo());
                     return resposta.getEstado();
                 }
+                case USER_REGISTADO_COM_SUCESSO -> {
+
+                }
             }
         } catch (Exception e) {
             throw new RuntimeException(e);
@@ -78,8 +92,9 @@ public class ControladorPrincipal {
 
 
 
-    private static void registo(User user){
+    private static String[] registo(/*User user*/){
         boolean nTefValido = false;
+        String [] dados = {nome, String.valueOf(nTelefone), email,password};
         Scanner scanner = new Scanner(System.in);
         System.out.print("Login E-mail: ");
         email = scanner.nextLine();
@@ -87,13 +102,17 @@ public class ControladorPrincipal {
             System.out.println("Tem de ter o seguinte formato: exemplo@exemplo.com");
             System.out.print("Login E-mail: ");
             email = scanner.nextLine();
+
         }
-        user.setEmail(email);
+        dados[0] = email;
+        //user.setEmail(email);
         System.out.print("NOME: ");
-        user.setNome(scanner.nextLine());
+        dados[1] = scanner.nextLine();
+        //user.setNome(scanner.nextLine());
         System.out.print("Password: ");
         password = scanner.nextLine();
-        user.setPassword(password);
+        dados[2] = password;
+        //user.setPassword(password);
         while (!nTefValido) { //obriga o user a meter um número válido
             try {
                 System.out.print("Número de Telefone: ");
@@ -109,8 +128,9 @@ public class ControladorPrincipal {
                 System.out.println("O número do telefone deve conter apenas números.");
             }
         }
-        user.setnTelefone(nTelefone);
-
+        dados[3] = String.valueOf(nTelefone);
+        //user.setnTelefone(nTelefone);
+        return dados;
     }
 
     private static String[] login(){
@@ -144,34 +164,15 @@ public class ControladorPrincipal {
                 switch (escolhaMenuPrincipal) {
                     case "registo": {
                         enviaMensagem("registo");
-                        /*ControladorPrincipal.registo(user);
-                        System.out.println(user);
-                        ControladorAutenticacaoCliente.registo(ligacao, user);
-                        break;*/
+                        recebeMensagem();
                         break;
                     }
                     case "login": {
                         enviaMensagem("login");
-
-                        System.out.println(recebeMensagem());
+                        recebeMensagem();
+                        //System.out.println(recebeMensagem());
                         break;
-                       /* dadosLogin = ControladorPrincipal.login();
-                        ControladorAutenticacaoCliente.login(ligacao, dadosLogin);
-
-                        try {
-                            ObjectInputStream oin = new ObjectInputStream(ligacao.getSocket().getInputStream());
-                            System.out.println(oin.readObject());
-                        } catch (IOException | ClassNotFoundException e) {
-                            throw new RuntimeException(e);
-                        }
-                        System.out.println(user.isEstado());
-                        break;*/
-                        //Login login = new Login("a21220079@isec.pt", "1234");
-                        //ControladorAutenticacao.login(login);
-
-
                     }
-
                 }
 
             }else{
@@ -181,6 +182,7 @@ public class ControladorPrincipal {
                     case 1: //CRIAR GRUPO
                     {
                         System.out.println("CRIAR GRUPO");
+                        enviaMensagem("cria_grupo");
                         break;
                     }
                     case 2: //CONVIDAR PARA GRUPO
