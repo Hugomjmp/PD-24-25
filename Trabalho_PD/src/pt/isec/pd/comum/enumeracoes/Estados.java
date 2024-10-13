@@ -9,10 +9,11 @@ public enum Estados {
 
     GRUPO_REGISTADO_COM_SUCESSO("Grupo registado com sucesso"),
 
-
+    GRUPO_ELIMINADO_COM_SUCESSO("Grupo Eliminado com sucesso"),
 
     ERRO_AUTENTICACAO("O Utilizador não existe"),
     ERRO_REGISTO("O Utilizador já existe"),
+    GRUPO_NAO_ENCONTRADO("Grupo nao existe"),
 
     ERRO_GRUPO("Grupo já existe")
     ;

@@ -66,8 +66,24 @@ public class Bd {
         return Estados.GRUPO_REGISTADO_COM_SUCESSO;
     }
 
+    public static Estados eliminarGrupoDB(String grupoNome, String eliminadoPor) {
+        String sql = "DELETE FROM GRUPO WHERE NOME = ?"; // SQL para eliminar o grupo com base no nome
 
+        try (PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            pstmt.setString(1, grupoNome);
+            int affectedRows = pstmt.executeUpdate();
 
+            if (affectedRows > 0) {
+                versaoUpdate(); // Atualiza a versão após a eliminação bem-sucedida
+                return Estados.GRUPO_ELIMINADO_COM_SUCESSO; // Retorna sucesso
+            } else {
+                return Estados.GRUPO_NAO_ENCONTRADO; // Retorna que o grupo não foi encontrado
+            }
+        } catch (SQLException e) {
+            System.err.println("Erro ao eliminar grupo: " + e.getMessage());
+            return Estados.ERRO_GRUPO; // Retorna erro em caso de exceção
+        }
+    }
 
 
 

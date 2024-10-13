@@ -55,13 +55,25 @@ public class ControladorPrincipal {
                        // ControladorPrincipal.registo(user);
                     }
                 }
-            } else{
-                switch (escolha){
+            } else {
+                switch (escolha) {
                     case "cria_grupo":
                         System.out.println("Envia Cria Grupo:");
                         System.out.print("Nome do grupo:");
                         grupo = scanner.nextLine();
-                        ControladorGrupoCliente.criaGrupo(ligacao,grupo,dados.getUtilizadorLogado().getEmail());
+                        ControladorGrupoCliente.criaGrupo(ligacao, grupo, dados.getUtilizadorLogado().getEmail());
+                        break;
+
+                    case "elimina_grupo":
+                        System.out.println("Envia Elimina Grupo:");
+                        System.out.print("Nome do grupo a eliminar:");
+                        grupo = scanner.nextLine();
+                        ControladorGrupoCliente.eliminaGrupo(ligacao, grupo, dados.getUtilizadorLogado().getEmail());
+                        break;
+
+                    default:
+                        System.out.println("Opção inválida. Por favor, tente novamente.");
+                        break;
                 }
             }
 
@@ -79,6 +91,7 @@ public class ControladorPrincipal {
                     return resposta.getEstado();
                 }
                 case USER_REGISTADO_COM_SUCESSO -> {
+
 
                 }
             }
@@ -203,6 +216,7 @@ public class ControladorPrincipal {
                     case 5: //ELIMINAR GRUPOS
                     {
                         System.out.println("ELIMINAR GRUPOS");
+                        enviaMensagem("elimina_grupo");
                         break;
                     }
                     case 6: //SAIR DE UM GRUPO

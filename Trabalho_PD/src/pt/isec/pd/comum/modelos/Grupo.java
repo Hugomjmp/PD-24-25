@@ -8,9 +8,12 @@ public class Grupo {
     private String criadoPor;
     private List<User> membros;
 
-    public Grupo(String nomeGrupo, String criadoPor){
+    //private String eliminadoPor;
+
+    public Grupo(String nomeGrupo, String criadoPor ){ // String eliminadoPor
         this.criadoPor = criadoPor;
         this.nomeGrupo = nomeGrupo;
+        //this.eliminadoPor = eliminadoPor;
     }
     public String getCriadoPor() {
         return criadoPor;

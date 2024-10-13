@@ -3,6 +3,7 @@ package pt.isec.pd.servidores.controladores;
 import pt.isec.pd.comum.enumeracoes.Estados;
 import pt.isec.pd.comum.modelos.RespostaServidorMensagem;
 import pt.isec.pd.comum.modelos.mensagens.CriaGrupo;
+import pt.isec.pd.comum.modelos.mensagens.EliminaGrupo;
 import pt.isec.pd.comum.modelos.mensagens.Login;
 import pt.isec.pd.comum.modelos.Mensagem;
 import pt.isec.pd.comum.modelos.mensagens.Registo;
@@ -40,6 +41,15 @@ public class ControladorMensagemServidor {
                 resposta = new RespostaServidorMensagem(estado, estado.getDados());
                 break;
                 //Estados estado =
+            }
+
+            case USER_ELIMINA_GRUPO:
+            {
+                System.out.println("Cheguei");
+                System.out.println(mensagem);
+                Estados estado = ControladorGrupoServidor.EliminaRegisto((EliminaGrupo) mensagem.getConteudo());
+                resposta = new RespostaServidorMensagem(estado, estado.getDados());
+                break;
             }
 
         }

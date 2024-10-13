@@ -3,6 +3,7 @@ package pt.isec.pd.servidores.controladores;
 import pt.isec.pd.comum.enumeracoes.Estados;
 
 import pt.isec.pd.comum.modelos.mensagens.CriaGrupo;
+import pt.isec.pd.comum.modelos.mensagens.EliminaGrupo;
 import pt.isec.pd.db.Bd;
 
 import java.io.Serializable;
@@ -10,7 +11,7 @@ import java.io.Serializable;
 
 public class ControladorGrupoServidor {
 
-    public static Estados grupoRegisto(CriaGrupo criaGrupo){
+    public static Estados grupoRegisto(CriaGrupo criaGrupo) {
         Serializable grupoRegisto = null;
         try {
             grupoRegisto = Bd.setGrupoDB(criaGrupo.getNome(), criaGrupo.getCriadoPor());
@@ -22,6 +23,15 @@ public class ControladorGrupoServidor {
 
     }
 
+    public static Estados EliminaRegisto(EliminaGrupo eliminaGrupo) {
+        try {
+            Estados resultado = Bd.eliminarGrupoDB(eliminaGrupo.getNome(), eliminaGrupo.getEliminadoPor());
+            return resultado;
+        } catch (Exception e) {
+            System.err.println("Erro ao eliminar grupo: " + e.getMessage());
+            return Estados.ERRO_GRUPO; // Retorna erro em caso de exceção
+        }
+    }
 
 }
 
