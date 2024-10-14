@@ -7,7 +7,7 @@ import java.util.List;
 
 public class RespostaListagemGrupos extends RespostaServidorMensagem {
     public RespostaListagemGrupos(Estados estado, List<String> grupos) {
-        super(estado, (Serializable) grupos); // Pass the list to the parent constructor
+        super(estado, (Serializable) grupos);
     }
 
 }

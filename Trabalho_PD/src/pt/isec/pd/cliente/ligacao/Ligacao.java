@@ -1,6 +1,7 @@
 package pt.isec.pd.cliente.ligacao;
 
 import pt.isec.pd.comum.modelos.RespostaServidorMensagem;
+import pt.isec.pd.comum.modelos.mensagens.SairGrupo;
 
 import java.io.*;
 import java.net.InetAddress;

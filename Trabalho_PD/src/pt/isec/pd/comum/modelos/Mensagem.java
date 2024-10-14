@@ -18,6 +18,7 @@ public class Mensagem implements Serializable {
         this.conteudo = conteudo;
     }
 
+
     public Serializable getConteudo() {
         return conteudo;
     }

@@ -5,12 +5,10 @@ import java.io.Serializable;
 public class ListarGrupo implements Serializable {
     private String solicitadoPor;
 
-    // Construtor
     public ListarGrupo(String solicitadoPor) {
         this.solicitadoPor = solicitadoPor;
     }
 
-    // Getter e Setter para solicitadoPor
     public String getSolicitadoPor() {
         return solicitadoPor;
     }

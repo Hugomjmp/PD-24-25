@@ -3,10 +3,7 @@ package pt.isec.pd.cliente.controladores;
 import pt.isec.pd.cliente.ligacao.Ligacao;
 import pt.isec.pd.comum.enumeracoes.Tipomensagemenum;
 import pt.isec.pd.comum.modelos.Mensagem;
-import pt.isec.pd.comum.modelos.mensagens.CriaGrupo;
-import pt.isec.pd.comum.modelos.mensagens.EliminaGrupo;
-import pt.isec.pd.comum.modelos.mensagens.InsereGrupo;
-import pt.isec.pd.comum.modelos.mensagens.ListarGrupo;
+import pt.isec.pd.comum.modelos.mensagens.*;
 
 public class ControladorGrupoCliente {
     public static void criaGrupo(Ligacao ligacao, String nomeGrupo , String nomeUser){
@@ -37,5 +34,13 @@ public class ControladorGrupoCliente {
         System.out.println(mensagem);
     }
 
-    
+    public static void sairGrupo(Ligacao ligacao, String grupoNome, String emailUsuario) {
+        SairGrupo sairGrupo = new SairGrupo(grupoNome, emailUsuario);
+        Mensagem mensagem = new Mensagem(Tipomensagemenum.USER_SAI_GRUPO, sairGrupo);
+        ligacao.enviaMensagem(mensagem);
+        System.out.println(mensagem);
+    }
+
+
+
 }

@@ -13,18 +13,18 @@ public class Bd {
     private static Connection conn = null;
     private static boolean estaConectado = false;
 
-    public static void ligaBD(String bd){
-       try {
-           String link = "jdbc:sqlite:";
-           System.out.println("A ligar à base de dados...");
-           bd = "src/pt/isec/pd/db/" + bd + ".db";
-           conn = DriverManager.getConnection(link + bd);
-           //System.out.println(conn);
-           System.out.println("Ligação efectuada com sucesso!");
-           setEstaConectado(true);
-       } catch (SQLException e) {
-           throw new RuntimeException(e);
-       }
+    public static void ligaBD(String bd) {
+        try {
+            String link = "jdbc:sqlite:";
+            System.out.println("A ligar à base de dados...");
+            bd = "src/pt/isec/pd/db/" + bd + ".db";
+            conn = DriverManager.getConnection(link + bd);
+            //System.out.println(conn);
+            System.out.println("Ligação efectuada com sucesso!");
+            setEstaConectado(true);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     public static boolean isEstaConectado() {
@@ -34,8 +34,9 @@ public class Bd {
     public static void setEstaConectado(boolean estaConectado) {
         Bd.estaConectado = estaConectado;
     }
-//TERMINAR ISTO DEPOIS
-    private static void criaTabelas(String bd){
+
+    //TERMINAR ISTO DEPOIS
+    private static void criaTabelas(String bd) {
         try {
             Statement stmt = conn.createStatement();
             stmt.executeUpdate("");
@@ -50,9 +51,9 @@ public class Bd {
         }
     }
 
-    public static Estados setGrupoDB(String grupoNome, String nomeUser){
+    public static Estados setGrupoDB(String grupoNome, String nomeUser) {
 
-        try{
+        try {
             Statement stmt = conn.createStatement();
 
             stmt.executeUpdate("INSERT INTO GRUPO (NOME, CRIADO_POR)" +
@@ -67,7 +68,8 @@ public class Bd {
 
         return Estados.GRUPO_REGISTADO_COM_SUCESSO;
     }
-    public static Estados integraGrupo(String grupoNome, String email){
+
+    public static Estados integraGrupo(String grupoNome, String email) {
 
         //User user = null;
         String userID = null;
@@ -76,7 +78,7 @@ public class Bd {
             Statement stmt = conn.createStatement();
             ResultSet rs = stmt.executeQuery("SELECT * FROM USERS WHERE EMAIL='" +
                     email + "'");
-            if(rs.next()){
+            if (rs.next()) {
                 userID = rs.getString("ID");
             }
 
@@ -84,7 +86,7 @@ public class Bd {
                 //Statement stmt = conn.createStatement();
                 ResultSet rs2 = stmt.executeQuery("SELECT * FROM GRUPO WHERE NOME='" +
                         grupoNome + "'");
-                if(rs.next()){
+                if (rs.next()) {
                     grupoID = rs2.getString("ID");
                 }
             } catch (SQLException e) {
@@ -93,7 +95,7 @@ public class Bd {
                 /*return user;*/
             }
 
-            try{
+            try {
                 //Statement stmt = conn.createStatement();
 
                 stmt.executeUpdate("INSERT INTO INTEGRA (USER_ID, GROUP_ID)" +
@@ -115,9 +117,30 @@ public class Bd {
         return Estados.GRUPO_NAO_ENCONTRADO;
     }
 
+    public static Estados sairDoGrupoDB(String grupoNome, String emailUsuario) {
+        String sqlDelete = "DELETE FROM INTEGRA WHERE GROUP_ID = (SELECT ID FROM GRUPO WHERE NOME = ?) " +
+                "AND USER_ID = (SELECT ID FROM USERS WHERE EMAIL = ?)";
 
+        try (PreparedStatement pstmt = conn.prepareStatement(sqlDelete)) {
+            pstmt.setString(1, grupoNome);
+            pstmt.setString(2, emailUsuario);
 
-//Não esquecer que para eliminar o grupo, primeiro tem de se verificar se há dividas por salvar
+            int affectedRows = pstmt.executeUpdate();
+
+            if (affectedRows > 0) {
+                versaoUpdate();
+                return Estados.USER_REMOVIDO_COM_SUCESSO;
+            } else {
+                return Estados.GRUPO_NAO_ENCONTRADO;
+            }
+
+        } catch (SQLException e) {
+            System.err.println("Erro ao remover usuário do grupo: " + e.getMessage());
+            return Estados.ERRO_GRUPO;
+        }
+    }
+
+    //Não esquecer que para eliminar o grupo, primeiro tem de se verificar se há dividas por salvar
     public static Estados eliminarGrupoDB(String grupoNome, String eliminadoPor) {
         String sql = "DELETE FROM GRUPO WHERE NOME = ?";
 

@@ -6,7 +6,6 @@ public class EliminaGrupo implements Serializable {
     private String nome;
     private String eliminadoPor;
 
-    // Construtor com dois parâmetros
     public EliminaGrupo(String nome, String eliminadoPor) {
         this.nome = nome;
         this.eliminadoPor = eliminadoPor;
@@ -20,7 +19,6 @@ public class EliminaGrupo implements Serializable {
         this.eliminadoPor = eliminadoPor;
     }
 
-    // Getter e Setter para nome
     public String getNome() {
         return nome;
     }

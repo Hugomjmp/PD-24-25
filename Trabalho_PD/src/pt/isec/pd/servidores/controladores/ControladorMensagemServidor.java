@@ -64,6 +64,19 @@ public class ControladorMensagemServidor {
                 }
                 break;
             }
+            case USER_SAI_GRUPO: {
+                System.out.println("Sai do Grupo...");
+
+                SairGrupo sairGrupo = (SairGrupo) mensagem.getConteudo();
+                String grupoNome = sairGrupo.getNomeGrupo();
+                String emailUser = sairGrupo.getEmailUser();
+
+                Estados estado = ControladorGrupoServidor.sairGrupo(grupoNome, emailUser);
+
+
+                resposta = new RespostaServidorMensagem(estado, null);
+                break;
+            }
 
             case USER_ELIMINA_GRUPO:
             {

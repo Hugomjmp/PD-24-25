@@ -72,9 +72,17 @@ public class ControladorPrincipal {
                         ControladorGrupoCliente.eliminaGrupo(ligacao, grupo, dados.getUtilizadorLogado().getEmail());
                         break;
 
+
                     case "lista_grupo":
                         System.out.println("Envia Listar Grupos:");
                         ControladorGrupoCliente.listarGrupos(ligacao, dados.getUtilizadorLogado().getEmail());
+                        break;
+
+                    case "sair_grupo":
+                        System.out.println("Envia Sair do Grupo:");
+                        System.out.print("Nome do grupo do qual deseja sair: ");
+                        grupo = scanner.nextLine();
+                        ControladorGrupoCliente.sairGrupo(ligacao, grupo, dados.getUtilizadorLogado().getEmail());
                         break;
 
                     default:
@@ -238,11 +246,14 @@ public class ControladorPrincipal {
                     {
                         System.out.println("ELIMINAR GRUPOS");
                         enviaMensagem("elimina_grupo");
+                        recebeMensagem();
                         break;
                     }
                     case 6: //SAIR DE UM GRUPO
                     {
                         System.out.println("SAIR DE UM GRUPO");
+                        enviaMensagem("sair_grupo");
+                        recebeMensagem();
                         break;
                     }
                     case 7: //VER GASTO TOTAL DE UM GRUPO

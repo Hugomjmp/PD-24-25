@@ -44,8 +44,20 @@ public class ControladorGrupoServidor {
             return resultado;
         } catch (Exception e) {
             System.err.println("Erro ao eliminar grupo: " + e.getMessage());
-            return Estados.ERRO_GRUPO; // Retorna erro em caso de exceção
+            return Estados.ERRO_GRUPO;
         }
+    }
+
+    public static Estados sairGrupo(String grupoNome, String emailUsuario) {
+
+        Estados estado = Bd.sairDoGrupoDB(grupoNome, emailUsuario);
+
+        if (estado == Estados.USER_REMOVIDO_COM_SUCESSO) {
+            System.out.println("Utilizador removido do grupo com sucesso.");
+        } else {
+            System.out.println("Erro ao remover o usuário do grupo.");
+        }
+        return estado;
     }
 
     public static List<String> listarGrupos(ListarGrupo listarGrupo) {

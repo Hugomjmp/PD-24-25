@@ -8,8 +8,6 @@ public class Registo implements Serializable {
     private String nome;
     private int nTelefone;
 
-
-
     public Registo(String email,String password, int nTelefone, String nome){
         this.email = email;
         this.nome = nome;
