@@ -100,7 +100,7 @@ public class ControladorPrincipal {
 
 
                 }
-                case GRUPO_LISTADO_COM_SUCESSO -> {
+                case GRUPO_LISTADO_COM_SUCESSO -> { //tratar deste warnig depois
                     List<String> grupos = (List<String>) resposta.getConteudo();
 
                     if (grupos != null && !grupos.isEmpty()) {
