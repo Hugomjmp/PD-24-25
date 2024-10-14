@@ -45,6 +45,13 @@ public class ControladorMensagemServidor {
                 break;
                 //Estados estado =
             }
+            case USER_INSERIDO_NO_GRUPO:
+            {
+                System.out.println(mensagem);
+                Estados estado = ControladorGrupoServidor.insereGrupo((InsereGrupo) mensagem.getConteudo());
+                resposta = new RespostaServidorMensagem(estado,estado.getDados());
+                break;
+            }
 
             case USER_LISTA_GRUPOS: {
                 System.out.println("A Listar grupos...");

@@ -62,6 +62,7 @@ public class ControladorPrincipal {
                         System.out.print("Nome do grupo:");
                         grupo = scanner.nextLine();
                         ControladorGrupoCliente.criaGrupo(ligacao, grupo, dados.getUtilizadorLogado().getEmail());
+                        ControladorGrupoCliente.insereGrupo(ligacao,grupo,dados.getUtilizadorLogado().getEmail());
                         break;
 
                     case "elimina_grupo":

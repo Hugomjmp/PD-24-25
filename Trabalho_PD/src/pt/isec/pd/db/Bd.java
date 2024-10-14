@@ -67,7 +67,57 @@ public class Bd {
 
         return Estados.GRUPO_REGISTADO_COM_SUCESSO;
     }
+    public static Estados integraGrupo(String grupoNome, String email){
 
+        //User user = null;
+        String userID = null;
+        String grupoID = null;
+        try {
+            Statement stmt = conn.createStatement();
+            ResultSet rs = stmt.executeQuery("SELECT * FROM USERS WHERE EMAIL='" +
+                    email + "'");
+            if(rs.next()){
+                userID = rs.getString("ID");
+            }
+
+            try {
+                //Statement stmt = conn.createStatement();
+                ResultSet rs2 = stmt.executeQuery("SELECT * FROM GRUPO WHERE NOME='" +
+                        grupoNome + "'");
+                if(rs.next()){
+                    grupoID = rs2.getString("ID");
+                }
+            } catch (SQLException e) {
+                System.out.println("O Utilizador não existe!");
+                /*user.setEstado(false);*/
+                /*return user;*/
+            }
+
+            try{
+                //Statement stmt = conn.createStatement();
+
+                stmt.executeUpdate("INSERT INTO INTEGRA (USER_ID, GROUP_ID)" +
+                        " VALUES ('" +
+                        userID + "','" +
+                        grupoID +
+                        "')");
+                versaoUpdate();
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+            rs.close();
+            stmt.close();
+        } catch (SQLException e) {
+            System.out.println("O Utilizador não existe!");
+            /*user.setEstado(false);*/
+            /*return user;*/
+        }
+        return Estados.GRUPO_NAO_ENCONTRADO;
+    }
+
+
+
+//Não esquecer que para eliminar o grupo, primeiro tem de se verificar se há dividas por salvar
     public static Estados eliminarGrupoDB(String grupoNome, String eliminadoPor) {
         String sql = "DELETE FROM GRUPO WHERE NOME = ?";
 

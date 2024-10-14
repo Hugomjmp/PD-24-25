@@ -8,7 +8,7 @@ public enum Estados {
     USER_REGISTADO_COM_SUCESSO("Utilizador registado com sucesso"),
 
     GRUPO_REGISTADO_COM_SUCESSO("Grupo registado com sucesso"),
-
+    GRUPO_USER_INSERIDO_COM_SUCESSO("Utilizador Inserido com Sucesso"),
     GRUPO_LISTADO_COM_SUCESSO("Grupo Listado com sucesso"),
 
     GRUPO_ELIMINADO_COM_SUCESSO("Grupo Eliminado com sucesso"),

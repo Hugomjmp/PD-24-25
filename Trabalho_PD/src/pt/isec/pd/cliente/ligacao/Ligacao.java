@@ -47,24 +47,6 @@ public class Ligacao {
         return socket;
     }
 
-
-    //método que recebe o socket e a serialização do conteudo da mensagem
-    //rever isto, porque não estou a fazer a parte da serealizaçao
-    //ver bem isto depois..
-/*    public Mensagem recebeMensagem(Socket socket){
-
-        try{
-            ObjectInputStream in;
-            in = new ObjectInputStream(socket.getInputStream());
-
-            return (Mensagem) in.readObject();
-
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        } catch (ClassNotFoundException e) {
-            throw new RuntimeException(e);
-        }
-    }*/
     public RespostaServidorMensagem recebeMensagem(){
 
         try{

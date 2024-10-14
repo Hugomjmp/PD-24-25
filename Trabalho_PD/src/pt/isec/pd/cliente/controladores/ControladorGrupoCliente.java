@@ -5,12 +5,19 @@ import pt.isec.pd.comum.enumeracoes.Tipomensagemenum;
 import pt.isec.pd.comum.modelos.Mensagem;
 import pt.isec.pd.comum.modelos.mensagens.CriaGrupo;
 import pt.isec.pd.comum.modelos.mensagens.EliminaGrupo;
+import pt.isec.pd.comum.modelos.mensagens.InsereGrupo;
 import pt.isec.pd.comum.modelos.mensagens.ListarGrupo;
 
 public class ControladorGrupoCliente {
     public static void criaGrupo(Ligacao ligacao, String nomeGrupo , String nomeUser){
         CriaGrupo criaGrupo = new CriaGrupo(nomeGrupo, nomeUser);
         Mensagem mensagem = new Mensagem(Tipomensagemenum.USER_CRIA_GRUPO, criaGrupo);
+        ligacao.enviaMensagem(mensagem);
+        System.out.println(mensagem);
+    }
+    public static void insereGrupo(Ligacao ligacao, String nomeGrupo, String Email){
+        InsereGrupo insereGrupo = new InsereGrupo(Email, nomeGrupo);
+        Mensagem mensagem = new Mensagem(Tipomensagemenum.USER_INSERIDO_NO_GRUPO,insereGrupo);
         ligacao.enviaMensagem(mensagem);
         System.out.println(mensagem);
     }

@@ -4,6 +4,7 @@ import pt.isec.pd.comum.enumeracoes.Estados;
 
 import pt.isec.pd.comum.modelos.mensagens.CriaGrupo;
 import pt.isec.pd.comum.modelos.mensagens.EliminaGrupo;
+import pt.isec.pd.comum.modelos.mensagens.InsereGrupo;
 import pt.isec.pd.comum.modelos.mensagens.ListarGrupo;
 import pt.isec.pd.db.Bd;
 
@@ -22,6 +23,17 @@ public class ControladorGrupoServidor {
             throw new RuntimeException(e);
         }
         return grupoRegisto == null ? Estados.ERRO_GRUPO : Estados.GRUPO_REGISTADO_COM_SUCESSO;
+
+
+    }
+    public static Estados insereGrupo(InsereGrupo insereGrupo) {
+        Serializable insertGroup = null;
+        try {
+            insertGroup = Bd.integraGrupo(insereGrupo.getNomeGrupo(),insereGrupo.getEmail());
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+        return insertGroup == null ? Estados.ERRO_GRUPO : Estados.GRUPO_USER_INSERIDO_COM_SUCESSO;
 
 
     }
