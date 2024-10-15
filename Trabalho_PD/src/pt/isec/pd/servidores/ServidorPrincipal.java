@@ -67,26 +67,8 @@ public class ServidorPrincipal {
         mostraServidorDados(serverPort,args[0]);
 
 
-        //--------------------ISTO JÁ NÃO É NECESSÁRIO----------------
-        //Login login = new Login("a21220079@isec.pt","1234");
-        //ControladorAutenticacao.login(login); //controlador do sistema de autenticação
-        //Registo registo = new Registo("batatas@gmail.com","batatas-fritas",124321021,"Batatas Friend");
-        //ControladorAutenticacao.registo(registo); //controlador do sistema de autenticação
-        //EditaConta edita = new EditaConta("batatas@gmail.com", "nopotatoes4u",null);
-        //ControladorAutenticacao.edita(edita); //controlador do sistema de autenticação
-        //Bd.getUserDB("'a21220079@isec.pt'", "1234"); //test
-        //Bd.setUserDB("Maria Jaquelina", 159753123,"maria@jaque.com", "jaquelina2");
-        //Bd.ligaBD(args[1]);
-        //Bd.editaUserBD(123459876,"maria@jaque.com", "jaquelina2");    //test edita db
-        //Bd.editaUserBD(1234,"maria@jaque.com", null);                 //test edita db
-        //Bd.editaUserBD(null,"maria@jaque.com", "jaquelina5");         //test edita db
-        //Bd.editaUserBD(999999999,"maria@jaque.com", "omgisjaquelina");//test edita db
-        //--------------------------------------------------------------
 
-        /*Ligacao lig = new Ligacao();*/
         int i = 0;
-
-
         try {
             socketServidor = new ServerSocket(serverPort); //cria o socket para o servidor
             System.out.println("O Servidor Principal foi inciado com sucesso!");

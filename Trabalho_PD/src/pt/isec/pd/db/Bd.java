@@ -116,7 +116,9 @@ public class Bd {
         }
         return Estados.GRUPO_NAO_ENCONTRADO;
     }
-
+    //HUGO confirmar isto depois
+    //Não esquecer que ainda falta verificar se o utilizador em questoã es tem dívidas
+    //Consultar enunciado!!!
     public static Estados sairDoGrupoDB(String grupoNome, String emailUsuario) {
         String sqlDelete = "DELETE FROM INTEGRA WHERE GROUP_ID = (SELECT ID FROM GRUPO WHERE NOME = ?) " +
                 "AND USER_ID = (SELECT ID FROM USERS WHERE EMAIL = ?)";

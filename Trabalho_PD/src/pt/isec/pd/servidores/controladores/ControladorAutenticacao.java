@@ -21,7 +21,6 @@ public class ControladorAutenticacao {
         }
         return userRegisto == null ? Estados.ERRO_REGISTO : Estados.USER_REGISTADO_COM_SUCESSO.setDados(userRegisto);
 
-
     }
     public static Estados login(Login login){
         Serializable userLogin = null;
