@@ -233,6 +233,7 @@ public class Bd {
         }
     }
 
+    //fixed
     public static Grupos listarGruposDB(String solicitadoPor) {
         List<Grupos> grupoList = new ArrayList<>();
         Grupos grupos = null;
