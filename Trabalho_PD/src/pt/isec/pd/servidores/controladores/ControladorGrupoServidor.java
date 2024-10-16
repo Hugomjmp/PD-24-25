@@ -57,14 +57,16 @@ public class ControladorGrupoServidor {
         return estado;
     }
 
-    public static List<String> listarGrupos(ListarGrupo listarGrupo) {
-        List<String> grupos = new ArrayList<>();
+    public static /*List<String>*/ Estados listarGrupos(ListarGrupo listarGrupo) {
+        //List<String> grupos = new ArrayList<>();
+        Serializable grupo = null;
         try {
-            grupos = Bd.listarGruposDB(listarGrupo.getSolicitadoPor());
+            //grupos = Bd.listarGruposDB(listarGrupo.getSolicitadoPor());
+            grupo = Bd.listarGruposDB(listarGrupo.getSolicitadoPor());
         } catch (Exception e) {
             System.err.println("Erro ao listar grupos: " + e.getMessage());
         }
-        return grupos;
+        return grupo == null ? Estados.ERRO_SEM_GRUPOS : Estados.GRUPO_LISTADO_COM_SUCESSO.setDados(grupo);
     }
 
     public static Estados criaConvite(CriaConvite criaConvite){

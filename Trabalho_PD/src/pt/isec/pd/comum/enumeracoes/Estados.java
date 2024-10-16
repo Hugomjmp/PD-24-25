@@ -26,7 +26,7 @@ public enum Estados {
     ERRO_AUTENTICACAO("O Utilizador não existe"),
     ERRO_REGISTO("O Utilizador já existe"),
     ERRO_GRUPO_NAO_ENCONTRADO("Grupo nao existe"),
-
+    ERRO_SEM_GRUPOS("Não está em nenhum grupo"),
     ERRO_GRUPO("Grupo já existe"),
     ERRO_CRIA_CONVITE("Convite já existente"),
     ERRO_VER_CONVITES("Sem convites")

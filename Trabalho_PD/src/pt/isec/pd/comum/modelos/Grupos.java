@@ -1,9 +1,10 @@
 package pt.isec.pd.comum.modelos;
 
 import javax.swing.plaf.basic.BasicDesktopIconUI;
+import java.io.Serializable;
 import java.util.List;
 
-public class Grupos {
+public class Grupos implements Serializable {
     private String nomeGrupo;
     private String criadoPor;
     private List<Grupos> gruposList;
@@ -19,11 +20,7 @@ public class Grupos {
         this.gruposList = gruposList;
     }
 
-    public Grupos(String nomeGrupo, String criadoPor ){ // String eliminadoPor
-        this.criadoPor = criadoPor;
-        this.nomeGrupo = nomeGrupo;
-        //this.eliminadoPor = eliminadoPor;
-    }
+
     public String getCriadoPor() {
         return criadoPor;
     }

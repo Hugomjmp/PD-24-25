@@ -5,6 +5,7 @@ import pt.isec.pd.cliente.modelos.Dados;
 import pt.isec.pd.cliente.vistas.Vista;
 import pt.isec.pd.comum.enumeracoes.Estados;
 import pt.isec.pd.comum.modelos.Convites;
+import pt.isec.pd.comum.modelos.Grupos;
 import pt.isec.pd.comum.modelos.RespostaServidorMensagem;
 import pt.isec.pd.comum.modelos.User;
 import pt.isec.pd.comum.modelos.mensagens.VerConvites;
@@ -130,20 +131,12 @@ public class ControladorPrincipal {
                 }
                 case VER_CONVITES_COM_SUCESSO -> {
                     Convites convites = (Convites) resposta.getConteudo();
-
                     Vista.tabelaConvites(convites);
+                    return resposta.getEstado();
                 }
                 case GRUPO_LISTADO_COM_SUCESSO -> { //tratar deste warnig depois
-                    List<String> grupos = (List<String>) resposta.getConteudo();
-
-                    if (grupos != null && !grupos.isEmpty()) {
-                        System.out.println("Grupos disponíveis:");
-                        for (String grupo : grupos) {
-                            System.out.println("- " + grupo);
-                        }
-                    } else {
-                        System.out.println("Nenhum grupo disponível.");
-                    }
+                    Grupos grupos = (Grupos) resposta.getConteudo();
+                    Vista.tabelaGrupos(grupos);
                     return resposta.getEstado();
                 }
             }

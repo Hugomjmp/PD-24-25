@@ -2,6 +2,7 @@ package pt.isec.pd.db;
 
 import pt.isec.pd.comum.enumeracoes.Estados;
 import pt.isec.pd.comum.modelos.Convites;
+import pt.isec.pd.comum.modelos.Grupos;
 import pt.isec.pd.comum.modelos.RespostaServidorMensagem;
 import pt.isec.pd.comum.modelos.User;
 
@@ -186,8 +187,6 @@ public class Bd {
         //return Estados.ERRO_VER_CONVITES;
         return convite;
     }
-
-
     //HUGO confirmar isto depois
     //Não esquecer que ainda falta verificar se o utilizador em questoã es tem dívidas
     //Consultar enunciado!!!
@@ -234,23 +233,27 @@ public class Bd {
         }
     }
 
-    public static List<String> listarGruposDB(String solicitadoPor) {
-        List<String> grupos = new ArrayList<>();
-
-        String sql = "SELECT NOME FROM GRUPO";
-
+    public static Grupos listarGruposDB(String solicitadoPor) {
+        List<Grupos> grupoList = new ArrayList<>();
+        Grupos grupos = null;
+        String sql = "SELECT g.NOME " +
+                    "FROM GRUPO g " +
+                    "JOIN INTEGRA i ON g.ID = i.GROUP_ID " +
+                    "JOIN USERS u ON i.USER_ID = u.ID " +
+                    "WHERE u.EMAIL = '" + solicitadoPor + "'";
         try (Statement stmt = conn.createStatement();
              ResultSet rs = stmt.executeQuery(sql)) {
-
-
             while (rs.next()) {
                 String nomeGrupo = rs.getString("NOME");
-                grupos.add(nomeGrupo);
+                grupos = new Grupos();
+                grupos.setNomeGrupo(nomeGrupo);
+                grupoList.add(grupos);
+                grupos.setGruposList(grupoList);
+                //grupoList.add(nomeGrupo);
             }
-
         } catch (SQLException e) {
             System.err.println("Erro ao listar grupos: " + e.getMessage());
-            return null;
+            //return null;
         }
 
         return grupos;

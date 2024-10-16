@@ -55,13 +55,13 @@ public class ControladorMensagemServidor {
 
             case USER_LISTA_GRUPOS: {
                 System.out.println("A Listar grupos...");
-                List<String> grupos = ControladorGrupoServidor.listarGrupos((ListarGrupo) mensagem.getConteudo());
+                Estados estado = ControladorGrupoServidor.listarGrupos((ListarGrupo) mensagem.getConteudo());
+                resposta = new RespostaServidorMensagem(estado, estado.getDados());
 
-
-                if (grupos != null && !grupos.isEmpty()) {
+                /*if (grupos != null && !grupos.isEmpty()) {
                     System.out.println("Rumo 1");
                     resposta = new RespostaListagemGrupos(Estados.GRUPO_LISTADO_COM_SUCESSO, grupos);
-                }
+                }*/
                 break;
             }
             case USER_SAI_GRUPO: {

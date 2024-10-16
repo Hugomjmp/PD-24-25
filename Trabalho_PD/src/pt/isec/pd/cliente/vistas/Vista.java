@@ -2,6 +2,7 @@ package pt.isec.pd.cliente.vistas;
 
 import pt.isec.pd.cliente.controladores.ControladorPrincipal;
 import pt.isec.pd.comum.modelos.Convites;
+import pt.isec.pd.comum.modelos.Grupos;
 
 import java.util.Scanner;
 
@@ -106,6 +107,53 @@ public class Vista {
             System.out.println("+");
 
         }
+
+    }
+    public static void tabelaGrupos(Grupos grupo){
+        int tamanhoNome = 0;
+        int tamanhoTotal = 0;
+        int espacosEsquerda;
+        int espacosDireita;
+        //calcular o maior dos nomes possíveis para adaptar a tabela
+        for (Grupos grupos : grupo.getGruposList() ) {
+            tamanhoNome = Math.max(tamanhoNome,grupos.getNomeGrupo().length());;
+        }
+        tamanhoTotal = tamanhoNome + 2;
+        //linha 1
+        System.out.print("+");
+        for (int i=0;i<tamanhoTotal;i++)
+            System.out.print("-");
+        System.out.println("+");
+        //mostra título da tabela
+        System.out.print("|");
+        espacosEsquerda = (tamanhoTotal - "Grupos".length())/2;
+        for (int i = 0; i < espacosEsquerda ; i++)
+            System.out.print(" ");
+        System.out.print("Grupos");
+        espacosDireita = tamanhoTotal - 6 - espacosEsquerda;
+        for (int i = 0; i < espacosDireita ; i++)
+            System.out.print(" ");
+        System.out.println("|");
+        System.out.print("+");
+        for (int i=0;i<tamanhoTotal;i++)
+            System.out.print("-");
+        System.out.println("+");
+        //linha 2
+        System.out.print("+");
+        for (int i=0;i<tamanhoTotal;i++)
+            System.out.print("-");
+        System.out.println("+");
+
+        for (Grupos grupos : grupo.getGruposList() ) {
+            System.out.println("| "+ grupos.getNomeGrupo() +" |");
+
+            System.out.print("+");
+            for (int i=0;i<tamanhoTotal;i++)
+                System.out.print("-");
+            System.out.println("+");
+
+        }
+        System.out.print("\n");
 
     }
 
