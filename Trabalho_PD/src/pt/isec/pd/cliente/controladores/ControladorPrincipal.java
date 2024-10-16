@@ -37,6 +37,7 @@ public class ControladorPrincipal {
         String [] dadosLogin;
         String [] dadosRegisto;
         String grupo;
+        String emailDestinatario;
         Scanner scanner = new Scanner(System.in);
             if(dados.getUtilizadorLogado() == null){
                 switch (escolha){
@@ -85,6 +86,15 @@ public class ControladorPrincipal {
                         ControladorGrupoCliente.sairGrupo(ligacao, grupo, dados.getUtilizadorLogado().getEmail());
                         break;
 
+                    case "cria_convite":
+                        System.out.println("Envia Cria Convite");
+                        System.out.print("Nome do grupo:");
+                        grupo = scanner.nextLine();
+                        System.out.print("Para quem quer enviar o convite (email):");
+                        emailDestinatario = scanner.nextLine();
+                        ControladorGrupoCliente.criaConvite(ligacao,dados.getUtilizadorLogado().getEmail(),emailDestinatario,grupo);
+                        break;
+
                     default:
                         System.out.println("Opção inválida. Por favor, tente novamente.");
                         break;
@@ -105,6 +115,10 @@ public class ControladorPrincipal {
                     return resposta.getEstado();
                 }
                 case USER_REGISTADO_COM_SUCESSO -> {
+
+
+                }
+                case ERRO_CRIA_CONVITE -> {
 
 
                 }
@@ -228,6 +242,7 @@ public class ControladorPrincipal {
                     case 2: //CONVIDAR PARA GRUPO
                     {
                         System.out.println("CONVIDAR PARA GRUPO");
+                        enviaMensagem("cria_convite");
                         break;
                     }
                     case 3: //LISTAR CONVITES

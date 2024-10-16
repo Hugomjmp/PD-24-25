@@ -1,6 +1,7 @@
 package pt.isec.pd.db;
 
 import pt.isec.pd.comum.enumeracoes.Estados;
+import pt.isec.pd.comum.modelos.RespostaServidorMensagem;
 import pt.isec.pd.comum.modelos.User;
 
 import java.sql.*;
@@ -114,8 +115,57 @@ public class Bd {
             /*user.setEstado(false);*/
             /*return user;*/
         }
-        return Estados.GRUPO_NAO_ENCONTRADO;
+        return Estados.ERRO_GRUPO_NAO_ENCONTRADO;
     }
+
+    public static Estados criaConvite(String email, String groupNome, String emailDestinatario){
+        String userID;
+        String destinatarioID;
+        String grupo;
+
+        String querySelect = "SELECT * FROM CONVITES c " +
+                            "WHERE c.GROUP_ID = (SELECT ID FROM GRUPO WHERE NOME = '" + groupNome + "' " +
+                            "AND CRIADO_POR = '" + email + "') " +
+                            "AND c.USER_ID = (SELECT ID FROM USERS WHERE EMAIL = '" + email + "') " +
+                            "AND c.DESTINATARIO_ID = (SELECT ID FROM USERS WHERE EMAIL = '" + emailDestinatario + "')";
+
+        //System.out.println(querySelect);
+        String queryInsert = "INSERT INTO CONVITES (GROUP_ID, USER_ID, DESTINATARIO_ID, ESTADO) " +
+                        "SELECT g.ID, u1.ID, u2.ID, 'pendente' " +
+                        "FROM USERS u1 " +
+                        "JOIN USERS u2 ON u2.EMAIL = '" + emailDestinatario + "' " +
+                        "JOIN GRUPO g ON g.CRIADO_POR = u1.EMAIL AND g.NOME = '" + groupNome + "' " +
+                        "WHERE u1.EMAIL = '" + email + "'";
+
+
+        try{
+            Statement stmt = conn.createStatement();
+
+            ResultSet rs = stmt.executeQuery(querySelect);
+/*
+            if(rs.next()) {
+                String emailDB = rs.getString("ID");
+                String nomeDB = rs.getString("GROUP_ID");
+                String passDB = rs.getString("USER_ID");
+                String telefoneDB = rs.getString("DESTINATARIO_ID");
+                String estado = rs.getString("ESTADO");
+                System.out.println( "\nTABELA: \n" + nomeDB + "\n" + emailDB + "\n"+ passDB + "\n" + telefoneDB + "\n" + estado+"\n");
+
+            }*/
+            if (rs.next()){
+                return Estados.ERRO_CRIA_CONVITE;
+            }
+
+            stmt.executeUpdate(queryInsert);
+            versaoUpdate();
+            return  Estados.GRUPO_CONVITE_COM_SUCESSO;
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+
+
     //HUGO confirmar isto depois
     //Não esquecer que ainda falta verificar se o utilizador em questoã es tem dívidas
     //Consultar enunciado!!!
@@ -133,7 +183,7 @@ public class Bd {
                 versaoUpdate();
                 return Estados.USER_REMOVIDO_COM_SUCESSO;
             } else {
-                return Estados.GRUPO_NAO_ENCONTRADO;
+                return Estados.ERRO_GRUPO_NAO_ENCONTRADO;
             }
 
         } catch (SQLException e) {
@@ -154,7 +204,7 @@ public class Bd {
                 versaoUpdate();
                 return Estados.GRUPO_ELIMINADO_COM_SUCESSO;
             } else {
-                return Estados.GRUPO_NAO_ENCONTRADO;
+                return Estados.ERRO_GRUPO_NAO_ENCONTRADO;
             }
         } catch (SQLException e) {
             System.err.println("Erro ao eliminar grupo: " + e.getMessage());
@@ -246,7 +296,7 @@ public class Bd {
                 String nomeDB = rs.getString("NOME");
                 String passDB = rs.getString("PASSWORD");
                 String telefoneDB = rs.getString("N_TELEFONE");
-                System.out.println( "\nTABELA: \n" + nomeDB + "\n" + emailDB + "\n"+ passDB + "\n" + telefoneDB + "\n");
+                //System.out.println( "\nTABELA: \n" + nomeDB + "\n" + emailDB + "\n"+ passDB + "\n" + telefoneDB + "\n");
                 user = new User();
                 user.setNome(nomeDB);
                 user.setEmail(emailDB);

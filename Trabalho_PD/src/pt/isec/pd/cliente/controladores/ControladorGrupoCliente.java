@@ -40,7 +40,12 @@ public class ControladorGrupoCliente {
         ligacao.enviaMensagem(mensagem);
         System.out.println(mensagem);
     }
-
+    public static void criaConvite(Ligacao ligacao, String email, String emailDestinatario, String grupoNome){
+        CriaConvite criaConvite = new CriaConvite(grupoNome,email,emailDestinatario);
+        Mensagem mensagem = new Mensagem(Tipomensagemenum.USER_CRIA_CONVITE,criaConvite);
+        ligacao.enviaMensagem(mensagem);
+        //System.out.println(mensagem);
+    }
 
 
 }

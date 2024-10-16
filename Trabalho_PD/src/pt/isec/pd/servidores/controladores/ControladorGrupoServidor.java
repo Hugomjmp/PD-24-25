@@ -2,10 +2,7 @@ package pt.isec.pd.servidores.controladores;
 
 import pt.isec.pd.comum.enumeracoes.Estados;
 
-import pt.isec.pd.comum.modelos.mensagens.CriaGrupo;
-import pt.isec.pd.comum.modelos.mensagens.EliminaGrupo;
-import pt.isec.pd.comum.modelos.mensagens.InsereGrupo;
-import pt.isec.pd.comum.modelos.mensagens.ListarGrupo;
+import pt.isec.pd.comum.modelos.mensagens.*;
 import pt.isec.pd.db.Bd;
 
 import java.io.Serializable;
@@ -68,6 +65,17 @@ public class ControladorGrupoServidor {
             System.err.println("Erro ao listar grupos: " + e.getMessage());
         }
         return grupos;
+    }
+
+    public static Estados criaConvite(CriaConvite criaConvite){
+        try {
+            Estados estado = Bd.criaConvite(criaConvite.getEmail(), criaConvite.getNomeGrupo(), criaConvite.getEmailDestinatario());
+            return estado;
+        } catch (Exception e) {
+            System.err.println("Erro ao criar convite para grupo: " + e.getMessage());
+            return Estados.ERRO_CRIA_CONVITE;
+        }
+
     }
 
 
