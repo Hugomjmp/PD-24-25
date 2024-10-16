@@ -1,6 +1,7 @@
 package pt.isec.pd.db;
 
 import pt.isec.pd.comum.enumeracoes.Estados;
+import pt.isec.pd.comum.modelos.Convites;
 import pt.isec.pd.comum.modelos.RespostaServidorMensagem;
 import pt.isec.pd.comum.modelos.User;
 
@@ -142,16 +143,7 @@ public class Bd {
             Statement stmt = conn.createStatement();
 
             ResultSet rs = stmt.executeQuery(querySelect);
-/*
-            if(rs.next()) {
-                String emailDB = rs.getString("ID");
-                String nomeDB = rs.getString("GROUP_ID");
-                String passDB = rs.getString("USER_ID");
-                String telefoneDB = rs.getString("DESTINATARIO_ID");
-                String estado = rs.getString("ESTADO");
-                System.out.println( "\nTABELA: \n" + nomeDB + "\n" + emailDB + "\n"+ passDB + "\n" + telefoneDB + "\n" + estado+"\n");
 
-            }*/
             if (rs.next()){
                 return Estados.ERRO_CRIA_CONVITE;
             }
@@ -163,7 +155,35 @@ public class Bd {
             throw new RuntimeException(e);
         }
     }
+    public static Convites getConvites(String emailRecipiente){
+        Convites convite = null;
+        String querySelect ="SELECT g.NOME AS NOMEGRUPO, u1.NOME AS NOMEREMETENTE, " +
+                            "c.ESTADO AS ESTADO FROM CONVITES c " +
+                            "JOIN GRUPO g ON c.GROUP_ID = g.ID " +
+                            "JOIN USERS u1 ON c.USER_ID = u1.ID " +
+                            "JOIN USERS u2 ON c.DESTINATARIO_ID = u2.ID " +
+                            "WHERE u2.EMAIL = '" + emailRecipiente + "'";
+        try {
+            Statement stmt = conn.createStatement();
+            ResultSet rs = stmt.executeQuery(querySelect);
+            if(rs.next()){
+                String nomeRemetenteDB = rs.getString("NOMEREMETENTE");
+                String nomeGrupoDB = rs.getString("NOMEGRUPO");
+                String estado = rs.getString("ESTADO");
+                System.out.println("\n" + nomeRemetenteDB + "\n" + nomeGrupoDB + "\n" + estado + "\n");
+                convite = new Convites();
 
+                convite.setEstado(estado);
+                convite.setGrupoNome(nomeGrupoDB);
+                convite.setNomeRecepiente(nomeRemetenteDB);
+                return convite;
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        //return Estados.ERRO_VER_CONVITES;
+        return convite;
+    }
 
 
     //HUGO confirmar isto depois
@@ -233,8 +253,6 @@ public class Bd {
 
         return grupos;
     }
-
-
 
     public static Estados setUserDB(String nome, int nTelefone, String Email, String password){
         try{

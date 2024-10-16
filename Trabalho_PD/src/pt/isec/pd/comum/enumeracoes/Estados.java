@@ -15,7 +15,7 @@ public enum Estados {
     GRUPO_LISTADO_COM_SUCESSO("Grupo Listado com sucesso"),
     GRUPO_ELIMINADO_COM_SUCESSO("Grupo Eliminado com sucesso"),
     GRUPO_CONVITE_COM_SUCESSO("Convite creado com sucesso"),
-
+    VER_CONVITES_COM_SUCESSO("Convites encontrados"),
 
 
 
@@ -26,7 +26,8 @@ public enum Estados {
     ERRO_GRUPO_NAO_ENCONTRADO("Grupo nao existe"),
 
     ERRO_GRUPO("Grupo já existe"),
-    ERRO_CRIA_CONVITE("Convite já existente")
+    ERRO_CRIA_CONVITE("Convite já existente"),
+    ERRO_VER_CONVITES("Sem convites")
     ;
 
     String mensagem;

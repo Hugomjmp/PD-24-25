@@ -77,6 +77,19 @@ public class ControladorGrupoServidor {
         }
 
     }
+    public static Estados verConvite(VerConvites verConvites){
+        Serializable convites = null;
+        try {
+
+            //Estados estado = Bd.getConvites(verConvites.getNomeRecepiente());
+            convites = Bd.getConvites(verConvites.getNomeRecepiente());
+                   // return estado;
+        } catch (Exception e) {
+            System.err.println("Erro ao criar convite para grupo: " + e.getMessage());
+            //return Estados.ERRO_VER_CONVITES;
+        }
+        return convites == null ? Estados.ERRO_VER_CONVITES : Estados.VER_CONVITES_COM_SUCESSO.setDados(convites);
+    }
 
 
 

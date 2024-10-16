@@ -86,14 +86,21 @@ public class ControladorMensagemServidor {
                 resposta = new RespostaServidorMensagem(estado, estado.getDados());
                 break;
             }
-            case USER_CRIA_CONVITE:
+            case USER_CRIA_CONVITE: {
                 System.out.println("cria convite...");
                 System.out.println(mensagem);
                 Estados estado = ControladorGrupoServidor.criaConvite((CriaConvite) mensagem.getConteudo());
 
-                resposta = new RespostaServidorMensagem(estado,null);
+                resposta = new RespostaServidorMensagem(estado, null);
 
                 break;
+            }
+            case USER_LISTA_CONVITES: {
+
+                Estados estado = ControladorGrupoServidor.verConvite((VerConvites) mensagem.getConteudo());
+                resposta = new RespostaServidorMensagem(estado, estado.getDados());
+                break;
+            }
 
         }
         return resposta;

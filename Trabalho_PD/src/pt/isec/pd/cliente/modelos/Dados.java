@@ -1,11 +1,13 @@
 package pt.isec.pd.cliente.modelos;
 
+import pt.isec.pd.comum.modelos.Convites;
 import pt.isec.pd.comum.modelos.User;
 import java.util.List;
 
 
 public class Dados {
     private User utilizadorLogado;
+    private Convites convites;
     List<User> utilizadores;
 
     public Dados(){
@@ -25,6 +27,11 @@ public class Dados {
     public void setUtilizadores(List<User> conteudo){
         this.utilizadores = conteudo;
     }
+
+    public Convites getConvites(){
+        return convites;
+    }
+
 
 
 

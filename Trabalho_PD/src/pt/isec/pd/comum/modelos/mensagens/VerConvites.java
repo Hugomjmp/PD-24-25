@@ -1,13 +1,16 @@
-package pt.isec.pd.comum.modelos;
+package pt.isec.pd.comum.modelos.mensagens;
 
 import java.io.Serializable;
 
-public class Convites implements Serializable {
+public class VerConvites implements Serializable {
+
     private String nomeRecepiente;
     private String grupoNome;
     private String estado;
 
-
+    public VerConvites(String nomeRecepiente) {
+        this.nomeRecepiente = nomeRecepiente;
+    }
 
     public String getNomeRecepiente() {
         return nomeRecepiente;
@@ -41,4 +44,5 @@ public class Convites implements Serializable {
                 ", estado='" + estado + '\'' +
                 '}';
     }
+
 }

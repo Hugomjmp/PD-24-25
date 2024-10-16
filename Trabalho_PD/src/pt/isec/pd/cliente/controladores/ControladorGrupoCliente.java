@@ -47,5 +47,12 @@ public class ControladorGrupoCliente {
         //System.out.println(mensagem);
     }
 
+    public static void verConvites(Ligacao ligacao, String emailRecebe){
+        VerConvites verConvites = new VerConvites(emailRecebe);
+        Mensagem mensagem = new Mensagem(Tipomensagemenum.USER_LISTA_CONVITES,verConvites);
+        ligacao.enviaMensagem(mensagem);
+        //System.out.println(mensagem);
+    }
+
 
 }

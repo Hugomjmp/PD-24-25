@@ -4,8 +4,10 @@ import pt.isec.pd.cliente.ligacao.Ligacao;
 import pt.isec.pd.cliente.modelos.Dados;
 import pt.isec.pd.cliente.vistas.Vista;
 import pt.isec.pd.comum.enumeracoes.Estados;
+import pt.isec.pd.comum.modelos.Convites;
 import pt.isec.pd.comum.modelos.RespostaServidorMensagem;
 import pt.isec.pd.comum.modelos.User;
+import pt.isec.pd.comum.modelos.mensagens.VerConvites;
 
 import java.util.List;
 import java.util.Scanner;
@@ -94,7 +96,11 @@ public class ControladorPrincipal {
                         emailDestinatario = scanner.nextLine();
                         ControladorGrupoCliente.criaConvite(ligacao,dados.getUtilizadorLogado().getEmail(),emailDestinatario,grupo);
                         break;
-
+                    case "ver_convites":
+                        System.out.println("Ver Convites");
+                        ControladorGrupoCliente.verConvites(ligacao,dados.getUtilizadorLogado().getEmail());
+                        recebeMensagem();
+                        break;
                     default:
                         System.out.println("Opção inválida. Por favor, tente novamente.");
                         break;
@@ -121,6 +127,10 @@ public class ControladorPrincipal {
                 case ERRO_CRIA_CONVITE -> {
 
 
+                }
+                case VER_CONVITES_COM_SUCESSO -> {
+                    Convites convites = (Convites) resposta.getConteudo();
+                    Vista.tabelaConvites(convites.getNomeRecepiente(),convites.getGrupoNome(),convites.getEstado());
                 }
                 case GRUPO_LISTADO_COM_SUCESSO -> { //tratar deste warnig depois
                     List<String> grupos = (List<String>) resposta.getConteudo();
@@ -248,6 +258,7 @@ public class ControladorPrincipal {
                     case 3: //LISTAR CONVITES
                     {
                         System.out.println("LISTAR CONVITES");
+                        enviaMensagem("ver_convites");
                         break;
                     }
                     case 4: // LISTAR GRUPOS

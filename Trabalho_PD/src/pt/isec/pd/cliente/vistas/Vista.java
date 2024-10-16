@@ -5,14 +5,6 @@ import pt.isec.pd.cliente.controladores.ControladorPrincipal;
 import java.util.Scanner;
 
 public class Vista {
-/*    ControladorPrincipal controladorPrincipal;
-
-    public Vista(ControladorPrincipal controladorPrincipal){
-        this.controladorPrincipal = controladorPrincipal;
-    }*/
-
-
-
     public static String menuPrincipal(){
         Scanner entrada = new Scanner(System.in);
         while (true) {
@@ -64,6 +56,12 @@ public class Vista {
                 System.out.println("OPÇÃO INVÁLIDA!");
             }
         }
+    }
+    public static void tabelaConvites(String nome, String nomeGrupo, String estado){
+        System.out.println("+------------------------------------------+");
+        System.out.println("|                   Convites               |");
+        System.out.println("+------------------------------------------+");
+        System.out.println("| "+ nome + "| "+ nomeGrupo +" |" +  estado +"    |");
     }
 
 }
