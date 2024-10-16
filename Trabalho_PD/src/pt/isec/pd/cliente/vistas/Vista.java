@@ -1,6 +1,7 @@
 package pt.isec.pd.cliente.vistas;
 
 import pt.isec.pd.cliente.controladores.ControladorPrincipal;
+import pt.isec.pd.comum.modelos.Convites;
 
 import java.util.Scanner;
 
@@ -57,11 +58,55 @@ public class Vista {
             }
         }
     }
-    public static void tabelaConvites(String nome, String nomeGrupo, String estado){
-        System.out.println("+------------------------------------------+");
-        System.out.println("|                   Convites               |");
-        System.out.println("+------------------------------------------+");
-        System.out.println("| "+ nome + "| "+ nomeGrupo +" |" +  estado +"    |");
+    public static void tabelaConvites(Convites convites){
+        int tamanhoNome = 0;
+        int tamanhoNomeGrupo = 0;
+        int tamanhoEstado = 0;
+        int tamanhoTotal = 0;
+        int espacosEsquerda;
+        int espacosDireita;
+        //calcular o maior dos nomes possíveis para adaptar a tabela
+        for (Convites convite : convites.getConvitesLista() ) {
+            tamanhoNome = Math.max(tamanhoNome,convite.getnomeRemetente().length());
+            tamanhoNomeGrupo = Math.max(tamanhoNomeGrupo,convite.getGrupoNome().length());
+            tamanhoEstado = Math.max(tamanhoEstado,convite.getEstado().length());
+        }
+        tamanhoTotal = tamanhoNome + tamanhoNomeGrupo + tamanhoEstado + 8;
+        //linha 1
+        System.out.print("+");
+        for (int i=0;i<tamanhoTotal;i++)
+            System.out.print("-");
+        System.out.println("+");
+        //mostra título da tabela
+        System.out.print("|");
+        espacosEsquerda = (tamanhoTotal - "Convites".length())/2;
+        for (int i = 0; i < espacosEsquerda ; i++)
+            System.out.print(" ");
+        System.out.print("Convites");
+        espacosDireita = tamanhoTotal - 8 - espacosEsquerda;
+        for (int i = 0; i < espacosDireita ; i++)
+            System.out.print(" ");
+        System.out.println("|");
+        System.out.print("+");
+        for (int i=0;i<tamanhoTotal;i++)
+            System.out.print("-");
+        System.out.println("+");
+        //linha 2
+        System.out.print("+");
+        for (int i=0;i<tamanhoTotal;i++)
+            System.out.print("-");
+        System.out.println("+");
+
+        for (Convites convite : convites.getConvitesLista() ) {
+        System.out.println("| "+ convite.getnomeRemetente() + " | "+ convite.getGrupoNome() +" | " +  convite.getEstado() +" |");
+
+            System.out.print("+");
+            for (int i=0;i<tamanhoTotal;i++)
+                System.out.print("-");
+            System.out.println("+");
+
+        }
+
     }
 
 }

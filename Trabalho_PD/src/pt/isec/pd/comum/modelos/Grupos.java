@@ -3,14 +3,23 @@ package pt.isec.pd.comum.modelos;
 import javax.swing.plaf.basic.BasicDesktopIconUI;
 import java.util.List;
 
-public class Grupo {
+public class Grupos {
     private String nomeGrupo;
     private String criadoPor;
-    private List<User> membros;
+    private List<Grupos> gruposList;
+
 
     //private String eliminadoPor;
 
-    public Grupo(String nomeGrupo, String criadoPor ){ // String eliminadoPor
+    public List<Grupos> getGruposList() {
+        return gruposList;
+    }
+
+    public void setGruposList(List<Grupos> gruposList) {
+        this.gruposList = gruposList;
+    }
+
+    public Grupos(String nomeGrupo, String criadoPor ){ // String eliminadoPor
         this.criadoPor = criadoPor;
         this.nomeGrupo = nomeGrupo;
         //this.eliminadoPor = eliminadoPor;

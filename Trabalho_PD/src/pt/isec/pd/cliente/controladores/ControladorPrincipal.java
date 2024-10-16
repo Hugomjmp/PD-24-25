@@ -130,7 +130,8 @@ public class ControladorPrincipal {
                 }
                 case VER_CONVITES_COM_SUCESSO -> {
                     Convites convites = (Convites) resposta.getConteudo();
-                    Vista.tabelaConvites(convites.getNomeRecepiente(),convites.getGrupoNome(),convites.getEstado());
+
+                    Vista.tabelaConvites(convites);
                 }
                 case GRUPO_LISTADO_COM_SUCESSO -> { //tratar deste warnig depois
                     List<String> grupos = (List<String>) resposta.getConteudo();

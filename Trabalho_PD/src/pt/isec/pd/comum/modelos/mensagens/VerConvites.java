@@ -1,6 +1,9 @@
 package pt.isec.pd.comum.modelos.mensagens;
 
+import pt.isec.pd.comum.modelos.Convites;
+
 import java.io.Serializable;
+import java.util.List;
 
 public class VerConvites implements Serializable {
 

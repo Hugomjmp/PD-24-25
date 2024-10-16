@@ -1,5 +1,7 @@
 package pt.isec.pd.comum.enumeracoes;
 
+import pt.isec.pd.comum.modelos.Convites;
+
 import java.io.Serializable;
 
 public enum Estados {
@@ -51,4 +53,5 @@ public enum Estados {
         this.dados = dados;
         return this;
     }
+
 }

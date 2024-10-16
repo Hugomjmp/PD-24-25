@@ -156,6 +156,7 @@ public class Bd {
         }
     }
     public static Convites getConvites(String emailRecipiente){
+        List<Convites> convitesLista = new ArrayList<>();
         Convites convite = null;
         String querySelect ="SELECT g.NOME AS NOMEGRUPO, u1.NOME AS NOMEREMETENTE, " +
                             "c.ESTADO AS ESTADO FROM CONVITES c " +
@@ -166,7 +167,7 @@ public class Bd {
         try {
             Statement stmt = conn.createStatement();
             ResultSet rs = stmt.executeQuery(querySelect);
-            if(rs.next()){
+            while(rs.next()){
                 String nomeRemetenteDB = rs.getString("NOMEREMETENTE");
                 String nomeGrupoDB = rs.getString("NOMEGRUPO");
                 String estado = rs.getString("ESTADO");
@@ -175,8 +176,9 @@ public class Bd {
 
                 convite.setEstado(estado);
                 convite.setGrupoNome(nomeGrupoDB);
-                convite.setNomeRecepiente(nomeRemetenteDB);
-                return convite;
+                convite.setnomeRemetente(nomeRemetenteDB);
+                convitesLista.add(convite);
+                convite.setConvitesLista(convitesLista);
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);
