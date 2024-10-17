@@ -34,8 +34,15 @@ public class ControladorAutenticacao {
         //System.out.println(userLogin);
 
     }
-    public static void edita(EditaConta edita){
-        System.out.println(edita.getEmail() + edita.getPassword() + edita.getnTelefone());
-        Bd.editaUserBD(edita.getnTelefone(),edita.getEmail(),edita.getPassword());
+    public static Estados edita(EditaConta edita){
+        Serializable userEdita = null;
+        //System.out.println(edita.getEmail() + edita.getPassword() + edita.getnTelefone());
+        try {
+            userEdita = Bd.editaUserBD(edita.getnTelefone(),edita.getEmail(),edita.getPassword());
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+        return userEdita == null ? Estados.ERRO_EDITAR_USER : Estados.USER_MODIFICADO_COM_SUCESSO.setDados(userEdita);
+
     }
 }

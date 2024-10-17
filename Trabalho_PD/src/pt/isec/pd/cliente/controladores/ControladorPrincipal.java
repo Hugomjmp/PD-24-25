@@ -42,6 +42,8 @@ public class ControladorPrincipal {
         String grupo;
         String decisao;
         String emailDestinatario;
+        Integer Telf;
+        String pass;
         Scanner scanner = new Scanner(System.in);
             if(dados.getUtilizadorLogado() == null){
                 switch (escolha){
@@ -121,6 +123,23 @@ public class ControladorPrincipal {
                         decisao = scanner.nextLine();
                         ControladorGrupoCliente.decisaoConvites(ligacao,decisao,grupo,dados.getUtilizadorLogado().getEmail());
                         //recebeMensagem();
+                        break;
+
+
+
+
+
+                    case "altera-dados":
+                        System.out.println("Ver Altera Dados");
+                        System.out.println("Deixar vazio o que não é para alterar.");
+                        System.out.print("Número de Telefone: ");
+                        Telf = Integer.parseInt(scanner.nextLine());
+                        System.out.print("\nPassword:");
+                        pass = scanner.nextLine();
+                        ControladorAutenticacaoCliente.edita(ligacao,Telf,dados.getUtilizadorLogado().getEmail(),pass);
+
+
+
                         break;
                     default:
                         System.out.println("Opção inválida. Por favor, tente novamente.");
@@ -350,7 +369,13 @@ public class ControladorPrincipal {
                         System.out.println("CONSULTAR SALDO");
                         break;
                     }
-                    case 17: //LOGOUT
+                    case 17: //ALTERA DADOS USER
+                    {
+                        System.out.println("ALTERA DADOS DO USER");
+                        enviaMensagem("altera-dados");
+                        break;
+                    }
+                    case 18: //LOGOUT
                     {
                         System.out.println("LOGOUT");
                         break;

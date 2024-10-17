@@ -2,6 +2,7 @@ package pt.isec.pd.cliente.controladores;
 
 import pt.isec.pd.cliente.ligacao.Ligacao;
 import pt.isec.pd.comum.modelos.User;
+import pt.isec.pd.comum.modelos.mensagens.EditaConta;
 import pt.isec.pd.comum.modelos.mensagens.Login;
 import pt.isec.pd.comum.modelos.Mensagem;
 import pt.isec.pd.comum.modelos.mensagens.Registo;
@@ -19,6 +20,10 @@ public class ControladorAutenticacaoCliente {
         Mensagem mensagem = new Mensagem(Tipomensagemenum.LOGIN,login);
         ligacao.enviaMensagem(/*ligacao.getSocket(),*/mensagem);
     }
-    public static void edita(){}
+    public static void edita(Ligacao ligacao, Integer telf, String email, String pass){
+        EditaConta editaConta = new EditaConta(email,pass,telf);
+        Mensagem mensagem = new Mensagem(Tipomensagemenum.USER_EDITA_INFORMACAO, editaConta);
+        ligacao.enviaMensagem(mensagem);
+    }
 
 }

@@ -203,14 +203,14 @@ public class Bd {
                         "(SELECT ID FROM GRUPO WHERE NOME = '" + grupoNome + "')";
         try{
             Statement stmt = conn.createStatement();
-            System.out.println("cheguei aqui:)");
+            //System.out.println("cheguei aqui:)");
             if(decisao.equalsIgnoreCase("aceitar")) {
                 stmt.executeUpdate(query);
                 stmt.executeUpdate(queryIntegra);
                 versaoUpdate();
                 return Estados.GRUPO_ACEITE_CONVITE_COM_SUCESSO;
             }
-
+            stmt.close();
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
@@ -281,6 +281,10 @@ public class Bd {
                 grupos.setGruposList(grupoList);
                 //grupoList.add(nomeGrupo);
             }
+            //ACRESCENTEI ISTO <- Hugo
+            stmt.close();
+            rs.close();
+            //----------------
         } catch (SQLException e) {
             System.err.println("Erro ao listar grupos: " + e.getMessage());
             //return null;
@@ -312,7 +316,7 @@ public class Bd {
         return Estados.USER_REGISTADO_COM_SUCESSO.setDados(user);
     }
 
-    public static void editaUserBD(Integer nTelefone, String Email, String password){
+    public static Estados editaUserBD(Integer nTelefone, String Email, String password){
         try {
             Statement stmt = conn.createStatement();
             if(nTelefone == null){
@@ -336,6 +340,7 @@ public class Bd {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
+        return Estados.USER_MODIFICADO_COM_SUCESSO;
     }
 
     public static User getUserDB(String email, String password){
