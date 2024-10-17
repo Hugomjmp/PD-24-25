@@ -92,7 +92,19 @@ public class ControladorGrupoServidor {
         }
         return convites == null ? Estados.ERRO_VER_CONVITES : Estados.VER_CONVITES_COM_SUCESSO.setDados(convites);
     }
+    public static Estados decidirConvite(DecidirConvite decidirConvite){
+        Serializable desicaoConvite = null;
+        try{
+            desicaoConvite = Bd.decideConvite(decidirConvite.getNomeGrupo(),decidirConvite.getEmailUser(),decidirConvite.getDecisao());
+        } catch (Exception e) {
 
+
+            System.err.println("Erro ao aceitar o convite para grupo: " + e.getMessage());
+        }
+        return desicaoConvite == null ? Estados.ERRO_ACEITAR_CONVITE : Estados.GRUPO_ACEITE_CONVITE_COM_SUCESSO.setDados(desicaoConvite);
+
+
+    }
 
 
 }

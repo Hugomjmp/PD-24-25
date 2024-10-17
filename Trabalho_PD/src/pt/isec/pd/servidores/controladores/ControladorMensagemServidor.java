@@ -101,7 +101,11 @@ public class ControladorMensagemServidor {
                 resposta = new RespostaServidorMensagem(estado, estado.getDados());
                 break;
             }
-
+            case USER_DECIDE_CONVITE: {
+                Estados estado = ControladorGrupoServidor.decidirConvite((DecidirConvite) mensagem.getConteudo());
+                resposta = new RespostaServidorMensagem(estado, estado.getDados());
+                break;
+            }
         }
         return resposta;
     }

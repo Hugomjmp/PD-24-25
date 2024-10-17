@@ -53,6 +53,11 @@ public class ControladorGrupoCliente {
         ligacao.enviaMensagem(mensagem);
         //System.out.println(mensagem);
     }
+    public static void decisaoConvites(Ligacao ligacao,String decisao ,String grupoNome, String email){
+        DecidirConvite decidirConvite = new DecidirConvite(grupoNome,email,decisao);
+        Mensagem mensagem = new Mensagem(Tipomensagemenum.USER_DECIDE_CONVITE,decidirConvite);
+        ligacao.enviaMensagem(mensagem);
+    }
 
 
 }

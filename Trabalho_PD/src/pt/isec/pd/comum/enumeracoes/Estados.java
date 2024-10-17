@@ -18,7 +18,7 @@ public enum Estados {
     GRUPO_ELIMINADO_COM_SUCESSO("Grupo Eliminado com sucesso"),
     GRUPO_CONVITE_COM_SUCESSO("Convite creado com sucesso"),
     VER_CONVITES_COM_SUCESSO("Convites encontrados"),
-
+    GRUPO_ACEITE_CONVITE_COM_SUCESSO("Convite aceite com sucesso"),
 
 
 
@@ -29,6 +29,7 @@ public enum Estados {
     ERRO_SEM_GRUPOS("Não está em nenhum grupo"),
     ERRO_GRUPO("Grupo já existe"),
     ERRO_CRIA_CONVITE("Convite já existente"),
+    ERRO_ACEITAR_CONVITE("Convite não existe"),
     ERRO_VER_CONVITES("Sem convites")
     ;
 

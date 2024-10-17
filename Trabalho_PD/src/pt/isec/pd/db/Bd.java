@@ -5,6 +5,7 @@ import pt.isec.pd.comum.modelos.Convites;
 import pt.isec.pd.comum.modelos.Grupos;
 import pt.isec.pd.comum.modelos.RespostaServidorMensagem;
 import pt.isec.pd.comum.modelos.User;
+import pt.isec.pd.comum.modelos.mensagens.DecidirConvite;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -186,6 +187,34 @@ public class Bd {
         }
         //return Estados.ERRO_VER_CONVITES;
         return convite;
+    }
+
+    public static Estados decideConvite(String grupoNome,String email, String decisao){
+
+
+        String query = "UPDATE CONVITES " +
+                        "SET ESTADO = '" + decisao + "' " +
+                        "WHERE GROUP_ID = (SELECT ID FROM GRUPO WHERE NOME = '" + grupoNome + "') " +
+                        "AND DESTINATARIO_ID = (SELECT ID FROM USERS WHERE EMAIL = '"+ email + "') " +
+                        "AND ESTADO = 'pendente'";
+
+        String queryIntegra = "INSERT INTO INTEGRA (USER_ID, GROUP_ID) " +
+                        "SELECT (SELECT ID FROM USERS WHERE EMAIL = '" + email + "'), " +
+                        "(SELECT ID FROM GRUPO WHERE NOME = '" + grupoNome + "')";
+        try{
+            Statement stmt = conn.createStatement();
+            System.out.println("cheguei aqui:)");
+            if(decisao.equalsIgnoreCase("aceitar")) {
+                stmt.executeUpdate(query);
+                stmt.executeUpdate(queryIntegra);
+                versaoUpdate();
+                return Estados.GRUPO_ACEITE_CONVITE_COM_SUCESSO;
+            }
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return Estados.ERRO_ACEITAR_CONVITE;
     }
     //HUGO confirmar isto depois
     //Não esquecer que ainda falta verificar se o utilizador em questoã es tem dívidas
