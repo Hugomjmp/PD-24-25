@@ -57,27 +57,25 @@ public class ServidorPrincipal {
 
         int argc = args.length;
         int serverPort;
-        System.out.println(argc);
+        Thread t;
         if (argc != 2){
             System.out.println("java ServidorPrincipal PORT DATA_BASE_FILE");
             return;
         }
-
         serverPort = parseInt(args[0]);
         mostraServidorDados(serverPort,args[0]);
-
-
-
         int i = 0;
         try {
-            socketServidor = new ServerSocket(serverPort); //cria o socket para o servidor
+            socketServidor = new ServerSocket(serverPort);//cria o socket para o servidor
             System.out.println("O Servidor Principal foi inciado com sucesso!");
             Bd.ligaBD(args[1]); // ligar à base de dados
             while (true) {
                     if(Bd.isEstaConectado()){ //usar em threads
-                        System.out.println(i);
+                        if (i!=0)
+                            System.out.println(i);
                         //cria uma thread e atribui ao cliente que acabou de entrar
-                        new ClienteThread(socketServidor.accept()).start();
+                        t = new ClienteThread(socketServidor.accept());
+                        t.start();
                         System.out.println("Entrou um cliente!");
                         i++;
                     } else {

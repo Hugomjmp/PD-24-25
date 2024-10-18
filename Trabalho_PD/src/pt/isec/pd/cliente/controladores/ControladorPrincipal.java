@@ -91,10 +91,11 @@ public class ControladorPrincipal {
                         System.out.print("Novo nome:");
                         grupoNovoNome = scanner.nextLine();
                         ControladorGrupoCliente.editaGrupo(ligacao, dados.getUtilizadorLogado().getEmail(),grupo,grupoNovoNome);
+                        recebeMensagem();
                         break;
 
                     case "lista_grupo":
-                        System.out.println("Envia Listar Grupos:");
+                        //System.out.println("Envia Listar Grupos:");
                         ControladorGrupoCliente.listarGrupos(ligacao, dados.getUtilizadorLogado().getEmail());
                         recebeMensagem();
                         break;
@@ -167,10 +168,10 @@ public class ControladorPrincipal {
 
     }
 
-    public static Estados recebeMensagem(){
+   public static Estados recebeMensagem(){
 
         RespostaServidorMensagem resposta = ligacao.recebeMensagem();
-        System.out.println("Recebe Mensagem -> "+resposta);
+        //System.out.println("Recebe Mensagem -> "+resposta);
         try {
             switch (resposta.getEstado()){
                 case USER_LOGADO_COM_SUCESSO -> {
@@ -190,6 +191,7 @@ public class ControladorPrincipal {
 
                 }*/
                 case GRUPO_NOME_ALTERADO_COM_SUCESSO -> {
+                    System.out.println(" HELLO "+resposta.getEstado());
                     return resposta.getEstado();
                 }
                 case VER_CONVITES_COM_SUCESSO -> {
@@ -197,10 +199,13 @@ public class ControladorPrincipal {
                     Vista.tabelaConvites(convites);
                     return resposta.getEstado();
                 }
+
                 case GRUPO_LISTADO_COM_SUCESSO -> { //tratar deste warnig depois
                     Grupos grupos = (Grupos) resposta.getConteudo();
                     Vista.tabelaGrupos(grupos);
+                    System.out.println(" HELLO "+resposta.getEstado());
                     return resposta.getEstado();
+
                 }
             }
         } catch (Exception e) {
@@ -208,7 +213,6 @@ public class ControladorPrincipal {
         }
         return resposta.getEstado();
     }
-
 
 
 

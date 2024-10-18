@@ -12,11 +12,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ControladorMensagemServidor {
-    private static String msg;
+
     public static RespostaServidorMensagem respostaServidor(Mensagem mensagem){
 
         RespostaServidorMensagem resposta = null;
-        System.out.println("ControladorMensagemServidor -> " + mensagem.getTipoMensagem());
         switch (mensagem.getTipoMensagem()){
             case USER_REGISTO:
             {
@@ -39,7 +38,7 @@ public class ControladorMensagemServidor {
             }
             case LOGOUT: //PARA FAZER
             {
-
+                break;
             }
             case USER_CRIA_GRUPO:
             {
@@ -69,11 +68,8 @@ public class ControladorMensagemServidor {
                 System.out.println("A Listar grupos...");
                 Estados estado = ControladorGrupoServidor.listarGrupos((ListarGrupo) mensagem.getConteudo());
                 resposta = new RespostaServidorMensagem(estado, estado.getDados());
-
-                /*if (grupos != null && !grupos.isEmpty()) {
-                    System.out.println("Rumo 1");
-                    resposta = new RespostaListagemGrupos(Estados.GRUPO_LISTADO_COM_SUCESSO, grupos);
-                }*/
+                //System.out.println("USER_LISTA_GRUPOS -> " +  estado);
+                //System.out.println("RESPOSTA -> " +resposta);
                 break;
             }
             case USER_SAI_GRUPO: {
@@ -119,11 +115,7 @@ public class ControladorMensagemServidor {
                 break;
             }
         }
-        System.out.println("->Controlador Mensagem Servidor " + resposta);
+        ///System.out.println("->Controlador Mensagem Servidor " + resposta);
         return resposta;
-    }
-    @Override
-    public String toString() {
-        return "Mensagem: " + msg;
     }
 }

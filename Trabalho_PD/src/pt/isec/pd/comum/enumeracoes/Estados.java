@@ -1,6 +1,5 @@
 package pt.isec.pd.comum.enumeracoes;
 
-import pt.isec.pd.comum.modelos.Convites;
 
 import java.io.Serializable;
 
@@ -49,9 +48,11 @@ public enum Estados {
     public String getMensagem(){
         return mensagem;
     }
+
     public Serializable getDados(){
         return dados;
     }
+
     public Estados setDados(Serializable dados){
         this.dados = dados;
         return this;

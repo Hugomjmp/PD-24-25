@@ -5,9 +5,13 @@ import pt.isec.pd.comum.enumeracoes.Estados;
 import java.io.Serializable;
 
 public class RespostaServidorMensagem implements Serializable{
+    private static final long serialVersionUID = 1L;
+
+
 
     private Serializable conteudo;  //conteudo do objecto, em Array de bytes, a ser passado
     private Estados estado;
+
     public RespostaServidorMensagem(Estados estado,Serializable conteudo){
         this.conteudo = conteudo;
         this.estado = estado;

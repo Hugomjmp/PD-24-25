@@ -1,6 +1,7 @@
 package pt.isec.pd.cliente.modelos;
 
 import pt.isec.pd.comum.modelos.Convites;
+import pt.isec.pd.comum.modelos.Grupos;
 import pt.isec.pd.comum.modelos.User;
 import java.util.List;
 
@@ -9,9 +10,18 @@ public class Dados {
     private User utilizadorLogado;
     private Convites convites;
     List<User> utilizadores;
+    private Grupos grupos;
 
     public Dados(){
         this.utilizadorLogado = null;
+    }
+
+    public Grupos getGrupos() {
+        return grupos;
+    }
+
+    public void setGrupos(Grupos grupos) {
+        this.grupos = grupos;
     }
 
     public User getUtilizadorLogado(){
