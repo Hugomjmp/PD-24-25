@@ -73,7 +73,9 @@ public class ControladorPrincipal {
 
                         grupo = scanner.nextLine();
                         ControladorGrupoCliente.criaGrupo(ligacao, grupo, dados.getUtilizadorLogado().getEmail());
+                        recebeMensagem();
                         ControladorGrupoCliente.insereGrupo(ligacao,grupo,dados.getUtilizadorLogado().getEmail());
+                        recebeMensagem();
                         break;
 
                     case "elimina_grupo":
@@ -82,6 +84,7 @@ public class ControladorPrincipal {
 
                         grupo = scanner.nextLine();
                         ControladorGrupoCliente.eliminaGrupo(ligacao, grupo, dados.getUtilizadorLogado().getEmail());
+                        recebeMensagem();
                         break;
                     case "edita_grupo":
                         System.out.println("Envia Edita Grupo");
@@ -106,6 +109,7 @@ public class ControladorPrincipal {
 
                         grupo = scanner.nextLine();
                         ControladorGrupoCliente.sairGrupo(ligacao, grupo, dados.getUtilizadorLogado().getEmail());
+                        recebeMensagem();
                         break;
 
                     case "cria_convite":
@@ -116,6 +120,7 @@ public class ControladorPrincipal {
                         System.out.print("Para quem quer enviar o convite (email):");
                         emailDestinatario = scanner.nextLine();
                         ControladorGrupoCliente.criaConvite(ligacao,dados.getUtilizadorLogado().getEmail(),emailDestinatario,grupo);
+                        recebeMensagem();
                         break;
                     case "ver_convites":
                         System.out.println("Ver Convites");
@@ -134,13 +139,8 @@ public class ControladorPrincipal {
 
                         decisao = scanner.nextLine();
                         ControladorGrupoCliente.decisaoConvites(ligacao,decisao,grupo,dados.getUtilizadorLogado().getEmail());
-                        //recebeMensagem();
+                        recebeMensagem();
                         break;
-
-
-
-
-
                     case "altera-dados":
                         System.out.println("Ver Altera Dados");
                         System.out.println("Deixar vazio o que não é para alterar.");
@@ -155,9 +155,7 @@ public class ControladorPrincipal {
                         System.out.print("\nPassword:");
                         pass = scanner.nextLine();
                         ControladorAutenticacaoCliente.edita(ligacao,Telf,dados.getUtilizadorLogado().getEmail(),pass);
-
-
-
+                        recebeMensagem();
                         break;
                     default:
                         System.out.println("Opção inválida. Por favor, tente novamente.");
@@ -179,17 +177,26 @@ public class ControladorPrincipal {
                     return resposta.getEstado();
                 }
 
-/*                case USER_REGISTADO_COM_SUCESSO -> {
+               case USER_REGISTADO_COM_SUCESSO -> {
 
 
                 }
-                case ERRO_CRIA_CONVITE -> {
+/*                case ERRO_CRIA_CONVITE -> {
 
-
-                }
-                case GRUPO_CONVITE_COM_SUCESSO -> {
 
                 }*/
+                case GRUPO_USER_INSERIDO_COM_SUCESSO ->{
+                    System.out.println(" HELLO INTEGRA "+resposta.getEstado());
+                    return  resposta.getEstado();
+                }
+                case GRUPO_REGISTADO_COM_SUCESSO ->{
+                    System.out.println(" HELLO REGISTO"+resposta.getEstado());
+                    return  resposta.getEstado();
+                }
+                case GRUPO_CONVITE_COM_SUCESSO -> {
+                    System.out.println(" HELLO "+resposta.getEstado());
+                    return  resposta.getEstado();
+                }
                 case GRUPO_NOME_ALTERADO_COM_SUCESSO -> {
                     System.out.println(" HELLO "+resposta.getEstado());
                     return resposta.getEstado();

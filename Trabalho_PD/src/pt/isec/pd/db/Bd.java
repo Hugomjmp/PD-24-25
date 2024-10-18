@@ -120,7 +120,7 @@ public class Bd {
             /*user.setEstado(false);*/
             /*return user;*/
         }
-        return Estados.ERRO_GRUPO_NAO_ENCONTRADO;
+        return Estados.GRUPO_USER_INSERIDO_COM_SUCESSO;
     }
 
     public static Estados criaConvite(String email, String groupNome, String emailDestinatario){
@@ -154,10 +154,11 @@ public class Bd {
 
             stmt.executeUpdate(queryInsert);
             versaoUpdate();
-            return  Estados.GRUPO_CONVITE_COM_SUCESSO;
+
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
+        return  Estados.GRUPO_CONVITE_COM_SUCESSO;
     }
     public static Convites getConvites(String emailRecipiente){
         List<Convites> convitesLista = new ArrayList<>();
@@ -344,7 +345,6 @@ public class Bd {
             //----------------
         } catch (SQLException e) {
             System.err.println("Erro ao listar grupos: " + e.getMessage());
-            //return null;
         }
         return grupos;
     }
