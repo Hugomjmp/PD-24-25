@@ -23,6 +23,7 @@ public class Bd {
             System.out.println("A ligar à base de dados...");
             bd = "src/pt/isec/pd/db/" + bd + ".db";
             conn = DriverManager.getConnection(link + bd);
+            //conn.setAutoCommit(false);
             //System.out.println(conn);
             System.out.println("Ligação efectuada com sucesso!");
             setEstaConectado(true);
@@ -210,6 +211,10 @@ public class Bd {
                 versaoUpdate();
                 return Estados.GRUPO_ACEITE_CONVITE_COM_SUCESSO;
             }
+            if (decisao.equalsIgnoreCase("recusar")){
+                stmt.executeUpdate(query);
+                versaoUpdate();
+            }
             stmt.close();
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -260,6 +265,27 @@ public class Bd {
             System.err.println("Erro ao eliminar grupo: " + e.getMessage());
             return Estados.ERRO_GRUPO; // Retorna erro em caso de exceção
         }
+    }
+
+    public static Estados editarNomeGrupoDB(String email,String grupoNome, String grupoNovoNome){
+        String query = "UPDATE GRUPO " +
+                "SET NOME = '" + grupoNovoNome + "' " +
+                "WHERE ID = (SELECT GROUP_ID FROM INTEGRA WHERE USER_ID = (" +
+                "SELECT ID FROM USERS WHERE EMAIL = '" + email + "') " +
+                "AND GROUP_ID = (SELECT ID FROM GRUPO WHERE NOME = '" + grupoNome + "'))";
+        System.out.println(query);
+        try {
+            Statement stmt = conn.createStatement();
+            stmt.executeUpdate(query);
+            versaoUpdate();
+            stmt.close();
+            //conn.commit();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+
+        return Estados.GRUPO_NOME_ALTERADO_COM_SUCESSO.setDados();
     }
 
     //fixed

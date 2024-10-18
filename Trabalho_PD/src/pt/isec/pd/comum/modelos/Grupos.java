@@ -5,6 +5,7 @@ import java.io.Serializable;
 import java.util.List;
 
 public class Grupos implements Serializable {
+    private static final long serialVersionUID = 1L;
     private String nomeGrupo;
     private String criadoPor;
     private List<Grupos> gruposList;

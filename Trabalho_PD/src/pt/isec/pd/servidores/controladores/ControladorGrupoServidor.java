@@ -56,7 +56,16 @@ public class ControladorGrupoServidor {
         }
         return estado;
     }
-
+    public static Estados editaGrupo(EditarGrupo editarGrupo){
+        Serializable edita = null;
+        try {
+            edita = Bd.editarNomeGrupoDB(editarGrupo.getEmail(), editarGrupo.getGrupoNome(), editarGrupo.getGrupoNovoNome());
+        } catch (Exception e) {
+            System.err.println("Erro ao editar grupo: " + e.getMessage());
+        }
+        System.out.println("ControladorGrupoServidor ->" + edita);
+        return edita == null ? Estados.ERRO_GRUPO_NAO_ENCONTRADO : Estados.GRUPO_NOME_ALTERADO_COM_SUCESSO.setDados(edita);
+    }
     public static /*List<String>*/ Estados listarGrupos(ListarGrupo listarGrupo) {
         //List<String> grupos = new ArrayList<>();
         Serializable grupo = null;
@@ -66,6 +75,7 @@ public class ControladorGrupoServidor {
         } catch (Exception e) {
             System.err.println("Erro ao listar grupos: " + e.getMessage());
         }
+        System.out.println("ControladorGrupoServidor ->" + grupo);
         return grupo == null ? Estados.ERRO_SEM_GRUPOS : Estados.GRUPO_LISTADO_COM_SUCESSO.setDados(grupo);
     }
 

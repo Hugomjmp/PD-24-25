@@ -8,6 +8,7 @@ import pt.isec.pd.comum.modelos.Convites;
 import pt.isec.pd.comum.modelos.Grupos;
 import pt.isec.pd.comum.modelos.RespostaServidorMensagem;
 import pt.isec.pd.comum.modelos.User;
+import pt.isec.pd.comum.modelos.mensagens.EditarGrupo;
 import pt.isec.pd.comum.modelos.mensagens.VerConvites;
 
 import java.util.List;
@@ -39,10 +40,11 @@ public class ControladorPrincipal {
     public static void enviaMensagem(String escolha){
         String [] dadosLogin;
         String [] dadosRegisto;
-        String grupo;
+        String grupo , grupoNovoNome;
         String decisao;
         String emailDestinatario;
-        Integer Telf;
+        String numeroTelefone;
+        Integer Telf = null;
         String pass;
         Scanner scanner = new Scanner(System.in);
             if(dados.getUtilizadorLogado() == null){
@@ -81,11 +83,20 @@ public class ControladorPrincipal {
                         grupo = scanner.nextLine();
                         ControladorGrupoCliente.eliminaGrupo(ligacao, grupo, dados.getUtilizadorLogado().getEmail());
                         break;
-
+                    case "edita_grupo":
+                        System.out.println("Envia Edita Grupo");
+                        //ControladorGrupoCliente.listarGrupos(ligacao, dados.getUtilizadorLogado().getEmail());
+                        System.out.print("Nome do Grupo que pretende alterar: ");
+                        grupo = scanner.nextLine();
+                        System.out.print("Novo nome:");
+                        grupoNovoNome = scanner.nextLine();
+                        ControladorGrupoCliente.editaGrupo(ligacao, dados.getUtilizadorLogado().getEmail(),grupo,grupoNovoNome);
+                        break;
 
                     case "lista_grupo":
                         System.out.println("Envia Listar Grupos:");
                         ControladorGrupoCliente.listarGrupos(ligacao, dados.getUtilizadorLogado().getEmail());
+                        recebeMensagem();
                         break;
 
                     case "sair_grupo":
@@ -133,7 +144,13 @@ public class ControladorPrincipal {
                         System.out.println("Ver Altera Dados");
                         System.out.println("Deixar vazio o que não é para alterar.");
                         System.out.print("Número de Telefone: ");
-                        Telf = Integer.parseInt(scanner.nextLine());
+                        numeroTelefone = scanner.nextLine();
+                        if (!numeroTelefone.isEmpty())
+                            try {
+                                Telf = Integer.parseInt(numeroTelefone);
+                            } catch (NumberFormatException e) {
+                                throw new RuntimeException(e);
+                            }
                         System.out.print("\nPassword:");
                         pass = scanner.nextLine();
                         ControladorAutenticacaoCliente.edita(ligacao,Telf,dados.getUtilizadorLogado().getEmail(),pass);
@@ -153,13 +170,14 @@ public class ControladorPrincipal {
     public static Estados recebeMensagem(){
 
         RespostaServidorMensagem resposta = ligacao.recebeMensagem();
-
+        System.out.println("Recebe Mensagem -> "+resposta);
         try {
             switch (resposta.getEstado()){
                 case USER_LOGADO_COM_SUCESSO -> {
                     dados.setUtilizadorLogado((User) resposta.getConteudo());
                     return resposta.getEstado();
                 }
+
 /*                case USER_REGISTADO_COM_SUCESSO -> {
 
 
@@ -171,6 +189,9 @@ public class ControladorPrincipal {
                 case GRUPO_CONVITE_COM_SUCESSO -> {
 
                 }*/
+                case GRUPO_NOME_ALTERADO_COM_SUCESSO -> {
+                    return resposta.getEstado();
+                }
                 case VER_CONVITES_COM_SUCESSO -> {
                     Convites convites = (Convites) resposta.getConteudo();
                     Vista.tabelaConvites(convites);
@@ -291,91 +312,97 @@ public class ControladorPrincipal {
                         enviaMensagem("cria_convite");
                         break;
                     }
-                    case 3: //LISTAR CONVITES
+                    case 3: //Editar nome Grupo
+                    {
+                        System.out.println("EDITAR GRUPO");
+                        enviaMensagem("edita_grupo");
+                        break;
+                    }
+                    case 4: //LISTAR CONVITES
                     {
                         System.out.println("LISTAR CONVITES");
                         enviaMensagem("ver_convites");
                         break;
                     }
-                    case 4: //decisao de aceitar/recusar convites
+                    case 5: //decisao de aceitar/recusar convites
                     {
                         System.out.println("DECISAO CONVITES");
                         enviaMensagem("decisao-convites");
                         break;
                     }
-                    case 5: // LISTAR GRUPOS
+                    case 6: // LISTAR GRUPOS
                     {
                         System.out.println("LISTAR GRUPOS");
                         enviaMensagem("lista_grupo");
-                        recebeMensagem();
+                        //recebeMensagem();
                         break;
                     }
-                    case 6: //ELIMINAR GRUPOS
+                    case 7: //ELIMINAR GRUPOS
                     {
                         System.out.println("ELIMINAR GRUPOS");
                         enviaMensagem("elimina_grupo");
                         recebeMensagem();
                         break;
                     }
-                    case 7: //SAIR DE UM GRUPO
+                    case 8: //SAIR DE UM GRUPO
                     {
                         System.out.println("SAIR DE UM GRUPO");
                         enviaMensagem("sair_grupo");
                         recebeMensagem();
                         break;
                     }
-                    case 8: //VER GASTO TOTAL DE UM GRUPO
+                    case 9: //VER GASTO TOTAL DE UM GRUPO
                     {
                         System.out.println("VER GASTO TOTAL DE UM GRUPO");
                         break;
                     }
-                    case 9: //VER HISTÓRICO DE UM GRUPO
+                    case 10: //VER HISTÓRICO DE UM GRUPO
                     {
                         System.out.println("VER HISTÓRICO DE UM GRUPO");
                         break;
                     }
-                    case 10: //GUARDAR DESPESAS PARA UM FICHEIRO
+                    case 11: //GUARDAR DESPESAS PARA UM FICHEIRO
                     {
                         System.out.println("GUARDAR DESPESAS PARA UM FICHEIRO");
                         break;
                     }
-                    case 11: //EDITAR DESPESAS
+                    case 12: //EDITAR DESPESAS
                     {
                         System.out.println("EDITAR DESPESAS");
                         break;
                     }
-                    case 12: //ELIMINAR DESPESAS
+                    case 13: //ELIMINAR DESPESAS
                     {
                         System.out.println("ELIMINAR DESPESAS");
                         break;
                     }
-                    case 13: //EFECTUAR PAGAMENTO
+                    case 14: //EFECTUAR PAGAMENTO
                     {
                         System.out.println("EFECTUAR PAGAMENTO");
                         break;
                     }
-                    case 14: //LISTAR TODOS OS PAGAMENTOS
+                    case 15: //LISTAR TODOS OS PAGAMENTOS
                     {
                         System.out.println("LISTAR TODOS OS PAGAMENTOS");
                         break;
                     }
-                    case 15: //ELIMINAR PAGAMENTO EFETUADO
+                    case 16: //ELIMINAR PAGAMENTO EFETUADO
                     {
                         System.out.println("ELIMINAR PAGAMENTO EFETUADO");
                         break;
                     }
-                    case 16: //CONSULTAR SALDO
+                    case 17: //CONSULTAR SALDO
                     {
                         System.out.println("CONSULTAR SALDO");
                         break;
                     }
-                    case 17: //ALTERA DADOS USER
+                    case 18: //ALTERA DADOS USER
                     {
                         System.out.println("ALTERA DADOS DO USER");
                         enviaMensagem("altera-dados");
                         break;
                     }
-                    case 18: //LOGOUT
+                    case 19: //LOGOUT
                     {
                         System.out.println("LOGOUT");
                         break;

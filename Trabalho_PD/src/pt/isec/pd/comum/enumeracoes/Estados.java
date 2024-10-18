@@ -15,6 +15,7 @@ public enum Estados {
     GRUPO_REGISTADO_COM_SUCESSO("Grupo registado com sucesso"),
     GRUPO_USER_INSERIDO_COM_SUCESSO("Utilizador Inserido com Sucesso"),
     GRUPO_LISTADO_COM_SUCESSO("Grupo Listado com sucesso"),
+    GRUPO_NOME_ALTERADO_COM_SUCESSO("Nome do Grupo Alterado com Sucesso"),
     GRUPO_ELIMINADO_COM_SUCESSO("Grupo Eliminado com sucesso"),
     GRUPO_CONVITE_COM_SUCESSO("Convite creado com sucesso"),
     VER_CONVITES_COM_SUCESSO("Convites encontrados"),

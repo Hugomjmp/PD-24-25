@@ -16,6 +16,7 @@ public class ControladorMensagemServidor {
     public static RespostaServidorMensagem respostaServidor(Mensagem mensagem){
 
         RespostaServidorMensagem resposta = null;
+        System.out.println("ControladorMensagemServidor -> " + mensagem.getTipoMensagem());
         switch (mensagem.getTipoMensagem()){
             case USER_REGISTO:
             {
@@ -29,8 +30,12 @@ public class ControladorMensagemServidor {
                 Estados estado = ControladorAutenticacao.login((Login) mensagem.getConteudo());
                 resposta = new RespostaServidorMensagem(estado,estado.getDados());
                 break;
-
-
+            }
+            case USER_EDITA_INFORMACAO:
+            {
+                Estados estados = ControladorAutenticacao.edita((EditaConta) mensagem.getConteudo());
+                resposta = new RespostaServidorMensagem(estados,estados.getDados());
+                break;
             }
             case LOGOUT: //PARA FAZER
             {
@@ -52,8 +57,15 @@ public class ControladorMensagemServidor {
                 resposta = new RespostaServidorMensagem(estado,estado.getDados());
                 break;
             }
+            case USER_EDITA_GRUPO:
+            {
+                Estados estado = ControladorGrupoServidor.editaGrupo((EditarGrupo) mensagem.getConteudo());
+                resposta = new RespostaServidorMensagem(estado, estado.getDados());
+                break;
+            }
 
-            case USER_LISTA_GRUPOS: {
+            case USER_LISTA_GRUPOS:
+            {
                 System.out.println("A Listar grupos...");
                 Estados estado = ControladorGrupoServidor.listarGrupos((ListarGrupo) mensagem.getConteudo());
                 resposta = new RespostaServidorMensagem(estado, estado.getDados());
@@ -107,6 +119,7 @@ public class ControladorMensagemServidor {
                 break;
             }
         }
+        System.out.println("->Controlador Mensagem Servidor " + resposta);
         return resposta;
     }
     @Override

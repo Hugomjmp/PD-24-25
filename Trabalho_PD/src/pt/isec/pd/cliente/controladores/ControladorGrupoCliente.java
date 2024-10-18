@@ -18,12 +18,17 @@ public class ControladorGrupoCliente {
         ligacao.enviaMensagem(mensagem);
         System.out.println(mensagem);
     }
-
+    public static void editaGrupo(Ligacao ligacao, String email, String nomeGrupo, String nomeNovoGrupo){
+        EditarGrupo editarGrupo = new EditarGrupo(email,nomeGrupo,nomeNovoGrupo);
+        Mensagem mensagem = new Mensagem(Tipomensagemenum.USER_EDITA_GRUPO,editarGrupo);
+        ligacao.enviaMensagem(mensagem);
+        System.out.println("ControladorGrupoCliente -> "+mensagem);
+    }
     public static void eliminaGrupo(Ligacao ligacao, String nomeGrupo , String nomeUser){
         EliminaGrupo eliminaGrupo = new EliminaGrupo(nomeGrupo, nomeUser);
         Mensagem mensagem = new Mensagem(Tipomensagemenum.USER_ELIMINA_GRUPO, eliminaGrupo);
         ligacao.enviaMensagem(mensagem);
-        System.out.println(mensagem);
+        System.out.println("ControladorGrupoCliente -> "+mensagem);
     }
 
     public static void listarGrupos(Ligacao ligacao, String nomeUser) {
@@ -31,7 +36,7 @@ public class ControladorGrupoCliente {
         ListarGrupo listarGrupo = new ListarGrupo(nomeUser);
         Mensagem mensagem = new Mensagem(Tipomensagemenum.USER_LISTA_GRUPOS, listarGrupo);
         ligacao.enviaMensagem(mensagem);
-        System.out.println(mensagem);
+        System.out.println("ControladorGrupoCliente -> "+mensagem);
     }
 
     public static void sairGrupo(Ligacao ligacao, String grupoNome, String emailUsuario) {

@@ -49,16 +49,17 @@ public class Ligacao {
     }
 
     public RespostaServidorMensagem recebeMensagem(){
-
+        RespostaServidorMensagem resposta = null;
         try{
             ObjectInputStream in;
             in = new ObjectInputStream(socket.getInputStream());
+            resposta = (RespostaServidorMensagem) in.readObject();
 
-            return (RespostaServidorMensagem) in.readObject();
 
         } catch (IOException | ClassNotFoundException e) {
             throw new RuntimeException(e);
         }
+        return resposta;
     }
 
 
