@@ -45,6 +45,7 @@ public class Vista {
             System.out.println("|  9  - Ver Gasto total de um grupo.       |  19 - Logout.                            |");
             System.out.println("|  10 - Ver histório de um grupo.          |                                          |");
             System.out.println("+-------------------------------------------------------------------------------------+");
+            System.out.print("#>");
             int opcao = scanner.nextInt();
             if (opcao > 0 && opcao < 20 ){
                 return opcao;
