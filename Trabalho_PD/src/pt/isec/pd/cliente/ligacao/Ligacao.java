@@ -21,7 +21,7 @@ public class Ligacao {
             //Cria o Socket para ligar ao Servidor Principal
             socket = new Socket(servidorEndereco,servidorPorto);
             System.out.println("Ligacao efectuada com sucesso!");
-            socket.setSoTimeout(10 * 1000);
+            //socket.setSoTimeout(10 * 1000);
 
         } catch (UnknownHostException e) {
             System.out.println("Destino desconhecido:\n\t" + e);
@@ -44,17 +44,16 @@ public class Ligacao {
         }
 
     }
-    public Socket getSocket(){
+/*    public Socket getSocket(){
         return socket;
-    }
+    }*/
 
     public RespostaServidorMensagem recebeMensagem(){
-        RespostaServidorMensagem resposta = null;
+        RespostaServidorMensagem resposta;
         try{
-            ObjectInputStream in;
-            in = new ObjectInputStream(socket.getInputStream());
+            ObjectInputStream in = new ObjectInputStream(socket.getInputStream());
             resposta = (RespostaServidorMensagem) in.readObject();
-
+            System.out.println("RESPOSTA RECEBE -> " + resposta);
 
         } catch (IOException | ClassNotFoundException e) {
             throw new RuntimeException(e);

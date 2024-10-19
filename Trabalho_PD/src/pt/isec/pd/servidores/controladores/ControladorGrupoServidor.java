@@ -2,6 +2,7 @@ package pt.isec.pd.servidores.controladores;
 
 import pt.isec.pd.comum.enumeracoes.Estados;
 
+import pt.isec.pd.comum.modelos.Grupos;
 import pt.isec.pd.comum.modelos.mensagens.*;
 import pt.isec.pd.db.Bd;
 
@@ -63,21 +64,34 @@ public class ControladorGrupoServidor {
         } catch (Exception e) {
             System.err.println("Erro ao editar grupo: " + e.getMessage());
         }
-        System.out.println("ControladorGrupoServidor ->" + edita);
+        //System.out.println("ControladorGrupoServidor ->" + edita);
         return edita == null ? Estados.ERRO_GRUPO_NAO_ENCONTRADO : Estados.GRUPO_NOME_ALTERADO_COM_SUCESSO.setDados(edita);
     }
+
     public static /*List<String>*/ Estados listarGrupos(ListarGrupo listarGrupo) {
         //List<String> grupos = new ArrayList<>();
         Serializable grupo = null;
         try {
-            //grupos = Bd.listarGruposDB(listarGrupo.getSolicitadoPor());
             grupo = Bd.listarGruposDB(listarGrupo.getSolicitadoPor());
         } catch (Exception e) {
             System.err.println("Erro ao listar grupos: " + e.getMessage());
         }
-        System.out.println("ControladorGrupoServidor ->" + grupo);
+        //System.out.println("ControladorGrupoServidor ->" + grupo);
         return grupo == null ? Estados.ERRO_SEM_GRUPOS : Estados.GRUPO_LISTADO_COM_SUCESSO.setDados(grupo);
     }
+
+    /*    public static Estados listarGrupos(ListarGrupo listarGrupo) {
+            Serializable grupo = null;
+
+                //grupo = Bd.listarGruposDB(listarGrupo.getSolicitadoPor());
+                List<Grupos> gruposList = Bd.listarGruposDB(listarGrupo.getSolicitadoPor());
+                if (gruposList.isEmpty()){
+                    return Estados.ERRO_SEM_GRUPOS;
+                }
+
+            System.out.println("ControladorGrupoServidor ->" + gruposList );
+            return Estados.GRUPO_LISTADO_COM_SUCESSO.setDados((Serializable) gruposList);
+        }*/
 
 
     public static Estados criaConvite(CriaConvite criaConvite){

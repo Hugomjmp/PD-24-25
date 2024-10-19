@@ -31,31 +31,23 @@ public class Vista {
     public static int menuCliente(){
         Scanner scanner = new Scanner(System.in);
         while(true) {
-            System.out.println("+------------------------------------------+");
-            System.out.println("|               MENU - Cliente             |");
-            System.out.println("+------------------------------------------+");
-            System.out.println("|  1  - Cria Grupo.                        |");
-            System.out.println("|  2  - Convidar para um grupo.            |");
-            System.out.println("|  3  - Editar nome do grupo               |");
-            System.out.println("|  4  - Listar Convites.                   |");
-            System.out.println("|  5  - Aceitar/Recusar Convites.          |");
-            System.out.println("|  6  - Listar Grupos.                     |");
-            System.out.println("|  7  - Eliminar de um Grupo.              |");
-            System.out.println("|  8  - Sair de um Grupo.                  |");
-            System.out.println("|  9  - Ver Gasto total de um grupo.       |");
-            System.out.println("|  10 - Ver histório de um grupo.          |");
-            System.out.println("|  11 - Guardar Despesas para um ficheiro. |");
-            System.out.println("|  12 - Editar Despesa.                    |");
-            System.out.println("|  13 - Eliminar uma Despesa.              |");
-            System.out.println("|  14 - Efectuar Pagamento.                |");
-            System.out.println("|  15 - Listar todos os Pagamentos.        |");
-            System.out.println("|  16 - Eliminar pagamento efetuado.       |");
-            System.out.println("|  17 - Consultar saldos.                  |");
-            System.out.println("|  18 - Alterar dados do Utilizador        |");
-            System.out.println("|  19 - Logout.                            |");
-            System.out.println("+------------------------------------------+");
+            System.out.println("+-------------------------------------------------------------------------------------+");
+            System.out.println("|                                     MENU - Cliente                                  |");
+            System.out.println("+-------------------------------------------------------------------------------------+");
+            System.out.println("|  1  - Cria Grupo.                        |  11 - Inserir uma Despesa.               |");
+            System.out.println("|  2  - Convidar para um grupo.            |  12 - Guardar Despesas para um ficheiro. |");
+            System.out.println("|  3  - Editar nome do grupo               |  13 - Editar Despesa.                    |");
+            System.out.println("|  4  - Listar Convites.                   |  14 - Eliminar uma Despesa.              |");
+            System.out.println("|  5  - Aceitar/Recusar Convites.          |  15 - Efectuar Pagamento.                |");
+            System.out.println("|  6  - Listar Grupos.                     |  16 - Listar todos os Pagamentos.        |");
+            System.out.println("|  7  - Eliminar de um Grupo.              |  17 - Eliminar pagamento efetuado.       |");
+            System.out.println("|  8  - Sair de um Grupo.                  |  18 - Consultar saldos.                  |");
+            System.out.println("|  9  - Ver Gasto total de um grupo.       |  19 - Alterar dados do Utilizador        |");
+            System.out.println("|  10 - Ver histório de um grupo.          |  20 - Logout.                            |");
+            System.out.println("+-------------------------------------------------------------------------------------+");
+            System.out.print("#>");
             int opcao = scanner.nextInt();
-            if (opcao > 0 && opcao < 20 ){
+            if (opcao > 0 && opcao < 21 ){
                 return opcao;
             }else{
                 System.out.println("OPÇÃO INVÁLIDA!");
@@ -117,6 +109,7 @@ public class Vista {
         int tamanhoTotal = 0;
         int espacosEsquerda;
         int espacosDireita;
+        int espacos = 0;
         //calcular o maior dos nomes possíveis para adaptar a tabela
         for (Grupos grupos : grupo.getGruposList() ) {
             tamanhoNome = Math.max(tamanhoNome,grupos.getNomeGrupo().length());;
@@ -148,9 +141,12 @@ public class Vista {
         System.out.println("+");
 
         for (Grupos grupos : grupo.getGruposList() ) {
-            System.out.println("| "+ grupos.getNomeGrupo() +" |");
-
-            System.out.print("+");
+            System.out.print("| "+ grupos.getNomeGrupo());
+            espacos = tamanhoTotal - 1 - grupos.getNomeGrupo().length();
+            for (int i = 0 ; i < espacos ; i++)
+                System.out.print(" ");
+            System.out.print("|");
+            System.out.print("\n+");
             for (int i=0;i<tamanhoTotal;i++)
                 System.out.print("-");
             System.out.println("+");

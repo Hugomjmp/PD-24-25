@@ -5,6 +5,7 @@ import pt.isec.pd.comum.modelos.Convites;
 import pt.isec.pd.comum.modelos.Grupos;
 import pt.isec.pd.comum.modelos.User;
 
+import java.io.Serializable;
 import java.sql.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -15,7 +16,7 @@ public class Bd {
 
     private static Connection conn = null;
     private static boolean estaConectado = false;
-
+    private static final Object lock = new Object();
     public static void ligaBD(String bd) {
         try {
             String link = "jdbc:sqlite:";
@@ -118,7 +119,7 @@ public class Bd {
             /*user.setEstado(false);*/
             /*return user;*/
         }
-        return Estados.ERRO_GRUPO_NAO_ENCONTRADO;
+        return Estados.GRUPO_USER_INSERIDO_COM_SUCESSO;
     }
 
     public static Estados criaConvite(String email, String groupNome, String emailDestinatario){
@@ -152,10 +153,11 @@ public class Bd {
 
             stmt.executeUpdate(queryInsert);
             versaoUpdate();
-            return  Estados.GRUPO_CONVITE_COM_SUCESSO;
+
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
+        return  Estados.GRUPO_CONVITE_COM_SUCESSO;
     }
     public static Convites getConvites(String emailRecipiente){
         List<Convites> convitesLista = new ArrayList<>();
@@ -267,25 +269,56 @@ public class Bd {
     }
 
     public static Estados editarNomeGrupoDB(String email,String grupoNome, String grupoNovoNome){
-        String query = "UPDATE GRUPO " +
-                "SET NOME = '" + grupoNovoNome + "' " +
-                "WHERE ID = (SELECT GROUP_ID FROM INTEGRA WHERE USER_ID = (" +
-                "SELECT ID FROM USERS WHERE EMAIL = '" + email + "') " +
-                "AND GROUP_ID = (SELECT ID FROM GRUPO WHERE NOME = '" + grupoNome + "'))";
-        System.out.println(query);
-        try {
-            Statement stmt = conn.createStatement();
-            stmt.executeUpdate(query);
-            versaoUpdate();
-            stmt.close();
-            //conn.commit();
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
+            String query = "UPDATE GRUPO " +
+                    "SET NOME = '" + grupoNovoNome + "' " +
+                    "WHERE ID = (SELECT GROUP_ID FROM INTEGRA WHERE USER_ID = (" +
+                    "SELECT ID FROM USERS WHERE EMAIL = '" + email + "') " +
+                    "AND GROUP_ID = (SELECT ID FROM GRUPO WHERE NOME = '" + grupoNome + "'))";
+            try {
+                Statement stmt = conn.createStatement();
+                stmt.executeUpdate(query);
+                versaoUpdate();
+                stmt.close();
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
 
         //return Estados.GRUPO_NOME_ALTERADO_COM_SUCESSO.setDados();
         return Estados.GRUPO_NOME_ALTERADO_COM_SUCESSO;
+
     }
+
+    /*public static List<Grupos> listarGruposDB(String solicitadoPor) {
+        Grupos grupos = null;
+        ArrayList<Grupos> grupoList = new ArrayList<>();
+        String sql = "SELECT g.NOME " +
+                "FROM GRUPO g " +
+                "JOIN INTEGRA i ON g.ID = i.GROUP_ID " +
+                "JOIN USERS u ON i.USER_ID = u.ID " +
+                "WHERE u.EMAIL = '" + solicitadoPor + "'";
+        try (Statement stmt = conn.createStatement();
+             ResultSet rs = stmt.executeQuery(sql)) {
+            while (rs.next()) {
+                String nomeGrupo = rs.getString("NOME");
+                grupos = new Grupos();
+                grupos.setNomeGrupo(nomeGrupo);
+                grupoList.add(grupos);
+                //grupos.setGruposList(grupoList);
+                //grupoList.add(nomeGrupo);
+            }
+            //ACRESCENTEI ISTO <- Hugo
+            stmt.close();
+            rs.close();
+            //----------------
+        } catch (SQLException e) {
+            System.err.println("Erro ao listar grupos: " + e.getMessage());
+            //return null;
+        }
+    return grupoList;
+
+    }*/
+
+
 
     //fixed
     public static Grupos listarGruposDB(String solicitadoPor) {
@@ -312,9 +345,7 @@ public class Bd {
             //----------------
         } catch (SQLException e) {
             System.err.println("Erro ao listar grupos: " + e.getMessage());
-            //return null;
         }
-
         return grupos;
     }
 
@@ -447,10 +478,6 @@ public class Bd {
         return user;
     }
 
-
-
-
-
     public static void versaoUpdate(){
         int NUMERO_VERSAO = 0;
         try {
@@ -460,7 +487,7 @@ public class Bd {
             if(rs.next()){
                 NUMERO_VERSAO = rs.getInt("NUMERO_VERSAO");
 
-                System.out.println( "\nTABELA: \n" + NUMERO_VERSAO + "\n");
+                //System.out.println( "\nTABELA: \n" + NUMERO_VERSAO + "\n");
                 NUMERO_VERSAO++; //incrementa a versão
             }
 
@@ -482,4 +509,75 @@ public class Bd {
             throw new RuntimeException(e);
         }
     }
+
+    public static Estados criaDespesa(String email,String grupo ,double despesa, String quemPagou, String descricao, String data ){
+        String query = "INSERT INTO DESPESA (GROUP_ID, VALOR, DESCRICAO, DATA, PAGA_POR, REGISTADA_POR) " +
+                "SELECT G.ID, " + despesa + ", '" + descricao + "', '" + data + "', U1.ID, U2.ID " +
+                "FROM GRUPO G " +
+                "JOIN INTEGRA I1 ON G.ID = I1.GROUP_ID " +
+                "JOIN USERS U1 ON U1.ID = I1.USER_ID " +
+                "JOIN USERS U2 ON U2.EMAIL = '" + email + "' " +
+                "WHERE G.NOME = '" + grupo + "' " +
+                "AND U1.EMAIL = '" + quemPagou + "' " +
+                "AND EXISTS (SELECT 1 FROM INTEGRA i2 WHERE i2.GROUP_ID = g.ID AND i2.USER_ID IN (u1.ID, u2.ID))";
+
+        try {
+            Statement stmt = conn.createStatement();
+            stmt.executeUpdate(query);
+            versaoUpdate();
+            stmt.close();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return Estados.USER_CRIA_DESPESA_COM_SUCESSO;
+
+    }
+
+    public static String verGasto(String email,String grupoNome){
+        String valorTotal = null;
+        String sql = "SELECT SUM(VALOR) AS DESPESATOTAL FROM DESPESA " +
+                    "JOIN GRUPO G ON G.ID = DESPESA.GROUP_ID " +
+                    "JOIN INTEGRA I ON g.ID = I.GROUP_ID " +
+                    "JOIN USERS U ON U.ID = I.USER_ID " +
+                    "WHERE G.NOME = '" + grupoNome + "'" + " AND U.EMAIL = '" + email + "'";
+
+        try (Statement stmt = conn.createStatement();
+             ResultSet rs = stmt.executeQuery(sql)){
+                valorTotal = rs.getString("DESPESATOTAL");
+                System.out.println(valorTotal);
+
+        } catch (SQLException e) {
+            System.err.println("Erro ao consultar os gastos totais: " + e.getMessage());
+        }
+        return valorTotal;
+    }
+
+
+/*    public static Grupos listarGruposDB(String solicitadoPor) {
+        List<Grupos> grupoList = new ArrayList<>();
+        Grupos grupos = null;
+        String sql = "SELECT g.NOME " +
+                "FROM GRUPO g " +
+                "JOIN INTEGRA i ON g.ID = i.GROUP_ID " +
+                "JOIN USERS u ON i.USER_ID = u.ID " +
+                "WHERE u.EMAIL = '" + solicitadoPor + "'";
+        try (Statement stmt = conn.createStatement();
+             ResultSet rs = stmt.executeQuery(sql)) {
+            while (rs.next()) {
+                String nomeGrupo = rs.getString("NOME");
+                grupos = new Grupos();
+                grupos.setNomeGrupo(nomeGrupo);
+                grupoList.add(grupos);
+                grupos.setGruposList(grupoList);
+                //grupoList.add(nomeGrupo);
+            }
+            //ACRESCENTEI ISTO <- Hugo
+            stmt.close();
+            rs.close();
+            //----------------
+        } catch (SQLException e) {
+            System.err.println("Erro ao listar grupos: " + e.getMessage());
+        }
+        return grupos;
+    }*/
 }
