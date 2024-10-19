@@ -10,6 +10,7 @@ public enum Estados {
     USER_REGISTADO_COM_SUCESSO("Utilizador registado com sucesso"),
     USER_REMOVIDO_COM_SUCESSO("User removido do Grupo com sucesso"),
     USER_MODIFICADO_COM_SUCESSO("User modificado com sucesso"),
+    USER_PAGAMENTO_INSERIDO_COM_SUCESSO("Utilizador inseriu o pagamento com sucesso"),
 
 
     GRUPO_REGISTADO_COM_SUCESSO("Grupo registado com sucesso"),
@@ -28,11 +29,14 @@ public enum Estados {
     ERRO_EDITAR_USER("Erro ao atualizar os dados do utilizador"),
     ERRO_REGISTO("O Utilizador já existe"),
     ERRO_GRUPO_NAO_ENCONTRADO("Grupo nao existe"),
+
+    ERRO_USER_NAO_PERTENCE_GRUPO("User nao pertence a esse grupo"),
     ERRO_SEM_GRUPOS("Não está em nenhum grupo"),
     ERRO_GRUPO("Grupo já existe"),
     ERRO_CRIA_CONVITE("Convite já existente"),
     ERRO_ACEITAR_CONVITE("Convite não existe"),
-    ERRO_VER_CONVITES("Sem convites")
+    ERRO_VER_CONVITES("Sem convites"),
+    ERRO_INSERIR_PAGAMENTO("Inseriu Pagamento Incorretamente"),
     ;
 
     String mensagem;

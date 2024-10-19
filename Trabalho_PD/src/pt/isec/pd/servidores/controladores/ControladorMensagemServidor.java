@@ -98,6 +98,15 @@ public class ControladorMensagemServidor {
                 resposta = new RespostaServidorMensagem(estado, estado.getDados());
                 break;
             }
+
+            case USER_INSERE_PAGAMENTO: {
+                System.out.println("Insere Pagamento...");
+                System.out.println(mensagem);
+                Estados estado = ControladorPagamentoServidor.InserirPagamento((InserePagamento) mensagem.getConteudo());
+                resposta = new RespostaServidorMensagem(estado, null);
+                break;
+            }
+
             case USER_CRIA_CONVITE: {
                 System.out.println("cria convite...");
                 System.out.println(mensagem);

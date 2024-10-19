@@ -107,6 +107,12 @@ public class ControladorPrincipal {
                         ControladorGrupoCliente.sairGrupo(ligacao, grupo, dados.getUtilizadorLogado().getEmail());
                         break;
 
+                    case "efetuar_pagamento": {
+                        System.out.println("Envia Efetuar Pagamento:");
+
+                        // Continuar aqui , Falta me a ligacao
+                    }
+
                     case "cria_convite":
                         System.out.println("Envia Cria Convite");
                         System.out.print("Nome do grupo:");
@@ -379,6 +385,8 @@ public class ControladorPrincipal {
                     case 14: //EFECTUAR PAGAMENTO
                     {
                         System.out.println("EFECTUAR PAGAMENTO");
+                        enviaMensagem("efetuar_pagamento");
+                        recebeMensagem();
                         break;
                     }
                     case 15: //LISTAR TODOS OS PAGAMENTOS

@@ -79,6 +79,7 @@ public class ControladorGrupoServidor {
         return grupo == null ? Estados.ERRO_SEM_GRUPOS : Estados.GRUPO_LISTADO_COM_SUCESSO.setDados(grupo);
     }
 
+
     public static Estados criaConvite(CriaConvite criaConvite){
         try {
             Estados estado = Bd.criaConvite(criaConvite.getEmail(), criaConvite.getNomeGrupo(), criaConvite.getEmailDestinatario());
