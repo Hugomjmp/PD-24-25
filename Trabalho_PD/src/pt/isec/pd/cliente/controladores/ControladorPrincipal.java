@@ -191,7 +191,13 @@ public class ControladorPrincipal {
                         ControladorDespesaCliente.verDespesaTotal(ligacao, dados.getUtilizadorLogado().getEmail(), grupo);
                         recebeMensagem();
                         break;
-
+                    case "exportar_despesas":
+                        System.out.println("Guardar Despesas");
+                        System.out.print("Grupo: ");
+                        grupo = scanner.nextLine();
+                        ControladorDespesaCliente.exportarDespesas(ligacao, grupo, dados.getUtilizadorLogado().getEmail());
+                        recebeMensagem();
+                        break;
                     default:
                         System.out.println("Opção inválida. Por favor, tente novamente.");
                         break;
@@ -428,6 +434,7 @@ public class ControladorPrincipal {
                     case 12: //GUARDAR DESPESAS PARA UM FICHEIRO
                     {
                         System.out.println("GUARDAR DESPESAS PARA UM FICHEIRO");
+                        enviaMensagem("exportar_despesas");
                         break;
                     }
                     case 13: //EDITAR DESPESAS

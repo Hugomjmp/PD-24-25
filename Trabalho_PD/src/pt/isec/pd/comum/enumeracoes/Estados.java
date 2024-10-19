@@ -23,6 +23,10 @@ public enum Estados {
 
     USER_CRIA_DESPESA_COM_SUCESSO("Utilizador cria despesa com sucesso"),
     CONSULTA_DESPESA_TOTAL_COM_SUCESSO("Consulta da despesa com sucesso"),
+    USER_EXPORTA_COM_SUCESSO("Ficheiro CSV exportado com sucesso"),
+
+
+
 
     ERRO_AUTENTICACAO("O Utilizador não existe"),
     ERRO_EDITAR_USER("Erro ao atualizar os dados do utilizador"),
@@ -37,8 +41,11 @@ public enum Estados {
     ERRO_VER_CONVITES("Sem convites"),
     ERRO_INSERIR_PAGAMENTO("Inseriu Pagamento Incorretamente"),
     ERRO_CRIAR_DESPESA("ERRO AO CRIAR DESPESA"),
-    ERRO_CONSULTA_DESPESA_TOTAL("ERRO AO CONSULTAR VALOR DA DESPESA TOTAL");
 
+    ERRO_CONSULTA_DESPESA_TOTAL("ERRO AO CONSULTAR VALOR DA DESPESA TOTAL"),
+
+    ERRO_AO_EXPORTAR_CSV("ERAR O FICHEIRO CSV");
+    
     String mensagem;
     Serializable dados;
 

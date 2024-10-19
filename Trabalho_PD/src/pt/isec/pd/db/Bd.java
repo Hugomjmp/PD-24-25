@@ -5,7 +5,8 @@ import pt.isec.pd.comum.modelos.Convites;
 import pt.isec.pd.comum.modelos.Grupos;
 import pt.isec.pd.comum.modelos.User;
 
-import java.io.Serializable;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.sql.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -552,32 +553,45 @@ public class Bd {
         return valorTotal;
     }
 
+    public static Estados export(String grupoNome,String nome) throws SQLException {
 
-/*    public static Grupos listarGruposDB(String solicitadoPor) {
-        List<Grupos> grupoList = new ArrayList<>();
-        Grupos grupos = null;
-        String sql = "SELECT g.NOME " +
-                "FROM GRUPO g " +
-                "JOIN INTEGRA i ON g.ID = i.GROUP_ID " +
-                "JOIN USERS u ON i.USER_ID = u.ID " +
-                "WHERE u.EMAIL = '" + solicitadoPor + "'";
+        String sqelementos = "SELECT U.NOME " +
+                                "FROM USERS U " +
+                                "JOIN INTEGRA I ON U.ID = I.USER_ID " +
+                                "JOIN GRUPO G ON G.ID = I.GROUP_ID " +
+                                "WHERE G.NOME = '" + grupoNome + "' " +
+                                "AND EXISTS ( " +
+                                "SELECT * " +
+                                "FROM INTEGRA I2 " +
+                                "JOIN USERS U2 ON I2.USER_ID = U2.ID " +
+                                "WHERE I2.GROUP_ID = G.ID " +
+                                "AND U2.EMAIL = '"+ nome +"')";
+        String localFicheiro = "src/pt/isec/pd/Ficheiros/";
+
         try (Statement stmt = conn.createStatement();
-             ResultSet rs = stmt.executeQuery(sql)) {
-            while (rs.next()) {
-                String nomeGrupo = rs.getString("NOME");
-                grupos = new Grupos();
-                grupos.setNomeGrupo(nomeGrupo);
-                grupoList.add(grupos);
-                grupos.setGruposList(grupoList);
-                //grupoList.add(nomeGrupo);
+             ResultSet rs = stmt.executeQuery(sqelementos))
+        {
+
+            FileWriter fileWriter = new FileWriter(localFicheiro + grupoNome + " despesas.csv");
+            fileWriter.write("Nome do grupo\n");
+            fileWriter.write(grupoNome + "\n");
+            fileWriter.write("\n");
+            fileWriter.write("\n");
+            fileWriter.write("Elementos\n");
+            while(rs.next()){
+                fileWriter.write(rs.getString("NOME") + ";");
             }
-            //ACRESCENTEI ISTO <- Hugo
-            stmt.close();
-            rs.close();
-            //----------------
-        } catch (SQLException e) {
-            System.err.println("Erro ao listar grupos: " + e.getMessage());
+            fileWriter.write("\n");
+            fileWriter.write("\n");
+            fileWriter.write("Data;Responsável pelo registo da despesa;Valor;Pago por;A dividir com\n");
+
+
+            fileWriter.close();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
         }
-        return grupos;
-    }*/
+
+        return Estados.USER_EXPORTA_COM_SUCESSO;
+    }
+
 }

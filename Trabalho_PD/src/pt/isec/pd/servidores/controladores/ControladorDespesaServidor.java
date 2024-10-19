@@ -6,6 +6,7 @@ import pt.isec.pd.comum.enumeracoes.Tipomensagemenum;
 import pt.isec.pd.comum.modelos.Mensagem;
 import pt.isec.pd.comum.modelos.mensagens.CriaDespesa;
 import pt.isec.pd.comum.modelos.mensagens.EditarGrupo;
+import pt.isec.pd.comum.modelos.mensagens.ExportarDespesas;
 import pt.isec.pd.comum.modelos.mensagens.VerGastoTotal;
 import pt.isec.pd.db.Bd;
 
@@ -36,6 +37,17 @@ public class ControladorDespesaServidor {
         return gasto == null ? Estados.ERRO_CONSULTA_DESPESA_TOTAL : Estados.CONSULTA_DESPESA_TOTAL_COM_SUCESSO.setDados(gasto);
 
     }
+
+    public static Estados exportCSV(ExportarDespesas exportarDespesas){
+        Serializable exportar = null;
+        try {
+            exportar = Bd.export(exportarDespesas.getGrupo(),exportarDespesas.getNome());
+        } catch (Exception e) {
+            System.err.println("Erro ao exportar as despesas do grupo: " + e.getMessage());
+        }
+        return exportar == null ? Estados.USER_EXPORTA_COM_SUCESSO : Estados.ERRO_AO_EXPORTAR_CSV.setDados(exportar);
+    }
+
 
 
 
