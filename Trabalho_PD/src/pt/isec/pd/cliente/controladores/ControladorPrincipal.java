@@ -10,7 +10,9 @@ import pt.isec.pd.comum.modelos.RespostaServidorMensagem;
 import pt.isec.pd.comum.modelos.User;
 import pt.isec.pd.comum.modelos.mensagens.EditarGrupo;
 import pt.isec.pd.comum.modelos.mensagens.VerConvites;
+import pt.isec.pd.servidores.controladores.ControladorDespesaServidor;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Scanner;
 
@@ -155,6 +157,25 @@ public class ControladorPrincipal {
                         System.out.print("\nPassword:");
                         pass = scanner.nextLine();
                         ControladorAutenticacaoCliente.edita(ligacao,Telf,dados.getUtilizadorLogado().getEmail(),pass);
+                        recebeMensagem();
+                        break;
+                    case "insere_despesa":
+                        double despesa;
+                        String quemPagou;
+                        String descricao;
+                        String data;
+                        System.out.println("Ver Inserir despesas");
+                        System.out.print("Grupo: ");
+                        grupo = scanner.nextLine();
+                        System.out.print("\nDespesa: ");
+                        despesa = Double.parseDouble(scanner.nextLine());
+                        System.out.print("\nPago por (email): ");
+                        quemPagou = scanner.nextLine();
+                        System.out.print("\nDescricao: ");
+                        descricao = scanner.nextLine();
+                        System.out.println("\nPago em (DD-MM-YYYY): ");
+                        data = scanner.nextLine();
+                        ControladorDespesaCliente.inserirDespesa(ligacao,dados.getUtilizadorLogado().getEmail(),grupo,despesa,quemPagou,descricao,data);
                         recebeMensagem();
                         break;
                     default:
@@ -372,48 +393,54 @@ public class ControladorPrincipal {
                         System.out.println("VER HISTÓRICO DE UM GRUPO");
                         break;
                     }
-                    case 11: //GUARDAR DESPESAS PARA UM FICHEIRO
+                    case 11: //INSERIR UMA DESPESA
+                    {
+                        System.out.println("INSERIR UMA DESPESA");
+                        enviaMensagem("insere_despesa");
+                        break;
+                    }
+                    case 12: //GUARDAR DESPESAS PARA UM FICHEIRO
                     {
                         System.out.println("GUARDAR DESPESAS PARA UM FICHEIRO");
                         break;
                     }
-                    case 12: //EDITAR DESPESAS
+                    case 13: //EDITAR DESPESAS
                     {
                         System.out.println("EDITAR DESPESAS");
                         break;
                     }
-                    case 13: //ELIMINAR DESPESAS
+                    case 14: //ELIMINAR DESPESAS
                     {
                         System.out.println("ELIMINAR DESPESAS");
                         break;
                     }
-                    case 14: //EFECTUAR PAGAMENTO
+                    case 15: //EFECTUAR PAGAMENTO
                     {
                         System.out.println("EFECTUAR PAGAMENTO");
                         break;
                     }
-                    case 15: //LISTAR TODOS OS PAGAMENTOS
+                    case 16: //LISTAR TODOS OS PAGAMENTOS
                     {
                         System.out.println("LISTAR TODOS OS PAGAMENTOS");
                         break;
                     }
-                    case 16: //ELIMINAR PAGAMENTO EFETUADO
+                    case 17: //ELIMINAR PAGAMENTO EFETUADO
                     {
                         System.out.println("ELIMINAR PAGAMENTO EFETUADO");
                         break;
                     }
-                    case 17: //CONSULTAR SALDO
+                    case 18: //CONSULTAR SALDO
                     {
                         System.out.println("CONSULTAR SALDO");
                         break;
                     }
-                    case 18: //ALTERA DADOS USER
+                    case 19: //ALTERA DADOS USER
                     {
                         System.out.println("ALTERA DADOS DO USER");
                         enviaMensagem("altera-dados");
                         break;
                     }
-                    case 19: //LOGOUT
+                    case 20: //LOGOUT
                     {
                         System.out.println("LOGOUT");
                         break;

@@ -20,7 +20,7 @@ public enum Estados {
     VER_CONVITES_COM_SUCESSO("Convites encontrados"),
     GRUPO_ACEITE_CONVITE_COM_SUCESSO("Convite aceite com sucesso"),
 
-
+    USER_CRIA_DESPESA_COM_SUCESSO("Utilizador cria despesa com sucesso"),
 
 
     ERRO_AUTENTICACAO("O Utilizador não existe"),
@@ -31,7 +31,11 @@ public enum Estados {
     ERRO_GRUPO("Grupo já existe"),
     ERRO_CRIA_CONVITE("Convite já existente"),
     ERRO_ACEITAR_CONVITE("Convite não existe"),
-    ERRO_VER_CONVITES("Sem convites")
+    ERRO_VER_CONVITES("Sem convites"),
+
+
+    ERRO_CRIAR_DESPESA("ERRO AO CRIAR DESPESA")
+
     ;
 
     String mensagem;

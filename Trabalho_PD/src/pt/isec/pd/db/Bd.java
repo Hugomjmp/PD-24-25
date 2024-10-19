@@ -430,6 +430,7 @@ public class Bd {
 
         return user;
     }
+
     public static void versaoUpdate(){
         int NUMERO_VERSAO = 0;
         try {
@@ -439,7 +440,7 @@ public class Bd {
             if(rs.next()){
                 NUMERO_VERSAO = rs.getInt("NUMERO_VERSAO");
 
-                System.out.println( "\nTABELA: \n" + NUMERO_VERSAO + "\n");
+                //System.out.println( "\nTABELA: \n" + NUMERO_VERSAO + "\n");
                 NUMERO_VERSAO++; //incrementa a versão
             }
 
@@ -460,5 +461,44 @@ public class Bd {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    public static Estados criaDespesa(String email,String grupo ,double despesa, String quemPagou, String descricao, String data ){
+        String query = "INSERT INTO DESPESA (GROUP_ID, VALOR, DESCRICAO, DATA, PAGA_POR, REGISTADA_POR) " +
+                "SELECT G.ID, " + despesa + ", '" + descricao + "', '" + data + "', U1.ID, U2.ID " +
+                "FROM GRUPO G " +
+                "JOIN INTEGRA I1 ON G.ID = I1.GROUP_ID " +
+                "JOIN USERS U1 ON U1.ID = I1.USER_ID " +
+                "JOIN USERS U2 ON U2.EMAIL = '" + email + "' " +
+                "WHERE G.NOME = '" + grupo + "' " +
+                "AND U1.EMAIL = '" + quemPagou + "' " +
+                "AND EXISTS (SELECT 1 FROM INTEGRA i2 WHERE i2.GROUP_ID = g.ID AND i2.USER_ID IN (u1.ID, u2.ID))";
+
+
+        /*
+        * INSERT INTO DESPESA (GROUP_ID, VALOR, DESCRICAO, DATA, PAGA_POR, REGISTADA_POR)
+        SELECT G.ID, 'despesas', 'descricao da despesa', '15-10-2024', U1.ID, U2.ID
+        FROM GRUPO G
+        JOIN INTEGRA I1 ON G.ID = I1.GROUP_ID
+        JOIN USERS U1 ON U1.ID = I1.USER_ID
+        JOIN USERS U2 ON U2.EMAIL = 'a@a.com'
+        WHERE G.NOME = 'olaadeus'
+        AND U1.EMAIL = 'a21220079@isec.pt'
+        AND EXISTS (SELECT 1 FROM INTEGRA i2 WHERE i2.GROUP_ID = g.ID AND i2.USER_ID IN (u1.ID, u2.ID))
+        * */
+
+
+
+        System.out.println(query);
+        try {
+            Statement stmt = conn.createStatement();
+            stmt.executeUpdate(query);
+            versaoUpdate();
+            stmt.close();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return Estados.USER_CRIA_DESPESA_COM_SUCESSO;
+
     }
 }
