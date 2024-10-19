@@ -130,7 +130,12 @@ public class ControladorMensagemServidor {
                 resposta = new RespostaServidorMensagem(estado, estado.getDados());
                 break;
             }
-
+            case USER_EXPORTA_HISTORICO_CSV_FICHEIRO:
+            {
+                Estados estado = ControladorDespesaServidor.exportCSV((ExportarDespesas) mensagem.getConteudo());
+                resposta = new RespostaServidorMensagem(estado, estado.getDados());
+                break;
+            }
 
 
         }
