@@ -206,6 +206,11 @@ public class ControladorPrincipal {
 
 
                 }*/
+                case USER_CRIA_DESPESA_COM_SUCESSO -> {
+                    System.out.println(" HELLO DESPESA " + resposta.getEstado());
+                    return resposta.getEstado();
+                }
+
                 case GRUPO_USER_INSERIDO_COM_SUCESSO ->{
                     System.out.println(" HELLO INTEGRA "+resposta.getEstado());
                     return  resposta.getEstado();

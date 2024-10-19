@@ -474,22 +474,6 @@ public class Bd {
                 "AND U1.EMAIL = '" + quemPagou + "' " +
                 "AND EXISTS (SELECT 1 FROM INTEGRA i2 WHERE i2.GROUP_ID = g.ID AND i2.USER_ID IN (u1.ID, u2.ID))";
 
-
-        /*
-        * INSERT INTO DESPESA (GROUP_ID, VALOR, DESCRICAO, DATA, PAGA_POR, REGISTADA_POR)
-        SELECT G.ID, 'despesas', 'descricao da despesa', '15-10-2024', U1.ID, U2.ID
-        FROM GRUPO G
-        JOIN INTEGRA I1 ON G.ID = I1.GROUP_ID
-        JOIN USERS U1 ON U1.ID = I1.USER_ID
-        JOIN USERS U2 ON U2.EMAIL = 'a@a.com'
-        WHERE G.NOME = 'olaadeus'
-        AND U1.EMAIL = 'a21220079@isec.pt'
-        AND EXISTS (SELECT 1 FROM INTEGRA i2 WHERE i2.GROUP_ID = g.ID AND i2.USER_ID IN (u1.ID, u2.ID))
-        * */
-
-
-
-        System.out.println(query);
         try {
             Statement stmt = conn.createStatement();
             stmt.executeUpdate(query);
