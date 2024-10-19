@@ -47,7 +47,7 @@ public class Vista {
             System.out.println("+-------------------------------------------------------------------------------------+");
             System.out.print("#>");
             int opcao = scanner.nextInt();
-            if (opcao > 0 && opcao < 20 ){
+            if (opcao > 0 && opcao < 21 ){
                 return opcao;
             }else{
                 System.out.println("OPÇÃO INVÁLIDA!");
