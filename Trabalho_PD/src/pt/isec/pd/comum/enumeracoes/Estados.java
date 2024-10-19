@@ -20,13 +20,9 @@ public enum Estados {
     GRUPO_CONVITE_COM_SUCESSO("Convite creado com sucesso"),
     VER_CONVITES_COM_SUCESSO("Convites encontrados"),
     GRUPO_ACEITE_CONVITE_COM_SUCESSO("Convite aceite com sucesso"),
-
     USER_CRIA_DESPESA_COM_SUCESSO("Utilizador cria despesa com sucesso"),
     CONSULTA_DESPESA_TOTAL_COM_SUCESSO("Consulta da despesa com sucesso"),
     USER_EXPORTA_COM_SUCESSO("Ficheiro CSV exportado com sucesso"),
-
-
-
 
     ERRO_AUTENTICACAO("O Utilizador não existe"),
     ERRO_EDITAR_USER("Erro ao atualizar os dados do utilizador"),

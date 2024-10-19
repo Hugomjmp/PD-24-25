@@ -115,10 +115,23 @@ public class ControladorPrincipal {
                         break;
 
                     case "efetuar_pagamento": {
+                        double valorPagamento;
+                        String quemRecebeu;
+                        String grupoNome;
                         System.out.println("Envia Efetuar Pagamento:");
 
-                        // Continuar aqui , Falta me a ligacao
+                        System.out.print("Grupo: ");
+                        grupoNome = scanner.nextLine();
+                        System.out.print("\nValor do Pagamento: ");
+                        valorPagamento = Double.parseDouble(scanner.nextLine());
+                        System.out.print("\nPago para (email): ");
+                        quemRecebeu = scanner.nextLine();
+                        String pagaPor = dados.getUtilizadorLogado().getEmail();
+                        ControladorPagamentoCliente.inserirPagamento(ligacao, pagaPor, quemRecebeu, grupoNome, valorPagamento);
+                        recebeMensagem();
+                        break;
                     }
+
 
                     case "cria_convite":
                         System.out.println("Envia Cria Convite");

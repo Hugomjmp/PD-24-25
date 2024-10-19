@@ -51,19 +51,6 @@ public class ControladorGrupoCliente {
         ligacao.enviaMensagem(mensagem);
         //System.out.println(mensagem);
     }
-    // Verificar isto também
-    public static void inserirPagamento(Ligacao ligacao, String pagaPor, String recebidoPor, String grupoNome, double valor) {
-
-        if (valor <= 0) {
-            System.out.println("Valor deve ser positivo.");
-            return;
-        }
-        InserePagamento pagamento = new InserePagamento(grupoNome, pagaPor, recebidoPor, valor);
-        Mensagem mensagem = new Mensagem(Tipomensagemenum.USER_INSERE_PAGAMENTO, pagamento);
-        ligacao.enviaMensagem(mensagem);
-        System.out.println("Pagamento enviado: " + mensagem);
-    }
-
 
     public static void verConvites(Ligacao ligacao, String emailRecebe){
         VerConvites verConvites = new VerConvites(emailRecebe);
