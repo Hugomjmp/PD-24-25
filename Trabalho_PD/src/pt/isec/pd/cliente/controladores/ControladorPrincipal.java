@@ -114,25 +114,6 @@ public class ControladorPrincipal {
                         recebeMensagem();
                         break;
 
-                    case "efetuar_pagamento": {
-                        double valorPagamento;
-                        String quemRecebeu;
-                        String grupoNome;
-                        System.out.println("Envia Efetuar Pagamento:");
-
-                        System.out.print("Grupo: ");
-                        grupoNome = scanner.nextLine();
-                        System.out.print("\nValor do Pagamento: ");
-                        valorPagamento = Double.parseDouble(scanner.nextLine());
-                        System.out.print("\nPago para (email): ");
-                        quemRecebeu = scanner.nextLine();
-                        String pagaPor = dados.getUtilizadorLogado().getEmail();
-                        ControladorPagamentoCliente.inserirPagamento(ligacao, pagaPor, quemRecebeu, grupoNome, valorPagamento);
-                        recebeMensagem();
-                        break;
-                    }
-
-
                     case "cria_convite":
                         System.out.println("Envia Cria Convite");
                         System.out.print("Nome do grupo:");
@@ -463,8 +444,6 @@ public class ControladorPrincipal {
                     case 15: //EFECTUAR PAGAMENTO
                     {
                         System.out.println("EFECTUAR PAGAMENTO");
-                        enviaMensagem("efetuar_pagamento");
-                        recebeMensagem();
                         break;
                     }
                     case 16: //LISTAR TODOS OS PAGAMENTOS

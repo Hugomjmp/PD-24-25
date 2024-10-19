@@ -9,7 +9,6 @@ public enum Estados {
     USER_REGISTADO_COM_SUCESSO("Utilizador registado com sucesso"),
     USER_REMOVIDO_COM_SUCESSO("User removido do Grupo com sucesso"),
     USER_MODIFICADO_COM_SUCESSO("User modificado com sucesso"),
-    USER_PAGAMENTO_INSERIDO_COM_SUCESSO("Utilizador inseriu o pagamento com sucesso"),
 
 
     GRUPO_REGISTADO_COM_SUCESSO("Grupo registado com sucesso"),
@@ -20,28 +19,30 @@ public enum Estados {
     GRUPO_CONVITE_COM_SUCESSO("Convite creado com sucesso"),
     VER_CONVITES_COM_SUCESSO("Convites encontrados"),
     GRUPO_ACEITE_CONVITE_COM_SUCESSO("Convite aceite com sucesso"),
+
     USER_CRIA_DESPESA_COM_SUCESSO("Utilizador cria despesa com sucesso"),
     CONSULTA_DESPESA_TOTAL_COM_SUCESSO("Consulta da despesa com sucesso"),
     USER_EXPORTA_COM_SUCESSO("Ficheiro CSV exportado com sucesso"),
+
+
+
 
     ERRO_AUTENTICACAO("O Utilizador não existe"),
     ERRO_EDITAR_USER("Erro ao atualizar os dados do utilizador"),
     ERRO_REGISTO("O Utilizador já existe"),
     ERRO_GRUPO_NAO_ENCONTRADO("Grupo nao existe"),
-
-    ERRO_USER_NAO_PERTENCE_GRUPO("User nao pertence a esse grupo"),
     ERRO_SEM_GRUPOS("Não está em nenhum grupo"),
     ERRO_GRUPO("Grupo já existe"),
     ERRO_CRIA_CONVITE("Convite já existente"),
     ERRO_ACEITAR_CONVITE("Convite não existe"),
     ERRO_VER_CONVITES("Sem convites"),
-    ERRO_INSERIR_PAGAMENTO("Inseriu Pagamento Incorretamente"),
+
+
     ERRO_CRIAR_DESPESA("ERRO AO CRIAR DESPESA"),
-
     ERRO_CONSULTA_DESPESA_TOTAL("ERRO AO CONSULTAR VALOR DA DESPESA TOTAL"),
+    ERRO_AO_EXPORTAR_CSV("ERRO AO EXPORTAR O FICHEIRO CSV")
+    ;
 
-    ERRO_AO_EXPORTAR_CSV("ERAR O FICHEIRO CSV");
-    
     String mensagem;
     Serializable dados;
 

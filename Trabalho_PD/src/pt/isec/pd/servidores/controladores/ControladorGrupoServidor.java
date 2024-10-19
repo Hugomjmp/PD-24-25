@@ -93,7 +93,6 @@ public class ControladorGrupoServidor {
             return Estados.GRUPO_LISTADO_COM_SUCESSO.setDados((Serializable) gruposList);
         }*/
 
-
     public static Estados criaConvite(CriaConvite criaConvite){
         try {
             Estados estado = Bd.criaConvite(criaConvite.getEmail(), criaConvite.getNomeGrupo(), criaConvite.getEmailDestinatario());

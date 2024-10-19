@@ -8,7 +8,6 @@ import pt.isec.pd.comum.modelos.User;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.sql.*;
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -265,7 +264,7 @@ public class Bd {
             }
         } catch (SQLException e) {
             System.err.println("Erro ao eliminar grupo: " + e.getMessage());
-            return Estados.ERRO_GRUPO;
+            return Estados.ERRO_GRUPO; // Retorna erro em caso de exceção
         }
     }
 
@@ -284,9 +283,8 @@ public class Bd {
                 throw new RuntimeException(e);
             }
 
-        //return Estados.GRUPO_NOME_ALTERADO_COM_SUCESSO.setDados();
-        return Estados.GRUPO_NOME_ALTERADO_COM_SUCESSO;
 
+            return Estados.GRUPO_NOME_ALTERADO_COM_SUCESSO;
     }
 
     /*public static List<Grupos> listarGruposDB(String solicitadoPor) {
@@ -349,53 +347,6 @@ public class Bd {
         }
         return grupos;
     }
-
-    public static Estados inserirPagamento(String groupId, String pagaPor, String recebidoPor, double valor, LocalDate data) {
-        try {
-            // Pago Por, Verificacao
-            String queryPagaPor = "SELECT 1 FROM INTEGRA WHERE USER_ID = ? AND GROUP_ID = ?";
-            PreparedStatement pstmtPagaPor = conn.prepareStatement(queryPagaPor);
-            pstmtPagaPor.setString(1, pagaPor);
-            pstmtPagaPor.setString(2, groupId);
-            ResultSet rsPagaPor = pstmtPagaPor.executeQuery();
-            if (!rsPagaPor.next()) {
-                return Estados.ERRO_USER_NAO_PERTENCE_GRUPO;
-            }
-            rsPagaPor.close();
-            pstmtPagaPor.close();
-
-            // Recebido Por, Verificacao
-            String queryRecebidoPor = "SELECT 1 FROM INTEGRA WHERE USER_ID = ? AND GROUP_ID = ?";
-            PreparedStatement pstmtRecebidoPor = conn.prepareStatement(queryRecebidoPor);
-            pstmtRecebidoPor.setString(1, recebidoPor);
-            pstmtRecebidoPor.setString(2, groupId);
-            ResultSet rsRecebidoPor = pstmtRecebidoPor.executeQuery();
-            if (!rsRecebidoPor.next()) {
-                return Estados.ERRO_USER_NAO_PERTENCE_GRUPO;
-            }
-            rsRecebidoPor.close();
-            pstmtRecebidoPor.close();
-
-
-            String queryInsertPagamento = "INSERT INTO PAGAMENTOS (GROUP_ID, PAGA_POR, RECEBIDO_POR, VALOR, DATA_PAGAMENTO) VALUES (?, ?, ?, ?, ?)";
-            PreparedStatement pstmtInsert = conn.prepareStatement(queryInsertPagamento);
-            pstmtInsert.setString(1, groupId);
-            pstmtInsert.setString(2, pagaPor);
-            pstmtInsert.setString(3, recebidoPor);
-            pstmtInsert.setDouble(4, valor);
-            pstmtInsert.setDate(5, java.sql.Date.valueOf(data));
-            pstmtInsert.executeUpdate();
-            pstmtInsert.close();
-
-            versaoUpdate();
-            return Estados.USER_PAGAMENTO_INSERIDO_COM_SUCESSO;
-
-        } catch (SQLException e) {
-            System.err.println("Erro ao inserir pagamento: " + e.getMessage());
-            return Estados.ERRO_INSERIR_PAGAMENTO;
-        }
-    }
-
 
     public static Estados setUserDB(String nome, int nTelefone, String Email, String password){
         try{
