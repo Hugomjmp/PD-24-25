@@ -485,4 +485,52 @@ public class Bd {
         return Estados.USER_CRIA_DESPESA_COM_SUCESSO;
 
     }
+
+    public static String verGasto(String email,String grupoNome){
+        String valorTotal = null;
+        String sql = "SELECT SUM(VALOR) AS DESPESATOTAL FROM DESPESA " +
+                    "JOIN GRUPO G ON G.ID = DESPESA.GROUP_ID " +
+                    "JOIN INTEGRA I ON g.ID = I.GROUP_ID " +
+                    "JOIN USERS U ON U.ID = I.USER_ID " +
+                    "WHERE G.NOME = '" + grupoNome + "'" + " AND U.EMAIL = '" + email + "'";
+
+        try (Statement stmt = conn.createStatement();
+             ResultSet rs = stmt.executeQuery(sql)){
+                valorTotal = rs.getString("DESPESATOTAL");
+                System.out.println(valorTotal);
+
+        } catch (SQLException e) {
+            System.err.println("Erro ao consultar os gastos totais: " + e.getMessage());
+        }
+        return valorTotal;
+    }
+
+
+/*    public static Grupos listarGruposDB(String solicitadoPor) {
+        List<Grupos> grupoList = new ArrayList<>();
+        Grupos grupos = null;
+        String sql = "SELECT g.NOME " +
+                "FROM GRUPO g " +
+                "JOIN INTEGRA i ON g.ID = i.GROUP_ID " +
+                "JOIN USERS u ON i.USER_ID = u.ID " +
+                "WHERE u.EMAIL = '" + solicitadoPor + "'";
+        try (Statement stmt = conn.createStatement();
+             ResultSet rs = stmt.executeQuery(sql)) {
+            while (rs.next()) {
+                String nomeGrupo = rs.getString("NOME");
+                grupos = new Grupos();
+                grupos.setNomeGrupo(nomeGrupo);
+                grupoList.add(grupos);
+                grupos.setGruposList(grupoList);
+                //grupoList.add(nomeGrupo);
+            }
+            //ACRESCENTEI ISTO <- Hugo
+            stmt.close();
+            rs.close();
+            //----------------
+        } catch (SQLException e) {
+            System.err.println("Erro ao listar grupos: " + e.getMessage());
+        }
+        return grupos;
+    }*/
 }

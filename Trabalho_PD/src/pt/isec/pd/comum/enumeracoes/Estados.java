@@ -21,7 +21,7 @@ public enum Estados {
     GRUPO_ACEITE_CONVITE_COM_SUCESSO("Convite aceite com sucesso"),
 
     USER_CRIA_DESPESA_COM_SUCESSO("Utilizador cria despesa com sucesso"),
-
+    CONSULTA_DESPESA_TOTAL_COM_SUCESSO("Consulta da despesa com sucesso"),
 
     ERRO_AUTENTICACAO("O Utilizador não existe"),
     ERRO_EDITAR_USER("Erro ao atualizar os dados do utilizador"),
@@ -34,8 +34,8 @@ public enum Estados {
     ERRO_VER_CONVITES("Sem convites"),
 
 
-    ERRO_CRIAR_DESPESA("ERRO AO CRIAR DESPESA")
-
+    ERRO_CRIAR_DESPESA("ERRO AO CRIAR DESPESA"),
+    ERRO_CONSULTA_DESPESA_TOTAL("ERRO AO CONSULTAR VALOR DA DESPESA TOTAL")
     ;
 
     String mensagem;

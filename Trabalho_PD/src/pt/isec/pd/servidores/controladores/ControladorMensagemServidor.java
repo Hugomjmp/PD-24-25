@@ -124,7 +124,12 @@ public class ControladorMensagemServidor {
                 resposta = new RespostaServidorMensagem(estado, estado.getDados());
                 break;
             }
-
+            case USER_VISUALIZA_GASTOS:
+            {
+                Estados estado = ControladorDespesaServidor.verGastoTotal((VerGastoTotal) mensagem.getConteudo());
+                resposta = new RespostaServidorMensagem(estado, estado.getDados());
+                break;
+            }
 
 
 

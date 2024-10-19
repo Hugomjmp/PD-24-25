@@ -178,6 +178,14 @@ public class ControladorPrincipal {
                         ControladorDespesaCliente.inserirDespesa(ligacao,dados.getUtilizadorLogado().getEmail(),grupo,despesa,quemPagou,descricao,data);
                         recebeMensagem();
                         break;
+                    case "gasto_total":
+                        System.out.println("Ver Inserir despesas");
+                        System.out.print("Grupo: ");
+                        grupo = scanner.nextLine();
+                        ControladorDespesaCliente.verDespesaTotal(ligacao, dados.getUtilizadorLogado().getEmail(), grupo);
+                        recebeMensagem();
+                        break;
+
                     default:
                         System.out.println("Opção inválida. Por favor, tente novamente.");
                         break;
@@ -206,6 +214,11 @@ public class ControladorPrincipal {
 
 
                 }*/
+                case CONSULTA_DESPESA_TOTAL_COM_SUCESSO -> {
+                    System.out.println(" HELLO DESPESA TOTAL " + resposta.getEstado());
+                    System.out.println("O gasto total no grupo foi de: " +  resposta.getConteudo() + "€");
+                    return resposta.getEstado();
+                }
                 case USER_CRIA_DESPESA_COM_SUCESSO -> {
                     System.out.println(" HELLO DESPESA " + resposta.getEstado());
                     return resposta.getEstado();
@@ -391,6 +404,8 @@ public class ControladorPrincipal {
                     case 9: //VER GASTO TOTAL DE UM GRUPO
                     {
                         System.out.println("VER GASTO TOTAL DE UM GRUPO");
+                        enviaMensagem("gasto_total");
+
                         break;
                     }
                     case 10: //VER HISTÓRICO DE UM GRUPO
