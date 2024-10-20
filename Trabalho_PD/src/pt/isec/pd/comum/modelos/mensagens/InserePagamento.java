@@ -1,8 +1,6 @@
 package pt.isec.pd.comum.modelos.mensagens;
 
 import java.io.Serializable;
-import java.time.LocalDate;
-import java.util.Date;
 
 public class InserePagamento implements Serializable {
     private static final long serialVersionUID = 1L;
@@ -11,20 +9,15 @@ public class InserePagamento implements Serializable {
     private String pagaPor;
     private String recebidoPor;
     private double valor;
-    private LocalDate data;
+    private String data;
 
-
-    public InserePagamento() {
-        this.data = LocalDate.now();
-    }
-
-
+    // Construtor que aceita uma data como string
     public InserePagamento(String groupId, String pagaPor, String recebidoPor, double valor) {
         this.groupId = groupId;
         this.pagaPor = pagaPor;
         this.recebidoPor = recebidoPor;
         this.valor = valor;
-        this.data = LocalDate.now();
+        this.data = data;
     }
 
     // Getters e Setters
@@ -60,7 +53,7 @@ public class InserePagamento implements Serializable {
         this.valor = valor;
     }
 
-    public LocalDate getData() {
+    public String getData() {
         return data;
     }
 
@@ -71,7 +64,7 @@ public class InserePagamento implements Serializable {
                 ", pagaPor='" + pagaPor + '\'' +
                 ", recebidoPor='" + recebidoPor + '\'' +
                 ", valor=" + valor +
-                ", data=" + data +
+                ", data='" + data + '\'' +
                 '}';
     }
 }

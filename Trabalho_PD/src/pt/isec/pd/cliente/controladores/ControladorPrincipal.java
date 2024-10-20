@@ -12,6 +12,7 @@ import pt.isec.pd.comum.modelos.mensagens.EditarGrupo;
 import pt.isec.pd.comum.modelos.mensagens.VerConvites;
 import pt.isec.pd.servidores.controladores.ControladorDespesaServidor;
 
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
 import java.util.Scanner;
@@ -118,6 +119,8 @@ public class ControladorPrincipal {
                         double valorPagamento;
                         String quemRecebeu;
                         String grupoNome;
+                        String dataPagamentoStr;
+
                         System.out.println("Envia Efetuar Pagamento:");
 
                         System.out.print("Grupo: ");
@@ -126,13 +129,14 @@ public class ControladorPrincipal {
                         valorPagamento = Double.parseDouble(scanner.nextLine());
                         System.out.print("\nPago para (email): ");
                         quemRecebeu = scanner.nextLine();
+                        System.out.print("\nData do Pagamento (formato DD-MM-YYYY): ");
+                        dataPagamentoStr = scanner.nextLine();
                         String pagaPor = dados.getUtilizadorLogado().getEmail();
-                        ControladorPagamentoCliente.inserirPagamento(ligacao, pagaPor, quemRecebeu, grupoNome, valorPagamento);
-                        recebeMensagem();
+
+                        ControladorPagamentoCliente.inserirPagamento(ligacao, pagaPor, quemRecebeu, grupoNome, valorPagamento, dataPagamentoStr);
+                        //recebeMensagem();
                         break;
                     }
-
-
                     case "cria_convite":
                         System.out.println("Envia Cria Convite");
                         System.out.print("Nome do grupo:");

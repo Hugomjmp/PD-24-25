@@ -15,11 +15,14 @@ public enum Estados {
     GRUPO_REGISTADO_COM_SUCESSO("Grupo registado com sucesso"),
     GRUPO_USER_INSERIDO_COM_SUCESSO("Utilizador Inserido com Sucesso"),
     GRUPO_LISTADO_COM_SUCESSO("Grupo Listado com sucesso"),
+
+    PAGAMENTO_LISTADO_COM_SUCESSO("Pagamento Listado com sucesso"),
     GRUPO_NOME_ALTERADO_COM_SUCESSO("Nome do Grupo Alterado com Sucesso"),
     GRUPO_ELIMINADO_COM_SUCESSO("Grupo Eliminado com sucesso"),
     GRUPO_CONVITE_COM_SUCESSO("Convite creado com sucesso"),
     VER_CONVITES_COM_SUCESSO("Convites encontrados"),
     GRUPO_ACEITE_CONVITE_COM_SUCESSO("Convite aceite com sucesso"),
+
     USER_CRIA_DESPESA_COM_SUCESSO("Utilizador cria despesa com sucesso"),
     CONSULTA_DESPESA_TOTAL_COM_SUCESSO("Consulta da despesa com sucesso"),
     USER_EXPORTA_COM_SUCESSO("Ficheiro CSV exportado com sucesso"),
@@ -40,6 +43,7 @@ public enum Estados {
 
     ERRO_CONSULTA_DESPESA_TOTAL("ERRO AO CONSULTAR VALOR DA DESPESA TOTAL"),
 
+    ERRO_SEM_PAGAMENTOS("Nao Existem Pagamentos"),
     ERRO_AO_EXPORTAR_CSV("ERAR O FICHEIRO CSV");
     
     String mensagem;

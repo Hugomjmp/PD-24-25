@@ -7,7 +7,7 @@ import pt.isec.pd.comum.modelos.mensagens.InserePagamento;
 
 public class ControladorPagamentoCliente {
 
-    public static void inserirPagamento(Ligacao ligacao, String pagaPor, String recebidoPor, String grupoNome, double valor) {
+    public static void inserirPagamento(Ligacao ligacao, String pagaPor, String recebidoPor, String grupoNome, double valor, String dataPagamentoStr) {
 
         if (valor <= 0) {
             System.out.println("Valor deve ser positivo.");

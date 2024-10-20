@@ -3,6 +3,7 @@ package pt.isec.pd.db;
 import pt.isec.pd.comum.enumeracoes.Estados;
 import pt.isec.pd.comum.modelos.Convites;
 import pt.isec.pd.comum.modelos.Grupos;
+import pt.isec.pd.comum.modelos.Pagamento;
 import pt.isec.pd.comum.modelos.User;
 
 import java.io.FileWriter;
@@ -350,40 +351,18 @@ public class Bd {
         return grupos;
     }
 
-    public static Estados inserirPagamento(String groupId, String pagaPor, String recebidoPor, double valor, LocalDate data) {
+    public static Estados inserirPagamento(String groupId, String pagaPor, String recebidoPor, double valor, String data) {
+        String queryInsertPagamento = "INSERT INTO PAGAMENTO (GROUP_ID, PAGA_POR, RECEBIDO_POR, VALOR, DATA) VALUES (?, ?, ?, ?, ?)";
+
         try {
-            // Pago Por, Verificacao
-            String queryPagaPor = "SELECT 1 FROM INTEGRA WHERE USER_ID = ? AND GROUP_ID = ?";
-            PreparedStatement pstmtPagaPor = conn.prepareStatement(queryPagaPor);
-            pstmtPagaPor.setString(1, pagaPor);
-            pstmtPagaPor.setString(2, groupId);
-            ResultSet rsPagaPor = pstmtPagaPor.executeQuery();
-            if (!rsPagaPor.next()) {
-                return Estados.ERRO_USER_NAO_PERTENCE_GRUPO;
-            }
-            rsPagaPor.close();
-            pstmtPagaPor.close();
-
-            // Recebido Por, Verificacao
-            String queryRecebidoPor = "SELECT 1 FROM INTEGRA WHERE USER_ID = ? AND GROUP_ID = ?";
-            PreparedStatement pstmtRecebidoPor = conn.prepareStatement(queryRecebidoPor);
-            pstmtRecebidoPor.setString(1, recebidoPor);
-            pstmtRecebidoPor.setString(2, groupId);
-            ResultSet rsRecebidoPor = pstmtRecebidoPor.executeQuery();
-            if (!rsRecebidoPor.next()) {
-                return Estados.ERRO_USER_NAO_PERTENCE_GRUPO;
-            }
-            rsRecebidoPor.close();
-            pstmtRecebidoPor.close();
-
-
-            String queryInsertPagamento = "INSERT INTO PAGAMENTOS (GROUP_ID, PAGA_POR, RECEBIDO_POR, VALOR, DATA_PAGAMENTO) VALUES (?, ?, ?, ?, ?)";
             PreparedStatement pstmtInsert = conn.prepareStatement(queryInsertPagamento);
+
             pstmtInsert.setString(1, groupId);
             pstmtInsert.setString(2, pagaPor);
             pstmtInsert.setString(3, recebidoPor);
             pstmtInsert.setDouble(4, valor);
-            pstmtInsert.setDate(5, java.sql.Date.valueOf(data));
+            pstmtInsert.setString(5, data);
+
             pstmtInsert.executeUpdate();
             pstmtInsert.close();
 
@@ -395,6 +374,41 @@ public class Bd {
             return Estados.ERRO_INSERIR_PAGAMENTO;
         }
     }
+
+    public static List<Pagamento> listarPagamentosDB(String solicitadoPor) {
+        List<Pagamento> pagamentoList = new ArrayList<>();
+        String sql = "SELECT p.VALOR, p.DATA, p.PAGA_POR, p.RECEBIDO_POR " +
+                "FROM PAGAMENTO p " +
+                "JOIN GRUPO g ON p.GROUP_ID = g.ID " +
+                "JOIN INTEGRA i ON g.ID = i.GROUP_ID " +
+                "JOIN USERS u ON i.USER_ID = u.ID " +
+                "WHERE u.EMAIL = ?";
+
+        try (PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            pstmt.setString(1, solicitadoPor);
+
+            try (ResultSet rs = pstmt.executeQuery()) {
+                while (rs.next()) {
+                    String groupId = rs.getString("GROUP_ID");
+                    double valor = rs.getDouble("VALOR");
+                    String data = rs.getString("DATA");
+                    String pagaPor = rs.getString("PAGA_POR");
+                    String recebidoPor = rs.getString("RECEBIDO_POR");
+
+                    Pagamento pagamento = new Pagamento(valor, data, pagaPor, recebidoPor, groupId);
+                    pagamentoList.add(pagamento);
+                }
+            }
+        } catch (SQLException e) {
+            System.err.println("Erro ao listar pagamentos: " + e.getMessage());
+        }
+
+        return pagamentoList;
+    }
+
+
+
+
 
 
     public static Estados setUserDB(String nome, int nTelefone, String Email, String password){
