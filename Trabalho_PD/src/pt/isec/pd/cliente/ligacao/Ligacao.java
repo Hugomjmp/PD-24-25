@@ -13,6 +13,7 @@ public class Ligacao {
     static InetAddress servidorEndereco;
     static int servidorPorto;
     private Socket socket = null;
+    private static final Object lock = new Object();
 
     public Ligacao(String endereco, String porto){
         try {
@@ -49,16 +50,18 @@ public class Ligacao {
     }*/
 
     public RespostaServidorMensagem recebeMensagem(){
-        RespostaServidorMensagem resposta;
-        try{
-            ObjectInputStream in = new ObjectInputStream(socket.getInputStream());
-            resposta = (RespostaServidorMensagem) in.readObject();
-            System.out.println("RESPOSTA RECEBE -> " + resposta);
+        synchronized (lock) {
+            RespostaServidorMensagem resposta;
+            try {
+                ObjectInputStream in = new ObjectInputStream(socket.getInputStream());
+                resposta = (RespostaServidorMensagem) in.readObject();
+                //System.out.println("RESPOSTA RECEBE -> " + resposta);
 
-        } catch (IOException | ClassNotFoundException e) {
-            throw new RuntimeException(e);
+            } catch (IOException | ClassNotFoundException e) {
+                throw new RuntimeException(e);
+            }
+            return resposta;
         }
-        return resposta;
     }
 
 

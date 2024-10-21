@@ -8,7 +8,7 @@ public class Cliente {
 
 
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws InterruptedException {
         int argc = args.length;
 
         if (argc != 2){

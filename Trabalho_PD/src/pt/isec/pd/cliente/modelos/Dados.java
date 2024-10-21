@@ -17,37 +17,37 @@ public class Dados {
         this.utilizadorLogado = null;
     }
 
-    public Grupos getGrupoSelecionado() {
+    public synchronized Grupos getGrupoSelecionado() {
         return GrupoSelecionado;
     }
 
-    public void setGrupoSelecionado(Grupos grupoSelecionado) {
+    public synchronized void setGrupoSelecionado(Grupos grupoSelecionado) {
         GrupoSelecionado = grupoSelecionado;
     }
 
-    public Grupos getGrupos() {
+    public synchronized Grupos getGrupos() {
         return grupos;
     }
 
-    public void setGrupos(Grupos grupos) {
+    public synchronized void setGrupos(Grupos grupos) {
         this.grupos = grupos;
     }
 
-    public User getUtilizadorLogado(){
+    public synchronized User getUtilizadorLogado(){
         return utilizadorLogado;
     }
-    public void setUtilizadorLogado(User utilizadorLogado){
+    public synchronized void setUtilizadorLogado(User utilizadorLogado){
         this.utilizadorLogado = utilizadorLogado;
     }
 
-    public List<User> getUtilizadores(){
-        return  utilizadores;
+    public synchronized List<User> getUtilizadores(){
+        return utilizadores;
     }
-    public void setUtilizadores(List<User> conteudo){
+    public synchronized void setUtilizadores(List<User> conteudo){
         this.utilizadores = conteudo;
     }
 
-    public Convites getConvites(){
+    public synchronized Convites getConvites(){
         return convites;
     }
 

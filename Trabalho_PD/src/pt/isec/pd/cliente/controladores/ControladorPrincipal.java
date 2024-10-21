@@ -51,21 +51,24 @@ public class ControladorPrincipal {
         Integer Telf = null;
         String pass;
         Scanner scanner = new Scanner(System.in);
-            if(dados.getUtilizadorLogado() == null){
-                switch (escolha){
+        System.out.println("escolha -> " + escolha);
+
+            if (dados.getUtilizadorLogado() == null) {
+                switch (escolha) {
                     case "login": { //login
                         System.out.println("Envia: Login");
                         dadosLogin = ControladorPrincipal.login();
                         ControladorAutenticacaoCliente.login(ligacao, dadosLogin);
+
                         break;
                     }
-                    case "registo":{ //Registo
+                    case "registo": { //Registo
                         System.out.println("Envia: Registo");
                         dadosRegisto = ControladorPrincipal.registo();
-                        ControladorAutenticacaoCliente.registo(ligacao,dadosRegisto);
+                        ControladorAutenticacaoCliente.registo(ligacao, dadosRegisto);
                         break;
-                       // ControladorAutenticacaoCliente.registo(ligacao, user);
-                       // ControladorPrincipal.registo(user);
+                        // ControladorAutenticacaoCliente.registo(ligacao, user);
+                        // ControladorPrincipal.registo(user);
                     }
                 }
             } else {
@@ -78,9 +81,9 @@ public class ControladorPrincipal {
 
                         grupo = scanner.nextLine();
                         ControladorGrupoCliente.criaGrupo(ligacao, grupo, dados.getUtilizadorLogado().getEmail());
-                        recebeMensagem();
-                        ControladorGrupoCliente.insereGrupo(ligacao,grupo,dados.getUtilizadorLogado().getEmail());
-                        recebeMensagem();
+                        //recebeMensagem();
+                        ControladorGrupoCliente.insereGrupo(ligacao, grupo, dados.getUtilizadorLogado().getEmail());
+                        //recebeMensagem();
                         break;
 
                     case "elimina_grupo":
@@ -89,7 +92,7 @@ public class ControladorPrincipal {
 
                         grupo = scanner.nextLine();
                         ControladorGrupoCliente.eliminaGrupo(ligacao, grupo, dados.getUtilizadorLogado().getEmail());
-                        recebeMensagem();
+                        //recebeMensagem();
                         break;
                     case "edita_grupo":
                         System.out.println("Envia Edita Grupo");
@@ -98,19 +101,19 @@ public class ControladorPrincipal {
                         grupo = scanner.nextLine();
                         System.out.print("Novo nome:");
                         grupoNovoNome = scanner.nextLine();
-                        ControladorGrupoCliente.editaGrupo(ligacao, dados.getUtilizadorLogado().getEmail(),grupo,grupoNovoNome);
-                        recebeMensagem();
+                        ControladorGrupoCliente.editaGrupo(ligacao, dados.getUtilizadorLogado().getEmail(), grupo, grupoNovoNome);
+                        //recebeMensagem();
                         break;
                     case "seleciona_grupo":
                         System.out.print("Nome do Grupo que pretende selecionar: ");
                         grupo = scanner.nextLine();
-                        ControladorGrupoCliente.selecionaGrupo(ligacao, dados.getUtilizadorLogado().getEmail() ,grupo);
-                        recebeMensagem();
+                        ControladorGrupoCliente.selecionaGrupo(ligacao, dados.getUtilizadorLogado().getEmail(), grupo);
+                        //recebeMensagem();
                         break;
                     case "lista_grupo":
                         //System.out.println("Envia Listar Grupos:");
                         ControladorGrupoCliente.listarGrupos(ligacao, dados.getUtilizadorLogado().getEmail());
-                        recebeMensagem();
+                        //recebeMensagem();
                         break;
 
                     case "sair_grupo":
@@ -119,7 +122,7 @@ public class ControladorPrincipal {
 
                         grupo = scanner.nextLine();
                         ControladorGrupoCliente.sairGrupo(ligacao, grupo, dados.getUtilizadorLogado().getEmail());
-                        recebeMensagem();
+                        //recebeMensagem();
                         break;
 
                     case "efetuar_pagamento": {
@@ -151,18 +154,18 @@ public class ControladorPrincipal {
                         grupo = scanner.nextLine();
                         System.out.print("Para quem quer enviar o convite (email):");
                         emailDestinatario = scanner.nextLine();
-                        ControladorGrupoCliente.criaConvite(ligacao,dados.getUtilizadorLogado().getEmail(),emailDestinatario,grupo);
-                        recebeMensagem();
+                        ControladorGrupoCliente.criaConvite(ligacao, dados.getUtilizadorLogado().getEmail(), emailDestinatario, grupo);
+                        //recebeMensagem();
                         break;
                     case "ver_convites":
                         System.out.println("Ver Convites");
-                        ControladorGrupoCliente.verConvites(ligacao,dados.getUtilizadorLogado().getEmail());
-                        recebeMensagem();
+                        ControladorGrupoCliente.verConvites(ligacao, dados.getUtilizadorLogado().getEmail());
+                        //recebeMensagem();
                         break;
                     case "decisao-convites":
                         System.out.println("Ver decisao");
-                        ControladorGrupoCliente.verConvites(ligacao,dados.getUtilizadorLogado().getEmail());
-                        recebeMensagem();
+                        ControladorGrupoCliente.verConvites(ligacao, dados.getUtilizadorLogado().getEmail());
+                        //recebeMensagem();
                         System.out.print("\nGRUPO: ");
 
                         grupo = scanner.nextLine();
@@ -170,8 +173,8 @@ public class ControladorPrincipal {
                         System.out.print("Decisao: ");
 
                         decisao = scanner.nextLine();
-                        ControladorGrupoCliente.decisaoConvites(ligacao,decisao,grupo,dados.getUtilizadorLogado().getEmail());
-                        recebeMensagem();
+                        ControladorGrupoCliente.decisaoConvites(ligacao, decisao, grupo, dados.getUtilizadorLogado().getEmail());
+                        //recebeMensagem();
                         break;
                     case "altera-dados":
                         System.out.println("Ver Altera Dados");
@@ -186,8 +189,8 @@ public class ControladorPrincipal {
                             }
                         System.out.print("\nPassword:");
                         pass = scanner.nextLine();
-                        ControladorAutenticacaoCliente.edita(ligacao,Telf,dados.getUtilizadorLogado().getEmail(),pass);
-                        recebeMensagem();
+                        ControladorAutenticacaoCliente.edita(ligacao, Telf, dados.getUtilizadorLogado().getEmail(), pass);
+                        //recebeMensagem();
                         break;
                     case "insere_despesa":
                         double despesa;
@@ -205,22 +208,22 @@ public class ControladorPrincipal {
                         descricao = scanner.nextLine();
                         System.out.println("\nPago em (DD-MM-YYYY): ");
                         data = scanner.nextLine();
-                        ControladorDespesaCliente.inserirDespesa(ligacao,dados.getUtilizadorLogado().getEmail(),grupo,despesa,quemPagou,descricao,data);
-                        recebeMensagem();
+                        ControladorDespesaCliente.inserirDespesa(ligacao, dados.getUtilizadorLogado().getEmail(), grupo, despesa, quemPagou, descricao, data);
+                        //recebeMensagem();
                         break;
                     case "gasto_total":
                         System.out.println("Ver Inserir despesas");
                         System.out.print("Grupo: ");
                         grupo = scanner.nextLine();
                         ControladorDespesaCliente.verDespesaTotal(ligacao, dados.getUtilizadorLogado().getEmail(), grupo);
-                        recebeMensagem();
+                        //recebeMensagem();
                         break;
                     case "exportar_despesas":
                         System.out.println("Guardar Despesas");
                         System.out.print("Grupo: ");
                         grupo = scanner.nextLine();
                         ControladorDespesaCliente.exportarDespesas(ligacao, grupo, dados.getUtilizadorLogado().getEmail());
-                        recebeMensagem();
+                        //recebeMensagem();
                         break;
                     default:
                         System.out.println("Opção inválida. Por favor, tente novamente.");
@@ -231,75 +234,75 @@ public class ControladorPrincipal {
 
     }
 
-   public static Estados recebeMensagem(){
-
-       RespostaServidorMensagem resposta = ligacao.recebeMensagem();
-        //System.out.println("Recebe Mensagem -> "+resposta);
-        try {
-            switch (resposta.getEstado()){
-                case USER_LOGADO_COM_SUCESSO -> {
-                    dados.setUtilizadorLogado((User) resposta.getConteudo());
-                    return resposta.getEstado();
-                }
-
-               case USER_REGISTADO_COM_SUCESSO -> {
-
-
-                }
-                case USER_GRUPO_SELECIONADO_COM_SUCESSO -> {
-                    dados.setGrupoSelecionado((Grupos) resposta.getConteudo());
-                    return resposta.getEstado();
-                }
-/*              case ERRO_CRIA_CONVITE -> {
-
-
-                }*/
-                case CONSULTA_DESPESA_TOTAL_COM_SUCESSO -> {
-                    System.out.println(" HELLO DESPESA TOTAL " + resposta.getEstado());
-                    System.out.println("O gasto total no grupo foi de: " +  resposta.getConteudo() + "€");
-                    return resposta.getEstado();
-                }
-                case USER_CRIA_DESPESA_COM_SUCESSO -> {
-                    System.out.println(" HELLO DESPESA " + resposta.getEstado());
-                    return resposta.getEstado();
-                }
-
-                case GRUPO_USER_INSERIDO_COM_SUCESSO ->{
-                    System.out.println(" HELLO INTEGRA "+resposta.getEstado());
-                    return  resposta.getEstado();
-                }
-                case GRUPO_REGISTADO_COM_SUCESSO ->{
-                    System.out.println(" HELLO REGISTO"+resposta.getEstado());
-                    return  resposta.getEstado();
-                }
-                case GRUPO_CONVITE_COM_SUCESSO -> {
-                    System.out.println(" HELLO "+resposta.getEstado());
-                    return  resposta.getEstado();
-                }
-                case GRUPO_NOME_ALTERADO_COM_SUCESSO -> {
-                    System.out.println(" HELLO "+resposta.getEstado());
-                    return resposta.getEstado();
-                }
-                case VER_CONVITES_COM_SUCESSO -> {
-                    Convites convites = (Convites) resposta.getConteudo();
-                    Vista.tabelaConvites(convites);
-                    return resposta.getEstado();
-                }
-
-                case GRUPO_LISTADO_COM_SUCESSO -> { //tratar deste warnig depois
-                    Grupos grupos = (Grupos) resposta.getConteudo();
-                    Vista.tabelaGrupos(grupos);
-                    System.out.println(" HELLO "+resposta.getEstado());
-                    return resposta.getEstado();
-
-                }
-            }
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
-        return resposta.getEstado();
-
-    }
+//   public static Estados recebeMensagem(){
+//
+//       RespostaServidorMensagem resposta = ligacao.recebeMensagem();
+//        //System.out.println("Recebe Mensagem -> "+resposta);
+//        try {
+//            switch (resposta.getEstado()){
+//                case USER_LOGADO_COM_SUCESSO -> {
+//                    dados.setUtilizadorLogado((User) resposta.getConteudo());
+//                    return resposta.getEstado();
+//                }
+//
+//               case USER_REGISTADO_COM_SUCESSO -> {
+//
+//
+//                }
+//                case USER_GRUPO_SELECIONADO_COM_SUCESSO -> {
+//                    dados.setGrupoSelecionado((Grupos) resposta.getConteudo());
+//                    return resposta.getEstado();
+//                }
+///*              case ERRO_CRIA_CONVITE -> {
+//
+//
+//                }*/
+//                case CONSULTA_DESPESA_TOTAL_COM_SUCESSO -> {
+//                    System.out.println(" HELLO DESPESA TOTAL " + resposta.getEstado());
+//                    System.out.println("O gasto total no grupo foi de: " +  resposta.getConteudo() + "€");
+//                    return resposta.getEstado();
+//                }
+//                case USER_CRIA_DESPESA_COM_SUCESSO -> {
+//                    System.out.println(" HELLO DESPESA " + resposta.getEstado());
+//                    return resposta.getEstado();
+//                }
+//
+//                case GRUPO_USER_INSERIDO_COM_SUCESSO ->{
+//                    System.out.println(" HELLO INTEGRA "+resposta.getEstado());
+//                    return  resposta.getEstado();
+//                }
+//                case GRUPO_REGISTADO_COM_SUCESSO ->{
+//                    System.out.println(" HELLO REGISTO"+resposta.getEstado());
+//                    return  resposta.getEstado();
+//                }
+//                case GRUPO_CONVITE_COM_SUCESSO -> {
+//                    System.out.println(" HELLO "+resposta.getEstado());
+//                    return  resposta.getEstado();
+//                }
+//                case GRUPO_NOME_ALTERADO_COM_SUCESSO -> {
+//                    System.out.println(" HELLO "+resposta.getEstado());
+//                    return resposta.getEstado();
+//                }
+//                case VER_CONVITES_COM_SUCESSO -> {
+//                    Convites convites = (Convites) resposta.getConteudo();
+//                    Vista.tabelaConvites(convites);
+//                    return resposta.getEstado();
+//                }
+//
+//                case GRUPO_LISTADO_COM_SUCESSO -> { //tratar deste warnig depois
+//                    Grupos grupos = (Grupos) resposta.getConteudo();
+//                    Vista.tabelaGrupos(grupos);
+//                    System.out.println(" HELLO "+resposta.getEstado());
+//                    return resposta.getEstado();
+//
+//                }
+//            }
+//        } catch (Exception e) {
+//            throw new RuntimeException(e);
+//        }
+//        return resposta.getEstado();
+//
+//    }
 
 
 
@@ -358,7 +361,7 @@ public class ControladorPrincipal {
     }
 
 
-    public static void main() {
+    public static void main() throws InterruptedException {
 
 
         String escolhaMenuPrincipal;
@@ -367,32 +370,40 @@ public class ControladorPrincipal {
 
 
         User user = new User();
-/*
-        RecebeMensagensThread recebe = new RecebeMensagensThread(ligacao, dados);
-        Thread threadrecebe = new Thread(recebe);
-        threadrecebe.start();*/
+
+        RecebeMensagensThread recebeMensagensThread = new RecebeMensagensThread(ligacao, dados);
+        Thread recebeThread = new Thread(recebeMensagensThread);
+        recebeThread.start();
         //System.out.println(escolhaMenuPrincipal);
         while (true) {
 
             if (dados.getUtilizadorLogado() == null) {
                 escolhaMenuPrincipal = Vista.menuPrincipal();
+
                 switch (escolhaMenuPrincipal) {
                     case "registo": {
-                        enviaMensagem("registo");
-                        recebeMensagem();
+
+                            enviaMensagem("registo");
+
+
+                        //recebeMensagem();
                         break;
                     }
                     case "login": {
-                        enviaMensagem("login");
-                        recebeMensagem();
+
+                            enviaMensagem("login");
+                        Thread.sleep(500);
+                        //recebeMensagem();
                         //System.out.println(recebeMensagem());
+                        System.out.println("DADOS: " + dados.getUtilizadorLogado());
                         break;
                     }
                 }
 
+
             }else{
                 escolhaCliente = Vista.menuCliente();
-                System.out.println("RECEBI:" + escolhaCliente);
+                //System.out.println("RECEBI:" + escolhaCliente);
                 switch (escolhaCliente){
                     case 1: //CRIAR GRUPO
                     {
@@ -441,14 +452,14 @@ public class ControladorPrincipal {
                     {
                         System.out.println("ELIMINAR GRUPOS");
                         enviaMensagem("elimina_grupo");
-                        recebeMensagem();
+                        //recebeMensagem();
                         break;
                     }
                     case 9: //SAIR DE UM GRUPO
                     {
                         System.out.println("SAIR DE UM GRUPO");
                         enviaMensagem("sair_grupo");
-                        recebeMensagem();
+                        //recebeMensagem();
                         break;
                     }
                     case 10: //VER GASTO TOTAL DE UM GRUPO
@@ -489,7 +500,7 @@ public class ControladorPrincipal {
                     {
                         System.out.println("EFECTUAR PAGAMENTO");
                         enviaMensagem("efetuar_pagamento");
-                        recebeMensagem();
+                        //recebeMensagem();
                         break;
                     }
                     case 17: //LISTAR TODOS OS PAGAMENTOS
@@ -518,6 +529,7 @@ public class ControladorPrincipal {
                         System.out.println("LOGOUT");
                         break;
                     }
+
                 }
             }
 
