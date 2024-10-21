@@ -4,17 +4,8 @@ import pt.isec.pd.cliente.Threads.RecebeMensagensThread;
 import pt.isec.pd.cliente.ligacao.Ligacao;
 import pt.isec.pd.cliente.modelos.Dados;
 import pt.isec.pd.cliente.vistas.Vista;
-import pt.isec.pd.comum.enumeracoes.Estados;
-import pt.isec.pd.comum.modelos.Convites;
-import pt.isec.pd.comum.modelos.Grupos;
-import pt.isec.pd.comum.modelos.RespostaServidorMensagem;
 import pt.isec.pd.comum.modelos.User;
-import pt.isec.pd.comum.modelos.mensagens.EditarGrupo;
-import pt.isec.pd.comum.modelos.mensagens.VerConvites;
-import pt.isec.pd.servidores.controladores.ControladorDespesaServidor;
 
-import java.time.LocalDate;
-import java.util.Date;
 import java.util.List;
 import java.util.Scanner;
 
@@ -84,6 +75,7 @@ public class ControladorPrincipal {
                         //recebeMensagem();
                         ControladorGrupoCliente.insereGrupo(ligacao, grupo, dados.getUtilizadorLogado().getEmail());
                         //recebeMensagem();
+
                         break;
 
                     case "elimina_grupo":
@@ -392,10 +384,14 @@ public class ControladorPrincipal {
                     case "login": {
 
                             enviaMensagem("login");
-                        Thread.sleep(500);
+
+
                         //recebeMensagem();
                         //System.out.println(recebeMensagem());
-                        System.out.println("DADOS: " + dados.getUtilizadorLogado());
+                        Thread.sleep(500);
+                            System.out.println("DADOS--> " + dados.getUtilizadorLogado());
+
+
                         break;
                     }
                 }
@@ -409,42 +405,49 @@ public class ControladorPrincipal {
                     {
                         System.out.println("CRIAR GRUPO");
                         enviaMensagem("cria_grupo");
+                        Thread.sleep(500);
                         break;
                     }
                     case 2: //Selecionar um GRUPO
                     {
                         System.out.println("SELECIONAR O GRUPO");
                         enviaMensagem("seleciona_grupo");
+                        Thread.sleep(500);
                         break;
                     }
                     case 3: //CONVIDAR PARA GRUPO
                     {
                         System.out.println("CONVIDAR PARA GRUPO");
                         enviaMensagem("cria_convite");
+                        Thread.sleep(500);
                         break;
                     }
                     case 4: //Editar nome Grupo
                     {
                         System.out.println("EDITAR GRUPO");
                         enviaMensagem("edita_grupo");
+                        Thread.sleep(500);
                         break;
                     }
                     case 5: //LISTAR CONVITES
                     {
                         System.out.println("LISTAR CONVITES");
                         enviaMensagem("ver_convites");
+                        Thread.sleep(500);
                         break;
                     }
                     case 6: //decisao de aceitar/recusar convites
                     {
                         System.out.println("DECISAO CONVITES");
                         enviaMensagem("decisao-convites");
+                        Thread.sleep(500);
                         break;
                     }
                     case 7: // LISTAR GRUPOS
                     {
                         System.out.println("LISTAR GRUPOS");
                         enviaMensagem("lista_grupo");
+                        Thread.sleep(500);
                         //recebeMensagem();
                         break;
                     }
@@ -452,6 +455,7 @@ public class ControladorPrincipal {
                     {
                         System.out.println("ELIMINAR GRUPOS");
                         enviaMensagem("elimina_grupo");
+                        Thread.sleep(500);
                         //recebeMensagem();
                         break;
                     }
@@ -459,6 +463,7 @@ public class ControladorPrincipal {
                     {
                         System.out.println("SAIR DE UM GRUPO");
                         enviaMensagem("sair_grupo");
+                        Thread.sleep(500);
                         //recebeMensagem();
                         break;
                     }
@@ -466,34 +471,40 @@ public class ControladorPrincipal {
                     {
                         System.out.println("VER GASTO TOTAL DE UM GRUPO");
                         enviaMensagem("gasto_total");
+                        Thread.sleep(500);
 
                         break;
                     }
                     case 11: //VER HISTÓRICO DE UM GRUPO
                     {
                         System.out.println("VER HISTÓRICO DE UM GRUPO");
+                        Thread.sleep(500);
                         break;
                     }
                     case 12: //INSERIR UMA DESPESA
                     {
                         System.out.println("INSERIR UMA DESPESA");
                         enviaMensagem("insere_despesa");
+                        Thread.sleep(500);
                         break;
                     }
                     case 13: //GUARDAR DESPESAS PARA UM FICHEIRO
                     {
                         System.out.println("GUARDAR DESPESAS PARA UM FICHEIRO");
                         enviaMensagem("exportar_despesas");
+                        Thread.sleep(500);
                         break;
                     }
                     case 14: //EDITAR DESPESAS
                     {
                         System.out.println("EDITAR DESPESAS");
+                        Thread.sleep(500);
                         break;
                     }
                     case 15: //ELIMINAR DESPESAS
                     {
                         System.out.println("ELIMINAR DESPESAS");
+                        Thread.sleep(500);
                         break;
                     }
                     case 16: //EFECTUAR PAGAMENTO
@@ -501,32 +512,38 @@ public class ControladorPrincipal {
                         System.out.println("EFECTUAR PAGAMENTO");
                         enviaMensagem("efetuar_pagamento");
                         //recebeMensagem();
+                        Thread.sleep(500);
                         break;
                     }
                     case 17: //LISTAR TODOS OS PAGAMENTOS
                     {
                         System.out.println("LISTAR TODOS OS PAGAMENTOS");
+                        Thread.sleep(500);
                         break;
                     }
                     case 18: //ELIMINAR PAGAMENTO EFETUADO
                     {
                         System.out.println("ELIMINAR PAGAMENTO EFETUADO");
+                        Thread.sleep(500);
                         break;
                     }
                     case 19: //CONSULTAR SALDO
                     {
                         System.out.println("CONSULTAR SALDO");
+                        Thread.sleep(500);
                         break;
                     }
                     case 20: //ALTERA DADOS USER
                     {
                         System.out.println("ALTERA DADOS DO USER");
                         enviaMensagem("altera-dados");
+                        Thread.sleep(500);
                         break;
                     }
                     case 21: //LOGOUT
                     {
                         System.out.println("LOGOUT");
+                        Thread.sleep(500);
                         break;
                     }
 
