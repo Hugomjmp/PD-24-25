@@ -351,6 +351,32 @@ public class Bd {
         return grupos;
     }
 
+    public static Grupos getGrupoDB(String email,String grupoNome){
+        Grupos grupo = null;
+
+        String sql = "SELECT g.NOME " +
+                "FROM GRUPO g " +
+                "JOIN INTEGRA i ON g.ID = i.GROUP_ID " +
+                "JOIN USERS u ON i.USER_ID = u.ID " +
+                "WHERE u.EMAIL = '"+ email +"' AND g.NOME = '"+ grupoNome + "'";
+        try {
+            Statement stmt = conn.createStatement();
+            ResultSet rs = stmt.executeQuery(sql);
+            while (rs.next()){
+                String nomeGrupoDB = rs.getString("NOME");
+                grupo = new Grupos();
+                grupo.setNomeGrupo(nomeGrupoDB);
+            }
+
+        } catch (SQLException e) {
+            System.err.println("Erro ao encontrar grupo: " + e.getMessage());
+        }
+        return grupo;
+    }
+
+
+
+
     public static Estados inserirPagamento(String groupId, String pagaPor, String recebidoPor, double valor, String data) {
         String queryInsertPagamento = "INSERT INTO PAGAMENTO (GROUP_ID, PAGA_POR, RECEBIDO_POR, VALOR, DATA) VALUES (?, ?, ?, ?, ?)";
 

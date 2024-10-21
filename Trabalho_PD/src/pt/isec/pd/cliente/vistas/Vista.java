@@ -34,26 +34,53 @@ public class Vista {
             System.out.println("+-------------------------------------------------------------------------------------+");
             System.out.println("|                                     MENU - Cliente                                  |");
             System.out.println("+-------------------------------------------------------------------------------------+");
-            System.out.println("|  1  - Cria Grupo.                        |  11 - Inserir uma Despesa.               |");
-            System.out.println("|  2  - Convidar para um grupo.            |  12 - Guardar Despesas para um ficheiro. |");
-            System.out.println("|  3  - Editar nome do grupo               |  13 - Editar Despesa.                    |");
-            System.out.println("|  4  - Listar Convites.                   |  14 - Eliminar uma Despesa.              |");
-            System.out.println("|  5  - Aceitar/Recusar Convites.          |  15 - Efectuar Pagamento.                |");
-            System.out.println("|  6  - Listar Grupos.                     |  16 - Listar todos os Pagamentos.        |");
-            System.out.println("|  7  - Eliminar de um Grupo.              |  17 - Eliminar pagamento efetuado.       |");
-            System.out.println("|  8  - Sair de um Grupo.                  |  18 - Consultar saldos.                  |");
-            System.out.println("|  9  - Ver Gasto total de um grupo.       |  19 - Alterar dados do Utilizador        |");
-            System.out.println("|  10 - Ver histório de um grupo.          |  20 - Logout.                            |");
+            System.out.println("|  1  - Cria Grupo.                        |  12 - Inserir uma Despesa.               |");
+            System.out.println("|  2  - Selecionar um Grupo.               |  13 - Guardar Despesas para um ficheiro. |");
+            System.out.println("|  3  - Convidar para um grupo.            |  14 - Editar Despesa.                    |");
+            System.out.println("|  4  - Editar nome do grupo               |  15 - Eliminar uma Despesa.              |");
+            System.out.println("|  5  - Listar Convites.                   |  16 - Efectuar Pagamento.                |");
+            System.out.println("|  6  - Aceitar/Recusar Convites.          |  17 - Listar todos os Pagamentos.        |");
+            System.out.println("|  7  - Listar Grupos.                     |  18 - Eliminar pagamento efetuado.       |");
+            System.out.println("|  8  - Eliminar de um Grupo.              |  19 - Consultar saldos.                  |");
+            System.out.println("|  9  - Sair de um Grupo.                  |  20 - Alterar dados do Utilizador        |");
+            System.out.println("|  10  - Ver Gasto total de um grupo.      |  21 - Logout.                            |");
+            System.out.println("|  11 - Ver histório de um grupo.          |                                          |");
             System.out.println("+-------------------------------------------------------------------------------------+");
             System.out.print("#>");
             int opcao = scanner.nextInt();
-            if (opcao > 0 && opcao < 21 ){
+            if (opcao > 0 && opcao < 22 ){
                 return opcao;
             }else{
                 System.out.println("OPÇÃO INVÁLIDA!");
             }
         }
     }
+
+    public static int menuGrupo(){
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("+------------------------------------------+");
+        System.out.println("|               MENU - Grupo               |");
+        System.out.println("+------------------------------------------+");
+        System.out.println("|  1  - Cria Grupo.                        |");
+        System.out.println("|  2  - Convidar para um grupo.            |");
+        System.out.println("|  3  - Editar nome do grupo               |");
+        System.out.println("|  4  - Listar Grupos.                     |");
+        System.out.println("|  5  - Eliminar de um Grupo.              |");
+        System.out.println("|  6  - Sair de um Grupo.                  |");
+        System.out.println("|  7  - Listar Convites.                   |");
+        System.out.println("|  8  - Aceitar/Recusar Convites.          |");
+        System.out.println("|  9  - Sair de um Grupo                   |");
+        System.out.println("|  10 - Back                               |");
+        System.out.println("+------------------------------------------+");
+        System.out.print("#>");
+        int opcao = scanner.nextInt();
+        if (opcao > 0 && opcao < 21 ){
+            return opcao;
+        }else{
+            return 99;
+        }
+    }
+
     public static void tabelaConvites(Convites convites){
         int tamanhoNome = 0;
         int tamanhoNomeGrupo = 0;

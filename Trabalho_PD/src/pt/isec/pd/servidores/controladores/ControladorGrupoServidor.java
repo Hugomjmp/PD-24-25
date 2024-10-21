@@ -79,6 +79,17 @@ public class ControladorGrupoServidor {
         //System.out.println("ControladorGrupoServidor ->" + grupo);
         return grupo == null ? Estados.ERRO_SEM_GRUPOS : Estados.GRUPO_LISTADO_COM_SUCESSO.setDados(grupo);
     }
+    public static Estados selecionaGrupo(SelecionarGrupo selecionarGrupo) {
+        //List<String> grupos = new ArrayList<>();
+        Serializable selecionaGrupo = null;
+        try {
+            selecionaGrupo = Bd.getGrupoDB(selecionarGrupo.getSolicitadoPor(),selecionarGrupo.getGrupoNome());
+        } catch (Exception e) {
+            System.err.println("Erro ao listar grupos: " + e.getMessage());
+        }
+        //System.out.println("ControladorGrupoServidor ->" + grupo);
+        return selecionaGrupo == null ? Estados.ERRO_AO_SELECIONAR_GRUPO : Estados.USER_GRUPO_SELECIONADO_COM_SUCESSO.setDados(selecionaGrupo);
+    }
 
     /*    public static Estados listarGrupos(ListarGrupo listarGrupo) {
             Serializable grupo = null;

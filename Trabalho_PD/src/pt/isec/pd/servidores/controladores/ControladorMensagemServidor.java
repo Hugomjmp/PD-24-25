@@ -72,6 +72,13 @@ public class ControladorMensagemServidor {
                 //System.out.println("RESPOSTA -> " +resposta);
                 break;
             }
+            case USER_SELECIONA_GRUPO:
+            {
+                System.out.println("A selecionar grupo...");
+                Estados estado = ControladorGrupoServidor.selecionaGrupo((SelecionarGrupo) mensagem.getConteudo());
+                resposta = new RespostaServidorMensagem(estado, estado.getDados());
+                break;
+            }
             case USER_SAI_GRUPO: {
                 System.out.println("Sai do Grupo...");
 

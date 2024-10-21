@@ -9,11 +9,20 @@ import java.util.List;
 public class Dados {
     private User utilizadorLogado;
     private Convites convites;
+    private Grupos GrupoSelecionado;
     List<User> utilizadores;
     private Grupos grupos;
 
     public Dados(){
         this.utilizadorLogado = null;
+    }
+
+    public Grupos getGrupoSelecionado() {
+        return GrupoSelecionado;
+    }
+
+    public void setGrupoSelecionado(Grupos grupoSelecionado) {
+        GrupoSelecionado = grupoSelecionado;
     }
 
     public Grupos getGrupos() {

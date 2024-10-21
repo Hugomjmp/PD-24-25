@@ -38,7 +38,11 @@ public class ControladorGrupoCliente {
         ligacao.enviaMensagem(mensagem);
         System.out.println("ControladorGrupoCliente -> "+mensagem);
     }
-
+    public static void selecionaGrupo(Ligacao ligacao, String email, String grupo){
+        SelecionarGrupo selecionarGrupo = new SelecionarGrupo(email,grupo);
+        Mensagem mensagem = new Mensagem(Tipomensagemenum.USER_SELECIONA_GRUPO, selecionarGrupo);
+        ligacao.enviaMensagem(mensagem);
+    }
     public static void sairGrupo(Ligacao ligacao, String grupoNome, String emailUsuario) {
         SairGrupo sairGrupo = new SairGrupo(grupoNome, emailUsuario);
         Mensagem mensagem = new Mensagem(Tipomensagemenum.USER_SAI_GRUPO, sairGrupo);
