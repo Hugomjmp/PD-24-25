@@ -48,17 +48,17 @@ public class Vista {
             System.out.println("+-------------------------------------------------------------------------------------+");
             System.out.println("|                                     MENU - Cliente                                  |");
             System.out.println("+-------------------------------------------------------------------------------------+");
-            System.out.println("|  1  - Cria Grupo.                        |  12 - Inserir uma Despesa.               |");
-            System.out.println("|  2  - Selecionar um Grupo.               |  13 - Guardar Despesas para um ficheiro. |");
-            System.out.println("|  3  - Convidar para um grupo.            |  14 - Editar Despesa.                    |");
-            System.out.println("|  4  - Editar nome do grupo               |  15 - Eliminar uma Despesa.              |");
-            System.out.println("|  5  - Listar Convites.                   |  -16 - Efectuar Pagamento.                |");
-            System.out.println("|  6  - Aceitar/Recusar Convites.          |  -17 - Listar todos os Pagamentos.        |");
-            System.out.println("|  7  - Listar Grupos.                     |  -18 - Eliminar pagamento efetuado.       |");
-            System.out.println("|  8  - Eliminar de um Grupo.              |  19 - Consultar saldos.                  |");
-            System.out.println("|  9  - Sair de um Grupo.                  |  20 - Alterar dados do Utilizador        |");
-            System.out.println("|  10 - Ver Gasto total de um grupo.      |  21 - Logout.                            |");
-            System.out.println("|  11 - Ver histório de um grupo.          |                                          |");
+            System.out.println("|  -1  - Cria Grupo.                        |  -12 - Inserir uma Despesa.               |");
+            System.out.println("|  -2  - Selecionar um Grupo.               |  -13 - Guardar Despesas para um ficheiro. |");
+            System.out.println("|  -3  - Convidar para um grupo.            |  -14 - Editar Despesa.                    |");
+            System.out.println("|  -4  - Editar nome do grupo               |  -15 - Eliminar uma Despesa.              |");
+            System.out.println("|  -5  - Listar Convites.                   |  -16 - Efectuar Pagamento.                |");
+            System.out.println("|  -6  - Aceitar/Recusar Convites.          |  -17 - Listar todos os Pagamentos.        |");
+            System.out.println("|  -7  - Listar Grupos.                     |  -18 - Eliminar pagamento efetuado.       |");
+            System.out.println("|  -8  - Eliminar de um Grupo.              |  19 - Consultar saldos.                  |");
+            System.out.println("|  -9  - Sair de um Grupo.                  |  -20 - Alterar dados do Utilizador        |");
+            System.out.println("|  -10 - Ver Gasto total de um grupo.      |  -21 - Logout.                            |");
+            System.out.println("|  -11 - Ver histório de um grupo.          |                                          |");
             System.out.println("+-------------------------------------------------------------------------------------+");
             System.out.print("#>");
             int opcao = scanner.nextInt();
@@ -77,7 +77,7 @@ public class Vista {
         System.out.println("|  2  - Despesas Menu.                     |");
         System.out.println("|  3  - Pagamentos Menu.                   |");
         System.out.println("|  4  - Ver convites Menu.                 |");
-        System.out.println("|  5  - Alterar Password. por implementar..|");
+        System.out.println("|  5  - Alterar Password ou nº Telefone.   |");
         System.out.println("|  6  - Logout.                            |");
         System.out.println("+------------------------------------------+");
         System.out.print("#>");
@@ -89,12 +89,11 @@ public class Vista {
         System.out.println("+------------------------------------------+");
         System.out.println("|  1  - Cria Grupo.                        |");
         System.out.println("|  2  - Selecionar um grupo.               |");
-        System.out.println("|  3  - Convidar para um grupo.            |");
-        System.out.println("|  4  - Editar nome do grupo               |");
-        System.out.println("|  5  - Listar Grupos.                     |");
-        System.out.println("|  6  - Eliminar um Grupo.                 |");
-        System.out.println("|  7  - Sair de um Grupo.                  |");
-        System.out.println("|  8  - Back                               |");
+        System.out.println("|  3  - Editar nome do grupo               |");
+        System.out.println("|  4  - Listar Grupos.                     |");
+        System.out.println("|  5  - Eliminar um Grupo.                 |");
+        System.out.println("|  6  - Sair de um Grupo.                  |");
+        System.out.println("|  7  - Back                               |");
         System.out.println("+------------------------------------------+");
         System.out.print("#>");
 /*        int opcao = scanner.nextInt();
@@ -104,9 +103,18 @@ public class Vista {
             return 99;
         }*/
     }
-
+    public static void menuConvites(){
+        System.out.println("+------------------------------------------+");
+        System.out.println("|             MENU - Convites              |");
+        System.out.println("+------------------------------------------+");
+        System.out.println("|  1  - Enviar um Convite.                 |");
+        System.out.println("|  2  - Aceitar/ Recusar Convites.         |");
+        System.out.println("|  3  - Listar Convites.                   |");
+        System.out.println("|  4  - Back                               |");
+        System.out.println("+------------------------------------------+");
+        System.out.print("#>");
+    }
     public static void menuDespesa(){
-        //Scanner scanner = new Scanner(System.in);
         System.out.println("+------------------------------------------+");
         System.out.println("|             MENU - Despesa               |");
         System.out.println("+------------------------------------------+");
@@ -114,19 +122,13 @@ public class Vista {
         System.out.println("|  2  - Editar uma Despesa.                |");
         System.out.println("|  3  - Eliminar uma Despesa.              |");
         System.out.println("|  4  - Ver gasto total.                   |");
-        System.out.println("|  5  - Exportar Despesas para um ficheiro |");
-        System.out.println("|  6  - Back                               |");
+        System.out.println("|  5  - Ver historico de Despesas.         |");
+        System.out.println("|  6  - Exportar Despesas para um ficheiro |");
+        System.out.println("|  7  - Back                               |");
         System.out.println("+------------------------------------------+");
         System.out.print("#>");
-/*        int opcao = scanner.nextInt();
-        if (opcao > 0 && opcao < 21 ){
-            return opcao;
-        }else{
-            return 99;
-        }*/
     }
     public static void menuPagamentos(){
-        //Scanner scanner = new Scanner(System.in);
         System.out.println("+------------------------------------------+");
         System.out.println("|            MENU - Pagamentos             |");
         System.out.println("+------------------------------------------+");
@@ -136,12 +138,6 @@ public class Vista {
         System.out.println("|  4  - Back                               |");
         System.out.println("+------------------------------------------+");
         System.out.print("#>");
-/*        int opcao = scanner.nextInt();
-        if (opcao > 0 && opcao < 21 ){
-            return opcao;
-        }else{
-            return 99;
-        }*/
     }
 
     public static void tabelaConvites(Convites convites){

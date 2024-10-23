@@ -1,18 +1,15 @@
 package pt.isec.pd.cliente.controladores;
 
-import pt.isec.pd.cliente.Threads.RecebeMensagensThread;
+
 import pt.isec.pd.cliente.ligacao.Ligacao;
 import pt.isec.pd.cliente.modelos.Dados;
 import pt.isec.pd.cliente.vistas.Vista;
-import pt.isec.pd.comum.enumeracoes.Estados;
+
 import pt.isec.pd.comum.modelos.Convites;
 import pt.isec.pd.comum.modelos.Grupos;
 import pt.isec.pd.comum.modelos.RespostaServidorMensagem;
 import pt.isec.pd.comum.modelos.User;
-import pt.isec.pd.comum.modelos.mensagens.Registo;
 
-import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
@@ -79,6 +76,18 @@ public class ControladorPrincipal {
         return 3;
     }
 
+    public void editaDados(String numeroTelefone, String password){
+        Integer Telf = null;
+        if (!numeroTelefone.isEmpty())
+            try {
+                Telf = Integer.parseInt(numeroTelefone);
+            } catch (NumberFormatException e) {
+                throw new RuntimeException(e);
+            }
+
+        ControladorAutenticacaoCliente.edita(ligacao, Telf, dados.getUtilizadorLogado().getEmail(), password);
+        recebeMensagem();
+    }
 
     public void criarGrupo(String nomeGrupo){
         ControladorGrupoCliente.criaGrupo(ligacao, nomeGrupo, dados.getUtilizadorLogado().getEmail());
@@ -185,8 +194,25 @@ public class ControladorPrincipal {
         ControladorPagamentoCliente.inserirPagamento(ligacao, pagaPor, quemRecebeu, grupoNome, valorPagamento, dataPagamentoStr);
         //recebeMensagem();*/
     }
-    public void eliminaPagamento(){}
-    public void listaPagamentos(){}
+    public void eliminaPagamento(){} /*TODO*/
+    public void listaPagamentos(){} /*TODO*/
+
+    /*TODO
+    *  falta compor isto... está a aparecer aqui e não pode ser*/
+    public void mostrarConvites(){
+        ControladorGrupoCliente.verConvites(ligacao, dados.getUtilizadorLogado().getEmail());
+        recebeMensagem();
+    }
+    /*TODO
+    *  falta meter aqui proteção para o caso de o user introduzir mal a palavra*/
+    public void respondeConvite(String grupoNome, String decisao){
+
+
+        ControladorGrupoCliente.decisaoConvites(ligacao, decisao, grupoNome, dados.getUtilizadorLogado().getEmail());
+        recebeMensagem();
+    }
+
+
 
 /*    public static void enviaMensagem(String escolha){
         String [] dadosLogin;
@@ -461,7 +487,7 @@ public class ControladorPrincipal {
 
 
 
-    private static String[] registo(/*User user*/){
+   /* private static String[] registo(*//*User user*//*){
         boolean nTefValido = false;
         String [] dados = {nome, String.valueOf(nTelefone), email,password};
         Scanner scanner = new Scanner(System.in);
@@ -500,9 +526,9 @@ public class ControladorPrincipal {
         dados[3] = String.valueOf(nTelefone);
         //user.setnTelefone(nTelefone);
         return dados;
-    }
+    }*/
 
-    private static String[] login(){
+/*    private static String[] login(){
         Scanner scanner = new Scanner(System.in);
         String [] dados = {email,password};
         System.out.print("Login E-mail: ");
@@ -512,7 +538,7 @@ public class ControladorPrincipal {
 
         //System.out.println(dados[0]+dados[1]);
         return dados;
-    }
+    }*/
 
 
     public static void main() throws InterruptedException {

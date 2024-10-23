@@ -51,10 +51,10 @@ public class ClienteConsolaUI {
                         break;
 
                     case "4":
-
+                        convitesMenu();
                         break;
                     case "5":
-
+                        alteraDados();
                         break;
                     case "6":
                         userAutenticado = false; // isto não está bem... fazer em condições
@@ -105,6 +105,15 @@ public class ClienteConsolaUI {
         else
             System.out.println("Registo efectuado com sucesso.");
     }
+    public void alteraDados(){
+        String numeroTelefone, pass;
+        System.out.println("Deixar vazio o que não é para alterar.");
+        System.out.print("Número de Telefone: ");
+        numeroTelefone = scanner.nextLine();
+        System.out.print("\nPassword:");
+        pass = scanner.nextLine();
+        cp.editaDados(numeroTelefone,pass);
+    }
 
     public void menuGrupos(){
         String escolha;
@@ -120,25 +129,22 @@ public class ClienteConsolaUI {
                     selecionarGrupo();
                     break;
                 case "3":
-                    convidarGrupo();
-                    break;
-                case "4":
                     editarNomeGrupo();
                     break;
-                case "5":
+                case "4":
                     listarGrupos();
                     break;
-                case "6":
+                case "5":
                     eliminarGrupo();
                     break;
-                case "7":
+                case "6":
                     sairGrupo();
                     break;
                 default:
-                    if (!escolha.equalsIgnoreCase("8"))
+                    if (!escolha.equalsIgnoreCase("7"))
                         System.out.println("Opção Inválida!");
             }
-        }while (!escolha.equalsIgnoreCase("8"));
+        }while (!escolha.equalsIgnoreCase("7"));
 
     }
     public void criarGrupo(){
@@ -155,17 +161,7 @@ public class ClienteConsolaUI {
         grupoSelecionado = cp.selecionarGrupo(nomeGrupo);
         System.out.println(grupoSelecionado);
     }
-    public void convidarGrupo(){
-        String emailDestinatario;
-        boolean confirmacao;
-        System.out.print("Para quem quer enviar o convite (email):");
-        emailDestinatario = scanner.nextLine();
-        confirmacao = cp.criarConvite(emailDestinatario,grupoSelecionado);
-        if (confirmacao)
-            System.out.println("Convite enviado com sucesso");
-        else
-            System.out.println("Tem de selecionar um grupo primeiro");
-    }
+
     public void editarNomeGrupo(){
         String nomeGrupo;
         boolean confirmacao;
@@ -219,13 +215,16 @@ public class ClienteConsolaUI {
                     consultarGastoTotal();
                     break;
                 case "5":
+
+                    break;
+                case "6":
                     exportarCSV();
                     break;
                 default:
-                    if (!escolha.equalsIgnoreCase("6"))
+                    if (!escolha.equalsIgnoreCase("7"))
                         System.out.println("Opção Inválida!");
             }
-        }while (!escolha.equalsIgnoreCase("6"));
+        }while (!escolha.equalsIgnoreCase("7"));
     }
 
     public void criarDespesa() {
@@ -253,7 +252,52 @@ public class ClienteConsolaUI {
     public void exportarCSV(){
         cp.exportaFicheiro(grupoSelecionado);
     }
+    public void convitesMenu(){
+        String escolha;
 
+        do {
+            Vista.menuConvites();
+            escolha = scanner.nextLine();
+            switch (escolha){
+                case "1":
+                    convidarGrupo();
+                    break;
+                case "2":
+                    decidirConvite();
+                    break;
+                case "3":
+                    ListarConvites();
+                    break;
+                default:
+                    if (!escolha.equalsIgnoreCase("4"))
+                        System.out.println("Opção Inválida!");
+            }
+        }while (!escolha.equalsIgnoreCase("4"));
+    }
+    public void convidarGrupo(){
+        String emailDestinatario;
+        boolean confirmacao;
+        System.out.print("Para quem quer enviar o convite (email):");
+        emailDestinatario = scanner.nextLine();
+        confirmacao = cp.criarConvite(emailDestinatario,grupoSelecionado);
+        if (confirmacao)
+            System.out.println("Convite enviado com sucesso");
+        else
+            System.out.println("Tem de selecionar um grupo primeiro");
+    }
+    public void decidirConvite(){
+        String grupoNome, decisao;
+        cp.mostrarConvites();
+        System.out.print("\nGRUPO: ");
+        grupoNome = scanner.nextLine();
+        System.out.println("Decisao: aceitar\\ recusar");
+        System.out.print("Decisao: ");
+        decisao = scanner.nextLine();
+        cp.respondeConvite(grupoNome, decisao);
+    }
+    public void ListarConvites(){
+        cp.mostrarConvites();
+    }
     public void pagamentosMenu(){
         String escolha;
 
@@ -276,8 +320,8 @@ public class ClienteConsolaUI {
             }
         }while (!escolha.equalsIgnoreCase("4"));
     }
-    public void efectuarPagamento(){}
-    public void eliminarPagamento(){}
-    public void listarPagamentos(){}
+    public void efectuarPagamento(){} /*TODO*/
+    public void eliminarPagamento(){} /*TODO*/
+    public void listarPagamentos(){} /*TODO*/
 
 }
