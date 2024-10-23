@@ -125,9 +125,6 @@ public class Bd {
     }
 
     public static Estados criaConvite(String email, String groupNome, String emailDestinatario){
-        String userID;
-        String destinatarioID;
-        String grupo;
 
         String querySelect = "SELECT * FROM CONVITES c " +
                             "WHERE c.GROUP_ID = (SELECT ID FROM GRUPO WHERE NOME = '" + groupNome + "' " +
@@ -135,14 +132,16 @@ public class Bd {
                             "AND c.USER_ID = (SELECT ID FROM USERS WHERE EMAIL = '" + email + "') " +
                             "AND c.DESTINATARIO_ID = (SELECT ID FROM USERS WHERE EMAIL = '" + emailDestinatario + "')";
 
-        //System.out.println(querySelect);
+        System.out.println(querySelect);
         String queryInsert = "INSERT INTO CONVITES (GROUP_ID, USER_ID, DESTINATARIO_ID, ESTADO) " +
                         "SELECT g.ID, u1.ID, u2.ID, 'pendente' " +
                         "FROM USERS u1 " +
                         "JOIN USERS u2 ON u2.EMAIL = '" + emailDestinatario + "' " +
-                        "JOIN GRUPO g ON g.CRIADO_POR = u1.EMAIL AND g.NOME = '" + groupNome + "' " +
-                        "WHERE u1.EMAIL = '" + email + "'";
-
+                        "JOIN INTEGRA i ON i.USER_ID = u1.ID " +
+                        "JOIN GRUPO g ON g.ID = i.GROUP_ID " +
+                        "WHERE u1.EMAIL = '" + email + "' " +
+                        "AND g.NOME = '" +groupNome + "'";
+        System.out.println(queryInsert);
 
         try{
             Statement stmt = conn.createStatement();

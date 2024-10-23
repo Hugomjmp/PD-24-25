@@ -50,18 +50,18 @@ public class Ligacao {
     }*/
 
     public RespostaServidorMensagem recebeMensagem(){
-        synchronized (lock) {
+
             RespostaServidorMensagem resposta;
             try {
                 ObjectInputStream in = new ObjectInputStream(socket.getInputStream());
                 resposta = (RespostaServidorMensagem) in.readObject();
-                //System.out.println("RESPOSTA RECEBE -> " + resposta);
+                System.out.println("RESPOSTA RECEBE -> " + resposta);
 
             } catch (IOException | ClassNotFoundException e) {
                 throw new RuntimeException(e);
             }
             return resposta;
-        }
+
     }
 
 

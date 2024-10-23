@@ -19,6 +19,7 @@ public class ControladorAutenticacao {
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
+
         return userRegisto == null ? Estados.ERRO_REGISTO : Estados.USER_REGISTADO_COM_SUCESSO.setDados(userRegisto);
 
     }
@@ -29,9 +30,8 @@ public class ControladorAutenticacao {
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
+        System.out.println("USERLOGIN" + userLogin);
         return userLogin == null ? Estados.ERRO_AUTENTICACAO : Estados.USER_LOGADO_COM_SUCESSO.setDados(userLogin);
-
-        //System.out.println(userLogin);
 
     }
     public static Estados edita(EditaConta edita){

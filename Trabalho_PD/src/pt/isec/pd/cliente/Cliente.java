@@ -1,5 +1,6 @@
 package pt.isec.pd.cliente;
 
+import pt.isec.pd.cliente.UI.ClienteConsolaUI;
 import pt.isec.pd.cliente.controladores.ControladorPrincipal;
 import pt.isec.pd.cliente.ligacao.Ligacao;
 
@@ -15,8 +16,12 @@ public class Cliente {
             System.out.println("java Cliente IPAdress PORT");
         }
         Ligacao ligacao = new Ligacao(args[0],args[1]);
-        ControladorPrincipal controladorPrincipal = new ControladorPrincipal(ligacao);
+        /*ControladorPrincipal controladorPrincipal = new ControladorPrincipal(ligacao);
         controladorPrincipal.main();
+*/
+        ControladorPrincipal controladorPrincipal = new ControladorPrincipal(ligacao);
+        ClienteConsolaUI clienteConsolaUI = new ClienteConsolaUI(controladorPrincipal);
+        clienteConsolaUI.iniciar();
 
 
 

@@ -7,7 +7,21 @@ import pt.isec.pd.comum.modelos.Grupos;
 import java.util.Scanner;
 
 public class Vista {
-    public static String menuPrincipal(){
+    public static void menuPrincipal(){
+        Scanner entrada = new Scanner(System.in);
+
+            System.out.println("+------------------+");
+            System.out.println("|  MENU - Login    |");
+            System.out.println("+------------------+");
+            System.out.println("|  1 - login       |");
+            System.out.println("|  2 - registo     |");
+            System.out.println("+------------------+");
+            System.out.print("#> ");
+
+
+
+    }
+/*    public static String menuPrincipal(){
         Scanner entrada = new Scanner(System.in);
         while (true) {
             System.out.println("+------------------+");
@@ -27,7 +41,7 @@ public class Vista {
 
             }
         }
-    }
+    }*/
     public static int menuCliente(){
         Scanner scanner = new Scanner(System.in);
         while(true) {
@@ -55,32 +69,62 @@ public class Vista {
             }
         }
     }
-
-    public static int menuGrupo(){
-        Scanner scanner = new Scanner(System.in);
+    public static void menuPrincipalCliente(){
+        System.out.println("+------------------------------------------+");
+        System.out.println("|            MENU - Principal              |");
+        System.out.println("+------------------------------------------+");
+        System.out.println("|  1  - Grupo Menu.                        |");
+        System.out.println("|  2  - Despesas Menu.                     |");
+        System.out.println("|  3  - Pagamentos Menu.                   |");
+        System.out.println("|  4  - Ver convites Menu.                 |");
+        System.out.println("|  5  - Alterar Password. por implementar..|");
+        System.out.println("|  6  - Logout.                            |");
+        System.out.println("+------------------------------------------+");
+        System.out.print("#>");
+    }
+    public static void menuGrupo(){
+        //Scanner scanner = new Scanner(System.in);
         System.out.println("+------------------------------------------+");
         System.out.println("|               MENU - Grupo               |");
         System.out.println("+------------------------------------------+");
         System.out.println("|  1  - Cria Grupo.                        |");
-        System.out.println("|  2  - Convidar para um grupo.            |");
-        System.out.println("|  3  - Editar nome do grupo               |");
-        System.out.println("|  4  - Listar Grupos.                     |");
-        System.out.println("|  5  - Eliminar de um Grupo.              |");
-        System.out.println("|  6  - Sair de um Grupo.                  |");
-        System.out.println("|  7  - Listar Convites.                   |");
-        System.out.println("|  8  - Aceitar/Recusar Convites.          |");
-        System.out.println("|  9  - Sair de um Grupo                   |");
-        System.out.println("|  10 - Back                               |");
+        System.out.println("|  2  - Selecionar um grupo.               |");
+        System.out.println("|  3  - Convidar para um grupo.            |");
+        System.out.println("|  4  - Editar nome do grupo               |");
+        System.out.println("|  5  - Listar Grupos.                     |");
+        System.out.println("|  6  - Eliminar um Grupo.                 |");
+        System.out.println("|  7  - Sair de um Grupo.                  |");
+        System.out.println("|  8  - Back                               |");
         System.out.println("+------------------------------------------+");
         System.out.print("#>");
-        int opcao = scanner.nextInt();
+/*        int opcao = scanner.nextInt();
         if (opcao > 0 && opcao < 21 ){
             return opcao;
         }else{
             return 99;
-        }
+        }*/
     }
 
+    public static void menuDespesa(){
+        //Scanner scanner = new Scanner(System.in);
+        System.out.println("+------------------------------------------+");
+        System.out.println("|             MENU - Despesa               |");
+        System.out.println("+------------------------------------------+");
+        System.out.println("|  1  - Inserir uma Despesa.               |");
+        System.out.println("|  2  - Editar uma Despesa.                |");
+        System.out.println("|  3  - Eliminar uma Despesa.              |");
+        System.out.println("|  4  - Ver gasto total.                   |");
+        System.out.println("|  5  - Exportar Despesas para um ficheiro |");
+        System.out.println("|  6  - Back                               |");
+        System.out.println("+------------------------------------------+");
+        System.out.print("#>");
+/*        int opcao = scanner.nextInt();
+        if (opcao > 0 && opcao < 21 ){
+            return opcao;
+        }else{
+            return 99;
+        }*/
+    }
     public static void tabelaConvites(Convites convites){
         int tamanhoNome = 0;
         int tamanhoNomeGrupo = 0;

@@ -19,8 +19,8 @@ public class ControladorMensagemServidor {
         switch (mensagem.getTipoMensagem()){
             case USER_REGISTO:
             {
-                resposta = new RespostaServidorMensagem(ControladorAutenticacao.registo((Registo)
-                        mensagem.getConteudo()),null);
+                Estados estado = ControladorAutenticacao.registo((Registo) mensagem.getConteudo());
+                resposta = new RespostaServidorMensagem(estado, estado.getDados());
                 break;
             }
             case LOGIN:
