@@ -36,15 +36,6 @@ public class ControladorPrincipal {
         this.dados = new Dados();
     }
 
-
-
-/*
-    public ControladorPrincipal(Ligacao ligacao){
-        this.ligacao = ligacao;
-        this.dados = new Dados();
-    }
-*/
-
     public List<User> getUsers(){
         return dados.getUtilizadores();
     }
@@ -52,14 +43,6 @@ public class ControladorPrincipal {
     public User getUserAutenticado(){
         return this.userAutenticado;
     }
-/*
-*
-*                         System.out.println("Envia: Login");
-                        dadosLogin = ControladorPrincipal.login();
-                        ControladorAutenticacaoCliente.login(ligacao, dadosLogin);
-                        recebeMensagem();
-                        break;
-* */
 
     public boolean login(String email, String password){
         String[] dadosLogin = {email,password};
@@ -179,6 +162,31 @@ public class ControladorPrincipal {
         return (String) recebeMensagem();
     }
 
+    /*TODO
+    *  ARRANJAR ESTE MÉTODO...*/
+    public void efectuaPagamento(){
+       /* double valorPagamento;
+        String quemRecebeu;
+        String grupoNome;
+        String dataPagamentoStr;
+
+        System.out.println("Envia Efetuar Pagamento:");
+
+        System.out.print("Grupo: ");
+        grupoNome = scanner.nextLine();
+        System.out.print("\nValor do Pagamento: ");
+        valorPagamento = Double.parseDouble(scanner.nextLine());
+        System.out.print("\nPago para (email): ");
+        quemRecebeu = scanner.nextLine();
+        System.out.print("\nData do Pagamento (formato DD-MM-YYYY): ");
+        dataPagamentoStr = scanner.nextLine();
+        String pagaPor = dados.getUtilizadorLogado().getEmail();
+
+        ControladorPagamentoCliente.inserirPagamento(ligacao, pagaPor, quemRecebeu, grupoNome, valorPagamento, dataPagamentoStr);
+        //recebeMensagem();*/
+    }
+    public void eliminaPagamento(){}
+    public void listaPagamentos(){}
 
 /*    public static void enviaMensagem(String escolha){
         String [] dadosLogin;
