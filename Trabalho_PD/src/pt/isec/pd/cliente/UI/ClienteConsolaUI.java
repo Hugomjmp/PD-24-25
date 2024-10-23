@@ -47,7 +47,7 @@ public class ClienteConsolaUI {
                         break;
 
                     case "3":
-
+                        pagamentosMenu();
                         break;
 
                     case "4":
@@ -248,10 +248,36 @@ public class ClienteConsolaUI {
         System.out.println("Gasto total do grupo: "+grupoSelecionado+ " é de: "+cp.consultaGastoTotal(grupoSelecionado) + "€");
 
     }
-    public void editarDespesa() {}
-    public void eliminarDespesa() {}
+    public void editarDespesa() {} /*TODO*/
+    public void eliminarDespesa() {} /*TODO*/
     public void exportarCSV(){
         cp.exportaFicheiro(grupoSelecionado);
     }
+
+    public void pagamentosMenu(){
+        String escolha;
+
+        do {
+            Vista.menuPagamentos();
+            escolha = scanner.nextLine();
+            switch (escolha){
+                case "1":
+                    efectuarPagamento();
+                    break;
+                case "2":
+                    eliminarPagamento();
+                    break;
+                case "3":
+                    listarPagamentos();
+                    break;
+                default:
+                    if (!escolha.equalsIgnoreCase("4"))
+                        System.out.println("Opção Inválida!");
+            }
+        }while (!escolha.equalsIgnoreCase("4"));
+    }
+    public void efectuarPagamento(){}
+    public void eliminarPagamento(){}
+    public void listarPagamentos(){}
 
 }

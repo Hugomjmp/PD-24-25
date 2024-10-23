@@ -52,12 +52,12 @@ public class Vista {
             System.out.println("|  2  - Selecionar um Grupo.               |  13 - Guardar Despesas para um ficheiro. |");
             System.out.println("|  3  - Convidar para um grupo.            |  14 - Editar Despesa.                    |");
             System.out.println("|  4  - Editar nome do grupo               |  15 - Eliminar uma Despesa.              |");
-            System.out.println("|  5  - Listar Convites.                   |  16 - Efectuar Pagamento.                |");
-            System.out.println("|  6  - Aceitar/Recusar Convites.          |  17 - Listar todos os Pagamentos.        |");
-            System.out.println("|  7  - Listar Grupos.                     |  18 - Eliminar pagamento efetuado.       |");
+            System.out.println("|  5  - Listar Convites.                   |  -16 - Efectuar Pagamento.                |");
+            System.out.println("|  6  - Aceitar/Recusar Convites.          |  -17 - Listar todos os Pagamentos.        |");
+            System.out.println("|  7  - Listar Grupos.                     |  -18 - Eliminar pagamento efetuado.       |");
             System.out.println("|  8  - Eliminar de um Grupo.              |  19 - Consultar saldos.                  |");
             System.out.println("|  9  - Sair de um Grupo.                  |  20 - Alterar dados do Utilizador        |");
-            System.out.println("|  10  - Ver Gasto total de um grupo.      |  21 - Logout.                            |");
+            System.out.println("|  10 - Ver Gasto total de um grupo.      |  21 - Logout.                            |");
             System.out.println("|  11 - Ver histório de um grupo.          |                                          |");
             System.out.println("+-------------------------------------------------------------------------------------+");
             System.out.print("#>");
@@ -125,6 +125,25 @@ public class Vista {
             return 99;
         }*/
     }
+    public static void menuPagamentos(){
+        //Scanner scanner = new Scanner(System.in);
+        System.out.println("+------------------------------------------+");
+        System.out.println("|            MENU - Pagamentos             |");
+        System.out.println("+------------------------------------------+");
+        System.out.println("|  1  - Efectuar Pagamento.                |");
+        System.out.println("|  2  - Eliminar pagamento efetuado.       |");
+        System.out.println("|  3  - Listar todos os Pagamentos.        |");
+        System.out.println("|  4  - Back                               |");
+        System.out.println("+------------------------------------------+");
+        System.out.print("#>");
+/*        int opcao = scanner.nextInt();
+        if (opcao > 0 && opcao < 21 ){
+            return opcao;
+        }else{
+            return 99;
+        }*/
+    }
+
     public static void tabelaConvites(Convites convites){
         int tamanhoNome = 0;
         int tamanhoNomeGrupo = 0;
