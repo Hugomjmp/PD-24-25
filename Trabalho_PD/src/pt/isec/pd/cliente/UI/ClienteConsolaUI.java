@@ -3,7 +3,9 @@ package pt.isec.pd.cliente.UI;
 import pt.isec.pd.cliente.controladores.ControladorPrincipal;
 import pt.isec.pd.cliente.vistas.Vista;
 import pt.isec.pd.comum.modelos.Grupos;
+import pt.isec.pd.comum.modelos.Pagamento;
 
+import java.util.List;
 import java.util.Scanner;
 
 public class ClienteConsolaUI {
@@ -320,8 +322,59 @@ public class ClienteConsolaUI {
             }
         }while (!escolha.equalsIgnoreCase("4"));
     }
-    public void efectuarPagamento(){} /*TODO*/
-    public void eliminarPagamento(){} /*TODO*/
-    public void listarPagamentos(){} /*TODO*/
+    public void efectuarPagamento() {
 
-}
+        String pagaPor, recebidoPor, data;
+        double valor;
+        System.out.print("\nPago por (email): ");
+        pagaPor = scanner.nextLine();
+        System.out.print("\nRecebido por (email): ");
+        recebidoPor = scanner.nextLine();
+        System.out.print("\nValor do pagamento: ");
+        valor = Double.parseDouble(scanner.nextLine());
+        System.out.print("\nData do pagamento (DD-MM-YYYY): ");
+        data = scanner.nextLine();
+        cp.efectuaPagamento(grupoSelecionado, pagaPor, recebidoPor, valor, data);
+    }
+    public void eliminarPagamento() {
+        System.out.print("\nPara eliminar um pagamento, forneça o ID do pagamento:\n");
+
+        System.out.print("ID do pagamento: ");
+        String paymentId = scanner.nextLine();
+
+        if (paymentId == null || paymentId.trim().isEmpty()) {
+            System.out.println("O ID do pagamento deve ser fornecido.");
+            return;
+        }
+
+        try {
+            cp.eliminaPagamento(grupoSelecionado, paymentId);
+            System.out.println("Pagamento eliminado com sucesso.");
+        } catch (Exception e) {
+            System.out.println("Erro ao eliminar pagamento: " + e.getMessage());
+        }
+    }
+
+    public void listarPagamentos() {
+
+        /*
+
+        List<Pagamento> pagamentos = cp.listarPagamentos(grupoSelecionado); // O controlador retorna a lista
+
+        if (pagamentos.isEmpty()) {
+            System.out.println("Não há pagamentos para mostrar neste grupo.");
+            return;
+        }
+        System.out.println("Pagamentos no grupo: " + grupoSelecionado);
+        for (Pagamento pagamento : pagamentos) {
+            System.out.println("ID: " + pagamento.getId());
+            System.out.println("Pago por: " + pagamento.getPagaPor());
+            System.out.println("Recebido por: " + pagamento.getRecebidoPor());
+            System.out.println("Valor: " + pagamento.getValor() + "€");
+            System.out.println("Data: " + pagamento.getData());
+            System.out.println("-----------------------------------");
+
+         */
+        }
+    }
+
