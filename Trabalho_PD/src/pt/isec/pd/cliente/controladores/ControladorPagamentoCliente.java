@@ -3,6 +3,7 @@ package pt.isec.pd.cliente.controladores;
 import pt.isec.pd.cliente.ligacao.Ligacao;
 import pt.isec.pd.comum.enumeracoes.Tipomensagemenum;
 import pt.isec.pd.comum.modelos.Mensagem;
+import pt.isec.pd.comum.modelos.mensagens.EliminaPagamento;
 import pt.isec.pd.comum.modelos.mensagens.InserePagamento;
 
 public class ControladorPagamentoCliente {

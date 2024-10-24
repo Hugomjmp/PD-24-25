@@ -6,12 +6,12 @@ public class Pagamento implements Serializable {
     private static final long serialVersionUID = 1L;
 
     private double valor;
-    private String data; // Use String para facilitar a manipulação, ou LocalDate se preferir
+    private String data;
     private String pagaPor;
     private String recebidoPor;
     private String groupId;
 
-    // Construtor
+
     public Pagamento(double valor, String data, String pagaPor, String recebidoPor,String groupId) {
         this.valor = valor;
         this.data = data;

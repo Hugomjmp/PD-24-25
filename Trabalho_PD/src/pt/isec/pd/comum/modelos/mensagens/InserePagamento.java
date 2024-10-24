@@ -11,8 +11,8 @@ public class InserePagamento implements Serializable {
     private double valor;
     private String data;
 
-    // Construtor que aceita uma data como string
-    public InserePagamento(String groupId, String pagaPor, String recebidoPor, double valor) {
+
+    public InserePagamento(String groupId, String pagaPor, String recebidoPor, double valor,String data) {
         this.groupId = groupId;
         this.pagaPor = pagaPor;
         this.recebidoPor = recebidoPor;
