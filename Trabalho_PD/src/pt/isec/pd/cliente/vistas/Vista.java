@@ -84,7 +84,6 @@ public class Vista {
         System.out.print("#>");
     }
     public static void menuGrupo(){
-        //Scanner scanner = new Scanner(System.in);
         System.out.println("+------------------------------------------+");
         System.out.println("|               MENU - Grupo               |");
         System.out.println("+------------------------------------------+");
@@ -97,12 +96,6 @@ public class Vista {
         System.out.println("|  7  - Back                               |");
         System.out.println("+------------------------------------------+");
         System.out.print("#>");
-/*        int opcao = scanner.nextInt();
-        if (opcao > 0 && opcao < 21 ){
-            return opcao;
-        }else{
-            return 99;
-        }*/
     }
     public static void menuConvites(){
         System.out.println("+------------------------------------------+");
@@ -266,7 +259,7 @@ public class Vista {
                 tamanhoData + tamanhoValor + 14;
         //linha 1
         System.out.print("+");
-        for (int i=0;i<tamanhoTotal;i++)
+        for (int i=0;i<tamanhoTotal+1;i++)
             System.out.print("-");
         System.out.println("+");
         //mostra título da tabela
@@ -276,37 +269,77 @@ public class Vista {
             System.out.print(" ");
         System.out.print("Histórico De Despesas");
         espacosDireita = tamanhoTotal - 21 - espacosEsquerda;
-        for (int i = 0; i < espacosDireita ; i++)
+        for (int i = 0; i < espacosDireita +1; i++)
             System.out.print(" ");
         System.out.println("|");
         System.out.print("+");
-        for (int i=0;i<tamanhoTotal;i++)
+        for (int i=0;i<tamanhoTotal+1;i++)
             System.out.print("-");
         System.out.println("+");
-        System.out.print("| ");
+        System.out.print("|");
+        for(int i = 0; i < (tamanhoData+2 - "DATA".length())/2; i++)
+            System.out.print(" ");
         System.out.print("DATA");
-        System.out.print(" | ");
+        for(int i = 0; i < (tamanhoData+2 - "DATA".length())/2; i++)
+            System.out.print(" ");
+        System.out.print("|");
+        for(int i = 0; i < (tamanhoValor+3 - "Valor".length())/2; i++)
+            System.out.print(" ");
         System.out.print("Valor");
-        System.out.print(" | ");
+        for(int i = 0; i < (tamanhoValor+3 - "Valor".length())/2; i++)
+            System.out.print(" ");
+        System.out.print("|");
+        for(int i = 0; i < (tamanhoDescricao+2 - "Descrição".length())/2; i++)
+            System.out.print(" ");
         System.out.print("Descrição");
-        System.out.print(" | ");
-        System.out.print("Registada Por");
-        System.out.print(" | ");
-        System.out.print("Pago Por");
-        System.out.println(" |");
+        for(int i = 0; i < (tamanhoDescricao+2 - "Descrição".length())/2; i++)
+            System.out.print(" ");
+        System.out.print("|");
+        for(int i = 0; i < (tamanhoRegistadoPor+2 - "Registo".length())/2; i++)
+            System.out.print(" ");
+        System.out.print("Registo");
+        for(int i = 0; i < (tamanhoRegistadoPor+2 - "Registo".length())/2; i++)
+            System.out.print(" ");
+        System.out.print("|");
+        for(int i = 0; i < (tamanhoPagoPor+2 - "Pago".length())/2; i++)
+            System.out.print(" ");
+        System.out.print("Pago");
+        for(int i = 0; i < (tamanhoPagoPor+2 - "Pago".length())/2; i++)
+            System.out.print(" ");
+        System.out.println("|");
         //linha 2
         System.out.print("+");
-        for (int i=0;i<tamanhoTotal;i++)
+        for (int i=0;i<tamanhoTotal+1;i++)
             System.out.print("-");
         System.out.println("+");
 
         for (Despesa despesa : despesas.getDespesaList() ) {
-            System.out.println("| "+ despesa.getData() + " | "+ despesa.getDespesa() + "€" +" | " +
-                    despesa.getDescricao()
-                    +" | " +despesa.getEmail() +" | " + despesa.getQuemPagou() +" |");
+            System.out.print(("| "+ despesa.getData() +" | "));
+
+            System.out.print(despesa.getDespesa() + "€");
+            for (int i = 0 ; i < tamanhoValor - String.valueOf(despesa.getDespesa()).length() +1; i++)
+                System.out.print(" ");
+            System.out.print("| ");
+            System.out.print(despesa.getDescricao());
+
+            for(int i = 0 ; i < tamanhoDescricao - despesa.getDescricao().length() + 1; i++)
+                System.out.print(" ");
+
+            System.out.print("| ");
+
+            System.out.print(despesa.getEmail());
+            for(int i = 0 ; i < tamanhoRegistadoPor - despesa.getEmail().length() + 1; i++)
+                System.out.print(" ");
+            System.out.print("| ");
+
+            System.out.print(despesa.getQuemPagou());
+            for(int i = 0 ; i < tamanhoPagoPor - despesa.getQuemPagou().length() + 1; i++)
+                System.out.print(" ");
+            System.out.print("|\n");
+
 
             System.out.print("+");
-            for (int i=0;i<tamanhoTotal;i++)
+            for (int i=0;i<tamanhoTotal+1;i++)
                 System.out.print("-");
             System.out.println("+");
 
