@@ -176,30 +176,16 @@ public class ControladorPrincipal {
         return (String) recebeMensagem();
     }
 
-    /*TODO
-    *  ARRANJAR ESTE MÉTODO...*/
-    public void efectuaPagamento(){
-       /* double valorPagamento;
-        String quemRecebeu;
-        String grupoNome;
-        String dataPagamentoStr;
+    public void efectuaPagamento(String grupoSelecionado,String pagaPor,String recebidoPor,double valor, String data ){
 
-        System.out.println("Envia Efetuar Pagamento:");
-
-        System.out.print("Grupo: ");
-        grupoNome = scanner.nextLine();
-        System.out.print("\nValor do Pagamento: ");
-        valorPagamento = Double.parseDouble(scanner.nextLine());
-        System.out.print("\nPago para (email): ");
-        quemRecebeu = scanner.nextLine();
-        System.out.print("\nData do Pagamento (formato DD-MM-YYYY): ");
-        dataPagamentoStr = scanner.nextLine();
-        String pagaPor = dados.getUtilizadorLogado().getEmail();
-
-        ControladorPagamentoCliente.inserirPagamento(ligacao, pagaPor, quemRecebeu, grupoNome, valorPagamento, dataPagamentoStr);
-        //recebeMensagem();*/
+        ControladorPagamentoCliente.inserirPagamento(ligacao, dados.getUtilizadorLogado().getEmail(), grupoSelecionado, pagaPor, recebidoPor, valor, data);
+        recebeMensagem();
     }
-    public void eliminaPagamento(){} /*TODO*/
+    public void eliminaPagamento(String grupoSelecionado, String paymentId) {
+        ControladorPagamentoCliente.eliminaPagamento(ligacao, dados.getUtilizadorLogado().getEmail(), grupoSelecionado, paymentId);
+        recebeMensagem();
+
+    }
     public void listaPagamentos(){} /*TODO*/
 
     /*TODO
