@@ -572,6 +572,25 @@ public class Bd {
         return Estados.USER_CRIA_DESPESA_COM_SUCESSO;
 
     }
+/*TODO
+*  ACABAR O EDITA DESPESA:...*/
+    public static Estados editaDespesa(String email,String grupo, double despesa, String quemPagou, String descricao, String data){
+        String query = "UPDATE Despesas SET valor = ?, " +
+                "descricao = ?, " +
+                "data_pagamento = ?, " +
+                "quem_pagou = ? " +
+                "WHERE idDespesa = ?";
+
+        try {
+            Statement stmt = conn.createStatement();
+            stmt.executeUpdate(query);
+            versaoUpdate();
+            stmt.close();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return Estados.USER_CRIA_DESPESA_COM_SUCESSO;
+    }
 
     public static String verGasto(String email,String grupoNome){
         String valorTotal = null;

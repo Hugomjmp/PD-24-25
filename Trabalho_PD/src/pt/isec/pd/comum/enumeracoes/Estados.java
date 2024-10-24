@@ -26,6 +26,7 @@ public enum Estados {
     GRUPO_ACEITE_CONVITE_COM_SUCESSO("Convite aceite com sucesso"),
 
     USER_CRIA_DESPESA_COM_SUCESSO("Utilizador cria despesa com sucesso"),
+    USER_EDITA_DESPESA_COM_SUCESSO("Utilizador edita despesa com sucesso"),
     CONSULTA_DESPESA_TOTAL_COM_SUCESSO("Consulta da despesa com sucesso"),
     USER_EXPORTA_COM_SUCESSO("Ficheiro CSV exportado com sucesso"),
 
@@ -47,8 +48,8 @@ public enum Estados {
     ERRO_CONSULTA_DESPESA_TOTAL("ERRO AO CONSULTAR VALOR DA DESPESA TOTAL"),
 
     ERRO_SEM_PAGAMENTOS("Nao Existem Pagamentos"),
-    ERRO_AO_EXPORTAR_CSV("ERAR O FICHEIRO CSV");
-    
+    ERRO_AO_EXPORTAR_CSV("ERAR O FICHEIRO CSV"),
+    ERRO_EDITAR_DESPESA("Erro ao editar Despesa");
     String mensagem;
     Serializable dados;
 

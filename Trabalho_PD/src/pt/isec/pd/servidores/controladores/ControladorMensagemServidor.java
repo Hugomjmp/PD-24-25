@@ -152,6 +152,12 @@ public class ControladorMensagemServidor {
                 resposta = new RespostaServidorMensagem(estado, estado.getDados());
                 break;
             }
+            case USER_EDITA_DESPESA:
+            {
+                Estados estado = ControladorDespesaServidor.editaDespesa((EditarDespesa) mensagem.getConteudo());
+                resposta = new RespostaServidorMensagem(estado, estado.getDados());
+                break;
+            }
 
 
         }

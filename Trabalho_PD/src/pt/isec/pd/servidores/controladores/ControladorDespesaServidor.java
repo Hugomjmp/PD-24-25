@@ -4,10 +4,7 @@ import pt.isec.pd.cliente.ligacao.Ligacao;
 import pt.isec.pd.comum.enumeracoes.Estados;
 import pt.isec.pd.comum.enumeracoes.Tipomensagemenum;
 import pt.isec.pd.comum.modelos.Mensagem;
-import pt.isec.pd.comum.modelos.mensagens.CriaDespesa;
-import pt.isec.pd.comum.modelos.mensagens.EditarGrupo;
-import pt.isec.pd.comum.modelos.mensagens.ExportarDespesas;
-import pt.isec.pd.comum.modelos.mensagens.VerGastoTotal;
+import pt.isec.pd.comum.modelos.mensagens.*;
 import pt.isec.pd.db.Bd;
 
 import java.io.Serializable;
@@ -25,6 +22,16 @@ public class ControladorDespesaServidor {
             //return Estados.ERRO_CRIAR_DESPESA;
         }
         return despesa == null ? Estados.ERRO_CRIAR_DESPESA : Estados.USER_CRIA_DESPESA_COM_SUCESSO.setDados(despesa);
+    }
+    public static Estados editaDespesa(EditarDespesa editarDespesa){
+        Serializable edita = null;
+        try {
+            edita = Bd.editaDespesa(editarDespesa.getEmail(),editarDespesa.getGrupo(),editarDespesa.getDespesa(),editarDespesa.getQuemPagou(),editarDespesa.getDescricao(), editarDespesa.getData());
+        }catch (Exception e) {
+            System.err.println("Erro ao editar uma despesa: " + e.getMessage());
+            //return Estados.ERRO_CRIAR_DESPESA;
+        }
+        return edita == null ? Estados.ERRO_EDITAR_DESPESA : Estados.USER_EDITA_DESPESA_COM_SUCESSO.setDados(edita);
     }
 
     public static Estados verGastoTotal(VerGastoTotal verGastoTotal){

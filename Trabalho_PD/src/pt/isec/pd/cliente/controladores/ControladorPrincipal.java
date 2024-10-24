@@ -158,8 +158,13 @@ public class ControladorPrincipal {
         ControladorDespesaCliente.inserirDespesa(ligacao, dados.getUtilizadorLogado().getEmail(), grupoSelecionado, despesa, quemPagou, descricao, data);
         recebeMensagem();
     }
-    public void editaDespesa(){}
-    public void eliminaDespesa(){}
+    public void editaDespesa(String grupoSelecionado, double despesa, String quemPagou, String descricao, String data){
+         ControladorDespesaCliente.editarDespesa(ligacao,dados.getUtilizadorLogado().getEmail(),grupoSelecionado,despesa,quemPagou,descricao,data);
+         recebeMensagem();
+    }
+    public void eliminaDespesa(){
+
+    }
     public void exportaFicheiro(String grupoSelecionado){
         ControladorDespesaCliente.exportarDespesas(ligacao, grupoSelecionado, dados.getUtilizadorLogado().getEmail());
         recebeMensagem();
