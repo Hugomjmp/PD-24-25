@@ -3,10 +3,7 @@ package pt.isec.pd.cliente.controladores;
 import pt.isec.pd.cliente.ligacao.Ligacao;
 import pt.isec.pd.comum.enumeracoes.Tipomensagemenum;
 import pt.isec.pd.comum.modelos.Mensagem;
-import pt.isec.pd.comum.modelos.mensagens.CriaDespesa;
-import pt.isec.pd.comum.modelos.mensagens.EditarDespesa;
-import pt.isec.pd.comum.modelos.mensagens.ExportarDespesas;
-import pt.isec.pd.comum.modelos.mensagens.VerGastoTotal;
+import pt.isec.pd.comum.modelos.mensagens.*;
 
 public class ControladorDespesaCliente {
     public static void inserirDespesa(Ligacao ligacao, String email,String grupo, double despesa, String quemPagou, String descricao, String data ){
@@ -29,5 +26,9 @@ public class ControladorDespesaCliente {
         Mensagem mensagem = new Mensagem(Tipomensagemenum.USER_EDITA_DESPESA, editaDespesa);
         ligacao.enviaMensagem(mensagem);
     }
-
+    public static void historicoDespesa(Ligacao ligacao, String grupo){
+        HistoricoDespesa historicoDespesa = new HistoricoDespesa(grupo);
+        Mensagem mensagem = new Mensagem(Tipomensagemenum.USER_HISTORICO_DESPESAS, historicoDespesa);
+        ligacao.enviaMensagem(mensagem);
+    }
 }

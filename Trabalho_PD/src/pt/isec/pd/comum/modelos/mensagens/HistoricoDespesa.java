@@ -1,25 +1,17 @@
-package pt.isec.pd.comum.modelos;
+package pt.isec.pd.comum.modelos.mensagens;
 
 import java.io.Serializable;
-import java.util.List;
 
-public class Despesa implements Serializable {
-    private String email;
-    private String grupo;
-    private double despesa;
-    private String quemPagou;
-    private String descricao;
-    private String data;
-    private List<Despesa> despesaList;
+public class HistoricoDespesa implements Serializable {
+    String email;
+    String grupo;
+    double despesa;
+    String quemPagou;
+    String descricao;
+    String data;
 
-
-
-    public List<Despesa> getDespesaList() {
-        return despesaList;
-    }
-
-    public void setDespesaList(List<Despesa> despesaList) {
-        this.despesaList = despesaList;
+    public HistoricoDespesa(String grupo) {
+        this.grupo = grupo;
     }
 
     public String getEmail() {
@@ -72,7 +64,7 @@ public class Despesa implements Serializable {
 
     @Override
     public String toString() {
-        return "Despesa{" +
+        return "EditarDespesa{" +
                 "email='" + email + '\'' +
                 ", grupo='" + grupo + '\'' +
                 ", despesa=" + despesa +
@@ -82,4 +74,3 @@ public class Despesa implements Serializable {
                 '}';
     }
 }
-

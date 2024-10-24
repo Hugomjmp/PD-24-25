@@ -2,6 +2,7 @@ package pt.isec.pd.cliente.vistas;
 
 import pt.isec.pd.cliente.controladores.ControladorPrincipal;
 import pt.isec.pd.comum.modelos.Convites;
+import pt.isec.pd.comum.modelos.Despesa;
 import pt.isec.pd.comum.modelos.Grupos;
 
 import java.util.Scanner;
@@ -241,5 +242,86 @@ public class Vista {
         System.out.print("\n");
 
     }
+
+
+    public static void tabelaDespesas(Despesa despesas){
+        int tamanhoDescricao = 0;
+        int tamanhoRegistadoPor = 0;
+        int tamanhoPagoPor = 0;
+        int tamanhoData = 0;
+        int tamanhoValor = 0;
+        int tamanhoTotal = 0;
+        int espacosEsquerda;
+        int espacosDireita;
+        //calcular o maior dos nomes possíveis para adaptar a tabela
+        for (Despesa despesa : despesas.getDespesaList() ) {
+            tamanhoDescricao = Math.max(tamanhoDescricao,despesa.getDescricao().length());
+            tamanhoRegistadoPor = Math.max(tamanhoRegistadoPor, despesa.getEmail().length());
+            tamanhoPagoPor = Math.max(tamanhoPagoPor, despesa.getQuemPagou().length());
+            tamanhoData = Math.max(tamanhoData, despesa.getData().length());
+            tamanhoValor = Math.max(tamanhoValor, String.valueOf(despesa.getDespesa()).length());
+
+        }
+        tamanhoTotal = tamanhoDescricao + tamanhoRegistadoPor + tamanhoPagoPor +
+                tamanhoData + tamanhoValor + 14;
+        //linha 1
+        System.out.print("+");
+        for (int i=0;i<tamanhoTotal;i++)
+            System.out.print("-");
+        System.out.println("+");
+        //mostra título da tabela
+        System.out.print("|");
+        espacosEsquerda = (tamanhoTotal - "Histórico De Despesas".length())/2;
+        for (int i = 0; i < espacosEsquerda ; i++)
+            System.out.print(" ");
+        System.out.print("Histórico De Despesas");
+        espacosDireita = tamanhoTotal - 21 - espacosEsquerda;
+        for (int i = 0; i < espacosDireita ; i++)
+            System.out.print(" ");
+        System.out.println("|");
+        System.out.print("+");
+        for (int i=0;i<tamanhoTotal;i++)
+            System.out.print("-");
+        System.out.println("+");
+        System.out.print("| ");
+        System.out.print("DATA");
+        System.out.print(" | ");
+        System.out.print("Valor");
+        System.out.print(" | ");
+        System.out.print("Descrição");
+        System.out.print(" | ");
+        System.out.print("Registada Por");
+        System.out.print(" | ");
+        System.out.print("Pago Por");
+        System.out.println(" |");
+        //linha 2
+        System.out.print("+");
+        for (int i=0;i<tamanhoTotal;i++)
+            System.out.print("-");
+        System.out.println("+");
+
+        for (Despesa despesa : despesas.getDespesaList() ) {
+            System.out.println("| "+ despesa.getData() + " | "+ despesa.getDespesa() + "€" +" | " +
+                    despesa.getDescricao()
+                    +" | " +despesa.getEmail() +" | " + despesa.getQuemPagou() +" |");
+
+            System.out.print("+");
+            for (int i=0;i<tamanhoTotal;i++)
+                System.out.print("-");
+            System.out.println("+");
+
+        }
+
+
+    }
+
+
+
+
+
+
+
+
+
 
 }

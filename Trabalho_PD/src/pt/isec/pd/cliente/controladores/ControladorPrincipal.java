@@ -5,10 +5,7 @@ import pt.isec.pd.cliente.ligacao.Ligacao;
 import pt.isec.pd.cliente.modelos.Dados;
 import pt.isec.pd.cliente.vistas.Vista;
 
-import pt.isec.pd.comum.modelos.Convites;
-import pt.isec.pd.comum.modelos.Grupos;
-import pt.isec.pd.comum.modelos.RespostaServidorMensagem;
-import pt.isec.pd.comum.modelos.User;
+import pt.isec.pd.comum.modelos.*;
 
 import java.util.List;
 import java.util.Scanner;
@@ -158,11 +155,19 @@ public class ControladorPrincipal {
         ControladorDespesaCliente.inserirDespesa(ligacao, dados.getUtilizadorLogado().getEmail(), grupoSelecionado, despesa, quemPagou, descricao, data);
         recebeMensagem();
     }
+
+    /*TODO
+    *  terminar isto...*/
     public void editaDespesa(String grupoSelecionado, double despesa, String quemPagou, String descricao, String data){
          ControladorDespesaCliente.editarDespesa(ligacao,dados.getUtilizadorLogado().getEmail(),grupoSelecionado,despesa,quemPagou,descricao,data);
          recebeMensagem();
     }
     public void eliminaDespesa(){
+
+    }
+    public Despesa mostrarDespesas(String grupoSelecionado){
+        ControladorDespesaCliente.historicoDespesa(ligacao,grupoSelecionado);
+        return (Despesa) recebeMensagem();
 
     }
     public void exportaFicheiro(String grupoSelecionado){
@@ -465,6 +470,11 @@ public class ControladorPrincipal {
                     return grupos;
                     //return resposta.getEstado();
 
+                }
+                case USER_OBTEM_HISTORICO_DESPESA_COM_SUCESSO ->{
+
+                    Despesa despesa = (Despesa) resposta.getConteudo();
+                    return despesa;
                 }
             }
         } catch (Exception e) {

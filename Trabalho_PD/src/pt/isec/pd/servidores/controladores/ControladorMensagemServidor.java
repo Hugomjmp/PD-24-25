@@ -158,6 +158,12 @@ public class ControladorMensagemServidor {
                 resposta = new RespostaServidorMensagem(estado, estado.getDados());
                 break;
             }
+            case USER_HISTORICO_DESPESAS:
+            {
+                Estados estado = ControladorDespesaServidor.historicoDespesa((HistoricoDespesa) mensagem.getConteudo());
+                resposta = new RespostaServidorMensagem(estado,estado.getDados());
+                break;
+            }
 
 
         }

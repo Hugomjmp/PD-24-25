@@ -2,6 +2,7 @@ package pt.isec.pd.cliente.UI;
 
 import pt.isec.pd.cliente.controladores.ControladorPrincipal;
 import pt.isec.pd.cliente.vistas.Vista;
+import pt.isec.pd.comum.modelos.Despesa;
 import pt.isec.pd.comum.modelos.Grupos;
 import pt.isec.pd.comum.modelos.Pagamento;
 
@@ -217,7 +218,7 @@ public class ClienteConsolaUI {
                     consultarGastoTotal();
                     break;
                 case "5":
-
+                    listarDespesas();
                     break;
                 case "6":
                     exportarCSV();
@@ -251,6 +252,11 @@ public class ClienteConsolaUI {
     }
     public void editarDespesa() {} /*TODO*/
     public void eliminarDespesa() {} /*TODO*/
+    public void listarDespesas(){
+        Despesa despesa = cp.mostrarDespesas(grupoSelecionado);
+        Vista.tabelaDespesas(despesa);
+
+    }
     public void exportarCSV(){
         cp.exportaFicheiro(grupoSelecionado);
     }

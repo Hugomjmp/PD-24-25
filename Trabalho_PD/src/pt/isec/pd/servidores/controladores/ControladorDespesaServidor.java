@@ -52,10 +52,19 @@ public class ControladorDespesaServidor {
         } catch (Exception e) {
             System.err.println("Erro ao exportar as despesas do grupo: " + e.getMessage());
         }
-        return exportar == null ? Estados.USER_EXPORTA_COM_SUCESSO : Estados.ERRO_AO_EXPORTAR_CSV.setDados(exportar);
+        return exportar == null ? Estados.ERRO_AO_EXPORTAR_CSV : Estados.USER_EXPORTA_COM_SUCESSO.setDados(exportar);
     }
 
+    public static Estados historicoDespesa(HistoricoDespesa historicoDespesa){
+        Serializable historico = null;
+        try {
+            historico = Bd.historio(historicoDespesa.getGrupo());
+        }catch (Exception e) {
+            System.err.println("Erro ao exportar as despesas do grupo: " + e.getMessage());
+        }
+        return historico == null ? Estados.ERRO_OBTER_HISTORICO : Estados.USER_OBTEM_HISTORICO_DESPESA_COM_SUCESSO.setDados(historico);
 
+    }
 
 
 

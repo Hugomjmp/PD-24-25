@@ -1,10 +1,7 @@
 package pt.isec.pd.db;
 
 import pt.isec.pd.comum.enumeracoes.Estados;
-import pt.isec.pd.comum.modelos.Convites;
-import pt.isec.pd.comum.modelos.Grupos;
-import pt.isec.pd.comum.modelos.Pagamento;
-import pt.isec.pd.comum.modelos.User;
+import pt.isec.pd.comum.modelos.*;
 
 import java.io.FileWriter;
 import java.io.IOException;
@@ -431,11 +428,6 @@ public class Bd {
         return pagamentoList;
     }
 
-
-
-
-
-
     public static Estados setUserDB(String nome, int nTelefone, String Email, String password){
         try{
             Statement stmt = conn.createStatement();
@@ -572,18 +564,61 @@ public class Bd {
         return Estados.USER_CRIA_DESPESA_COM_SUCESSO;
 
     }
-/*TODO
-*  ACABAR O EDITA DESPESA:...*/
-    public static Estados editaDespesa(String email,String grupo, double despesa, String quemPagou, String descricao, String data){
-        String query = "UPDATE Despesas SET valor = ?, " +
-                "descricao = ?, " +
-                "data_pagamento = ?, " +
-                "quem_pagou = ? " +
-                "WHERE idDespesa = ?";
+
+    public static Despesa historio(String grupo){
+        List <Despesa> despesaList = new ArrayList<>();
+        Despesa despesa = null;
+        String GRUPODB = null;
+        String queryGrupoID = "SELECT ID " +
+                "FROM GRUPO " +
+                "WHERE NOME = '"+ grupo +"'";
 
         try {
             Statement stmt = conn.createStatement();
-            stmt.executeUpdate(query);
+            ResultSet rsID = stmt.executeQuery(queryGrupoID);
+            if(rsID.next())
+                GRUPODB = rsID.getString("ID");
+
+            String query = "SELECT D.DATA, D.VALOR, D.DESCRICAO, U1.NOME AS REGISTADA_POR, U.NOME AS PAGO_POR " +
+                    "FROM DESPESA D " +
+                    "JOIN USERS U ON D.PAGA_POR = U.ID " +
+                    "JOIN USERS U1 ON D.REGISTADA_POR = U1.ID " +
+                    "WHERE D.GROUP_ID = "+ GRUPODB + " " +
+                    "ORDER BY D.DATA ASC";
+            ResultSet rs = stmt.executeQuery(query);
+            while (rs.next()){
+                String DATA = rs.getString("DATA");
+                String VALOR = rs.getString("VALOR");
+                String DESCRICAO = rs.getString("DESCRICAO");
+                String REGISTADA_POR = rs.getString("REGISTADA_POR");
+                String PAGO_POR = rs.getString("PAGO_POR");
+                despesa = new Despesa();
+                despesa.setData(DATA);
+                despesa.setDespesa(Double.parseDouble(VALOR));
+                despesa.setDescricao(DESCRICAO);
+                despesa.setEmail(REGISTADA_POR);
+                despesa.setQuemPagou(PAGO_POR);
+                despesaList.add(despesa);
+                despesa.setDespesaList(despesaList);
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return despesa;
+    }
+
+    /*TODO
+*  ACABAR O EDITA DESPESA:...*/
+    public static Estados editaDespesa(String email,String grupo, double despesa, String quemPagou, String descricao, String data){
+/*        String query = "UPDATE Despesas SET valor = '"+ despesa +"', " +
+                "descricao = "+ descricao +", " +
+                "data_pagamento = "+data+", " +
+                "quem_pagou = "+quemPagou+" " +
+                "WHERE idDespesa = "?"";*/
+
+        try {
+            Statement stmt = conn.createStatement();
+            //stmt.executeUpdate(query);
             versaoUpdate();
             stmt.close();
         } catch (SQLException e) {
@@ -591,6 +626,9 @@ public class Bd {
         }
         return Estados.USER_CRIA_DESPESA_COM_SUCESSO;
     }
+
+
+
 
     public static String verGasto(String email,String grupoNome){
         String valorTotal = null;
