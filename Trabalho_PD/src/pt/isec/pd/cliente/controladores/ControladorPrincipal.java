@@ -158,9 +158,9 @@ public class ControladorPrincipal {
 
     /*TODO
     *  terminar isto...*/
-    public void editaDespesa(String grupoSelecionado, double despesa, String quemPagou, String descricao, String data){
-         ControladorDespesaCliente.editarDespesa(ligacao,dados.getUtilizadorLogado().getEmail(),grupoSelecionado,despesa,quemPagou,descricao,data);
-         recebeMensagem();
+    public void editaDespesa(String grupoSelecionado,String ID_despesa ,String despesa, String quemPagou, String descricao, String data){
+        ControladorDespesaCliente.editarDespesa(ligacao,dados.getUtilizadorLogado().getEmail(),grupoSelecionado,despesa,quemPagou,descricao,data, ID_despesa);
+        recebeMensagem();
     }
     public void eliminaDespesa(){
 

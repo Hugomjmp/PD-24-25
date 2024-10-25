@@ -26,7 +26,7 @@ public class ControladorDespesaServidor {
     public static Estados editaDespesa(EditarDespesa editarDespesa){
         Serializable edita = null;
         try {
-            edita = Bd.editaDespesa(editarDespesa.getEmail(),editarDespesa.getGrupo(),editarDespesa.getDespesa(),editarDespesa.getQuemPagou(),editarDespesa.getDescricao(), editarDespesa.getData());
+            edita = Bd.editaDespesa(editarDespesa.getEmail(),editarDespesa.getGrupo(),editarDespesa.getDespesa(),editarDespesa.getQuemPagou(),editarDespesa.getDescricao(), editarDespesa.getData(), editarDespesa.getID_despesa());
         }catch (Exception e) {
             System.err.println("Erro ao editar uma despesa: " + e.getMessage());
             //return Estados.ERRO_CRIAR_DESPESA;

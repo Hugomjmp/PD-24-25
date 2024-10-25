@@ -250,7 +250,27 @@ public class ClienteConsolaUI {
         System.out.println("Gasto total do grupo: "+grupoSelecionado+ " é de: "+cp.consultaGastoTotal(grupoSelecionado) + "€");
 
     }
-    public void editarDespesa() {} /*TODO*/
+    public void editarDespesa() {
+        String valor;
+        String quemPagou;
+        String descricao;
+        String data;
+        String ID_despesa;
+        Despesa despesa = cp.mostrarDespesas(grupoSelecionado);
+        Vista.tabelaDespesas(despesa);
+        System.out.print("ID: ");
+        ID_despesa = scanner.nextLine();
+        System.out.println("O que não quiser alterar deixar a vazio.");
+        System.out.print("Modificar o Valor da despesa: ");
+        valor = scanner.nextLine();
+        System.out.print("Modificar quem pagou (email): ");
+        quemPagou = scanner.nextLine();
+        System.out.print("Modificar descrição: ");
+        descricao = scanner.nextLine();
+        System.out.print("Modificar a data (DD-MM-YYYY): ");
+        data = scanner.nextLine();
+        cp.editaDespesa(grupoSelecionado,ID_despesa,valor,quemPagou,descricao,data);
+    } /*TODO*/
     public void eliminarDespesa() {} /*TODO*/
     public void listarDespesas(){
         Despesa despesa = cp.mostrarDespesas(grupoSelecionado);

@@ -5,18 +5,28 @@ import java.io.Serializable;
 public class EditarDespesa implements Serializable {
     String email;
     String grupo;
-    double despesa;
+    String despesa;
     String quemPagou;
     String descricao;
     String data;
+    String ID_despesa;
 
-    public EditarDespesa(String email,String grupo, double despesa, String quemPagou, String descricao, String data) {
+    public EditarDespesa(String email,String grupo, String despesa, String quemPagou, String descricao, String data, String ID_despesa) {
         this.email = email;
         this.grupo = grupo;
         this.despesa = despesa;
         this.quemPagou = quemPagou;
         this.descricao = descricao;
         this.data = data;
+        this.ID_despesa = ID_despesa;
+    }
+
+    public String getID_despesa() {
+        return ID_despesa;
+    }
+
+    public void setID_despesa(String ID_despesa) {
+        this.ID_despesa = ID_despesa;
     }
 
     public String getEmail() {
@@ -35,11 +45,11 @@ public class EditarDespesa implements Serializable {
         this.grupo = grupo;
     }
 
-    public double getDespesa() {
+    public String getDespesa() {
         return despesa;
     }
 
-    public void setDespesa(double despesa) {
+    public void setDespesa(String despesa) {
         this.despesa = despesa;
     }
 

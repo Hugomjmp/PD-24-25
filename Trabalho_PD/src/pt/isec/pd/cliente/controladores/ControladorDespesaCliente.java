@@ -21,8 +21,8 @@ public class ControladorDespesaCliente {
         Mensagem mensagem = new Mensagem(Tipomensagemenum.USER_EXPORTA_HISTORICO_CSV_FICHEIRO, exportar);
         ligacao.enviaMensagem(mensagem);
     }
-    public static void editarDespesa(Ligacao ligacao, String email,String grupo, double despesa, String quemPagou, String descricao, String data ){
-        EditarDespesa editaDespesa = new EditarDespesa(email,grupo,despesa,quemPagou,descricao,data);
+    public static void editarDespesa(Ligacao ligacao, String email,String grupo, String despesa, String quemPagou, String descricao, String data,String ID_despesa ){
+        EditarDespesa editaDespesa = new EditarDespesa(email,grupo,despesa,quemPagou,descricao,data, ID_despesa);
         Mensagem mensagem = new Mensagem(Tipomensagemenum.USER_EDITA_DESPESA, editaDespesa);
         ligacao.enviaMensagem(mensagem);
     }

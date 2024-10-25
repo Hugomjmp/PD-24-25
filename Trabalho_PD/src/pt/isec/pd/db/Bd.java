@@ -579,7 +579,7 @@ public class Bd {
             if(rsID.next())
                 GRUPODB = rsID.getString("ID");
 
-            String query = "SELECT D.DATA, D.VALOR, D.DESCRICAO, U1.NOME AS REGISTADA_POR, U.NOME AS PAGO_POR " +
+            String query = "SELECT D.ID, D.DATA, D.VALOR, D.DESCRICAO, U1.NOME AS REGISTADA_POR, U.NOME AS PAGO_POR " +
                     "FROM DESPESA D " +
                     "JOIN USERS U ON D.PAGA_POR = U.ID " +
                     "JOIN USERS U1 ON D.REGISTADA_POR = U1.ID " +
@@ -587,12 +587,14 @@ public class Bd {
                     "ORDER BY D.DATA ASC";
             ResultSet rs = stmt.executeQuery(query);
             while (rs.next()){
+                String ID = rs.getString("ID");
                 String DATA = rs.getString("DATA");
                 String VALOR = rs.getString("VALOR");
                 String DESCRICAO = rs.getString("DESCRICAO");
                 String REGISTADA_POR = rs.getString("REGISTADA_POR");
                 String PAGO_POR = rs.getString("PAGO_POR");
                 despesa = new Despesa();
+                despesa.setIdDespesa(ID);
                 despesa.setData(DATA);
                 despesa.setDespesa(Double.parseDouble(VALOR));
                 despesa.setDescricao(DESCRICAO);
@@ -608,23 +610,57 @@ public class Bd {
     }
 
     /*TODO
-*  ACABAR O EDITA DESPESA:...*/
-    public static Estados editaDespesa(String email,String grupo, double despesa, String quemPagou, String descricao, String data){
-/*        String query = "UPDATE Despesas SET valor = '"+ despesa +"', " +
-                "descricao = "+ descricao +", " +
-                "data_pagamento = "+data+", " +
-                "quem_pagou = "+quemPagou+" " +
-                "WHERE idDespesa = "?"";*/
+    *  ACABAR O EDITA DESPESA:...*/
+    public static Estados editaDespesa(String email,String grupo, String despesa, String quemPagou, String descricao, String data, String ID_despesa){
 
         try {
             Statement stmt = conn.createStatement();
-            //stmt.executeUpdate(query);
-            versaoUpdate();
+
+            if (!data.isEmpty() && !email.isEmpty() && despesa.isEmpty() && quemPagou.isEmpty() && descricao.isEmpty()) {
+                String sqldata = "UPDATE DESPESA " +
+                        "SET DATA = '" + data + "' " +
+                        "WHERE ID = " + ID_despesa;
+                stmt.executeUpdate(sqldata);
+
+                versaoUpdate();
+            } else if (data.isEmpty() && !email.isEmpty() && despesa.isEmpty() && quemPagou.isEmpty() && descricao.isEmpty()) { /*TODO*/
+                String sqlEmail = "UPDATE DESPESA " +
+                        "SET REGISTADA_POR = '" + email + "' " +
+                        "WHERE ID = " + ID_despesa;
+
+                //stmt.executeUpdate();
+                versaoUpdate();
+            } else if (data.isEmpty() && !email.isEmpty() && !despesa.isEmpty() && quemPagou.isEmpty() && descricao.isEmpty()) {
+                String sqlDespesa = "UPDATE DESPESA " +
+                        "SET VALOR = '" + despesa + "' " +
+                        "WHERE ID = " + ID_despesa;
+
+                stmt.executeUpdate(sqlDespesa);
+                versaoUpdate();
+            } else if (data.isEmpty() && !email.isEmpty() && despesa.isEmpty() && !quemPagou.isEmpty() && descricao.isEmpty()) { /*TODO*/
+                String sqlQuemPagou = "UPDATE DESPESA " +
+                        "SET PAGA_POR = '" + quemPagou + "' " +
+                        "WHERE ID = " + ID_despesa;
+
+                //stmt.executeUpdate();
+                versaoUpdate();
+            } else if (data.isEmpty() && !email.isEmpty() && despesa.isEmpty() && quemPagou.isEmpty() && !descricao.isEmpty()) {
+                String sqlDescricao = "UPDATE DESPESA " +
+                        "SET DESCRICAO = '" + descricao + "' " +
+                        "WHERE ID = " + ID_despesa;
+                System.out.print(sqlDescricao);
+
+                stmt.executeUpdate(sqlDescricao);
+                versaoUpdate();
+            } else {
+                return Estados.ERRO_EDITAR_DESPESA;
+            }
             stmt.close();
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-        return Estados.USER_CRIA_DESPESA_COM_SUCESSO;
+
+        return Estados.USER_EDITA_DESPESA_COM_SUCESSO;
     }
 
 

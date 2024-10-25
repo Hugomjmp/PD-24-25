@@ -243,11 +243,13 @@ public class Vista {
         int tamanhoPagoPor = 0;
         int tamanhoData = 0;
         int tamanhoValor = 0;
+        int tamanhoID = 0;
         int tamanhoTotal = 0;
         int espacosEsquerda;
         int espacosDireita;
         //calcular o maior dos nomes possíveis para adaptar a tabela
         for (Despesa despesa : despesas.getDespesaList() ) {
+            tamanhoID = Math.max(tamanhoID, despesa.getIdDespesa().length());
             tamanhoDescricao = Math.max(tamanhoDescricao,despesa.getDescricao().length());
             tamanhoRegistadoPor = Math.max(tamanhoRegistadoPor, despesa.getEmail().length());
             tamanhoPagoPor = Math.max(tamanhoPagoPor, despesa.getQuemPagou().length());
@@ -256,10 +258,10 @@ public class Vista {
 
         }
         tamanhoTotal = tamanhoDescricao + tamanhoRegistadoPor + tamanhoPagoPor +
-                tamanhoData + tamanhoValor + 14;
+                tamanhoData + tamanhoValor + tamanhoID + 14;
         //linha 1
         System.out.print("+");
-        for (int i=0;i<tamanhoTotal+1;i++)
+        for (int i=0;i<tamanhoTotal+4;i++)
             System.out.print("-");
         System.out.println("+");
         //mostra título da tabela
@@ -269,13 +271,19 @@ public class Vista {
             System.out.print(" ");
         System.out.print("Histórico De Despesas");
         espacosDireita = tamanhoTotal - 21 - espacosEsquerda;
-        for (int i = 0; i < espacosDireita +1; i++)
+        for (int i = 0; i < espacosDireita +4; i++)
             System.out.print(" ");
         System.out.println("|");
         System.out.print("+");
-        for (int i=0;i<tamanhoTotal+1;i++)
+        for (int i=0;i<tamanhoTotal+4;i++)
             System.out.print("-");
         System.out.println("+");
+        System.out.print("|");
+        for(int i = 0; i < (tamanhoID+2 - "ID".length())/2; i++)
+            System.out.print(" ");
+        System.out.print("ID");
+        for(int i = 0; i < (tamanhoID+2 - "ID".length())/2; i++)
+            System.out.print(" ");
         System.out.print("|");
         for(int i = 0; i < (tamanhoData+2 - "DATA".length())/2; i++)
             System.out.print(" ");
@@ -309,12 +317,19 @@ public class Vista {
         System.out.println("|");
         //linha 2
         System.out.print("+");
-        for (int i=0;i<tamanhoTotal+1;i++)
+        for (int i=0;i<tamanhoTotal+4;i++)
             System.out.print("-");
         System.out.println("+");
 
         for (Despesa despesa : despesas.getDespesaList() ) {
-            System.out.print(("| "+ despesa.getData() +" | "));
+
+            System.out.print("| " + despesa.getIdDespesa());
+            for (int i = 0 ; i < tamanhoID - String.valueOf(despesa.getIdDespesa()).length() +1; i++)
+                System.out.print(" ");
+            System.out.print("| ");
+
+
+            System.out.print(despesa.getData() +" | ");
 
             System.out.print(despesa.getDespesa() + "€");
             for (int i = 0 ; i < tamanhoValor - String.valueOf(despesa.getDespesa()).length() +1; i++)
@@ -339,7 +354,7 @@ public class Vista {
 
 
             System.out.print("+");
-            for (int i=0;i<tamanhoTotal+1;i++)
+            for (int i=0;i<tamanhoTotal+4;i++)
                 System.out.print("-");
             System.out.println("+");
 

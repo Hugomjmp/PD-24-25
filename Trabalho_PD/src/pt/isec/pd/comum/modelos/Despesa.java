@@ -10,9 +10,16 @@ public class Despesa implements Serializable {
     private String quemPagou;
     private String descricao;
     private String data;
+    private String idDespesa;
     private List<Despesa> despesaList;
 
+    public String getIdDespesa() {
+        return idDespesa;
+    }
 
+    public void setIdDespesa(String idDespesa) {
+        this.idDespesa = idDespesa;
+    }
 
     public List<Despesa> getDespesaList() {
         return despesaList;
