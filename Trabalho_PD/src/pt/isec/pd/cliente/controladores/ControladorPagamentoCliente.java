@@ -39,23 +39,20 @@ public class ControladorPagamentoCliente {
     }
 
 
-    public static List<Pagamento> listarPagamento(Ligacao ligacao, String emailLogado, String grupoSelecionado) {
+    public static void listarPagamento(Ligacao ligacao, String emailLogado, String grupoSelecionado) {
         if (grupoSelecionado == null || grupoSelecionado.isEmpty()) {
             System.out.println("ID do grupo deve ser fornecido.");
-            return null;
         }
         if (emailLogado == null || emailLogado.isEmpty()) {
             System.out.println("Email do usuário deve ser fornecido.");
-            return null;
         }
         ListarPagamentos listarPagamentos = new ListarPagamentos(emailLogado, grupoSelecionado);
         Mensagem mensagem = new Mensagem(Tipomensagemenum.USER_LISTA_PAGAMENTOS, listarPagamentos);
         ligacao.enviaMensagem(mensagem);
         System.out.println("Listagem de pagamentos enviada: " + grupoSelecionado);
 
-        List<Pagamento> pagamentos = Bd.listarPagamentosDB(grupoSelecionado);
-        return pagamentos;
     }
 
 
 }
+

@@ -414,26 +414,9 @@ public class ClienteConsolaUI {
         }
     }
 
-
-
     public void listarPagamentos() {
-        List<Pagamento> pagamentos = cp.listarPagamento(grupoSelecionado);
-
-        if (pagamentos.isEmpty()) {
-            System.out.println("Não há pagamentos para mostrar neste grupo.");
-            return;
-        }
-
-        System.out.println("Pagamentos no grupo: " + grupoSelecionado);
-
-        for (Pagamento pagamento : pagamentos) {
-            System.out.println("ID: " + pagamento.getGroupId());
-            System.out.println("Pago por: " + pagamento.getPagaPor());
-            System.out.println("Recebido por: " + pagamento.getRecebidoPor());
-            System.out.println("Valor: " + pagamento.getValor() + "€");
-            System.out.println("Data: " + pagamento.getData());
-            System.out.println("-----------------------------------");
-        }
+        Pagamento pagamentos = cp.listarPagamento(grupoSelecionado);
+        Vista.tabelaPagamentos (pagamentos);
     }
 }
 

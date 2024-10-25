@@ -169,6 +169,8 @@ public class ControladorPrincipal {
         return (Despesa) recebeMensagem();
 
     }
+
+
     public void exportaFicheiro(String grupoSelecionado){
         ControladorDespesaCliente.exportarDespesas(ligacao, grupoSelecionado, dados.getUtilizadorLogado().getEmail());
         recebeMensagem();
@@ -186,38 +188,12 @@ public class ControladorPrincipal {
         recebeMensagem();
     }
     public void eliminaPagamento(String grupoSelecionado, String data, double valor, String pagaPor, String recebidoPor) {
-        ControladorPagamentoCliente.eliminaPagamento(
-                ligacao,
-                dados.getUtilizadorLogado().getEmail(),
-                grupoSelecionado,
-                data,
-                valor,
-                pagaPor,
-                recebidoPor
-        );
+        ControladorPagamentoCliente.eliminaPagamento(ligacao, dados.getUtilizadorLogado().getEmail(), grupoSelecionado, data, valor, pagaPor, recebidoPor);
         recebeMensagem();
     }
-
-
-
-    public List<Pagamento> listarPagamento(String grupoSelecionado) {
+    public Pagamento listarPagamento(String grupoSelecionado) {
         ControladorPagamentoCliente.listarPagamento(ligacao, dados.getUtilizadorLogado().getEmail(), grupoSelecionado);
-        Pagamento pagamentosRecebidos = (Pagamento) recebeMensagem();
-        if (pagamentosRecebidos != null && pagamentosRecebidos.getPagamentosList() != null) {
-            List<Pagamento> listaDePagamentos = pagamentosRecebidos.getPagamentosList();
-
-            if (listaDePagamentos.isEmpty()) {
-                System.out.println("Não há pagamentos para o grupo selecionado.");
-            } else {
-                System.out.println("Pagamentos do grupo " + grupoSelecionado + ":");
-                for (Pagamento pagamento : listaDePagamentos) {
-                    System.out.println(pagamento.toString());
-                }
-            }
-        } else {
-            System.out.println("Erro ao listar pagamentos. Verifique a conexão ou o grupo selecionado.");
-        }
-        return null;
+        return(Pagamento) recebeMensagem();
     }
 
 

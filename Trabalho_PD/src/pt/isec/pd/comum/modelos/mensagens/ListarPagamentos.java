@@ -6,7 +6,6 @@ public class ListarPagamentos implements Serializable {
     private String solicitadoPor;
     private String grupoId;
 
-    // Construtor
     public ListarPagamentos(String solicitadoPor, String grupoId) {
         this.solicitadoPor = solicitadoPor;
         this.grupoId = grupoId;

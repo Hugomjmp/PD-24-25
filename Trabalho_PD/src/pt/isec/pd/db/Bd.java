@@ -434,7 +434,7 @@ public class Bd {
                     String pagaPor = rs.getString("PAGA_POR");
                     String recebidoPor = rs.getString("RECEBIDO_POR");
 
-                    Pagamento pagamento = new Pagamento(valor, data, pagaPor, recebidoPor, groupId);
+                    Pagamento pagamento = new Pagamento(groupId, data, valor, pagaPor, recebidoPor);
                     pagamentoList.add(pagamento);
                 }
             }
@@ -444,6 +444,7 @@ public class Bd {
 
         return pagamentoList;
     }
+
 
 
     public static Estados setUserDB(String nome, int nTelefone, String Email, String password){

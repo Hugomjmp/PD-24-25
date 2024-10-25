@@ -124,10 +124,10 @@ public class ControladorMensagemServidor {
 
                 ListarPagamentos listarPagamentos = (ListarPagamentos) mensagem.getConteudo();
                 Estados estado = ControladorPagamentoServidor.ListarPagamentos(listarPagamentos);
-
-                resposta = new RespostaServidorMensagem(estado, null);
+                resposta = new RespostaServidorMensagem(estado, estado.getDados());
                 break;
             }
+
 
             case USER_CRIA_CONVITE:
             {

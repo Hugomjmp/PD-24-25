@@ -6,6 +6,7 @@ import pt.isec.pd.comum.modelos.Despesa;
 import pt.isec.pd.comum.modelos.Grupos;
 import pt.isec.pd.comum.modelos.Pagamento;
 
+import java.util.List;
 import java.util.Scanner;
 
 public class Vista {
@@ -366,6 +367,108 @@ public class Vista {
                 System.out.print("-");
             System.out.println("+");
 
+        }
+    }
+
+    public static void tabelaPagamentos(Pagamento pagamento) {
+        List<Pagamento> listaPagamentos = pagamento.getPagamentos();
+        if (listaPagamentos.isEmpty()) {
+            System.out.println("Nenhum pagamento disponível.");
+            return;
+        }
+
+        int tamanhoGroupId = 0;
+        int tamanhoData = 0;
+        int tamanhoValor = 0;
+        int tamanhoPagaPor = 0;
+        int tamanhoRecebidoPor = 0;
+        int tamanhoTotal = 0;
+        int espacosEsquerda;
+        int espacosDireita;
+
+        // Calcular tamanhos
+        for (Pagamento p : listaPagamentos) {
+            tamanhoGroupId = Math.max(tamanhoGroupId, p.getGroupId().length());
+            tamanhoData = Math.max(tamanhoData, p.getData().length());
+            tamanhoValor = Math.max(tamanhoValor, String.valueOf(p.getValor()).length());
+            tamanhoPagaPor = Math.max(tamanhoPagaPor, p.getPagaPor().length());
+            tamanhoRecebidoPor = Math.max(tamanhoRecebidoPor, p.getRecebidoPor().length());
+        }
+
+        tamanhoTotal = tamanhoGroupId + tamanhoData + tamanhoValor + tamanhoPagaPor + tamanhoRecebidoPor + 16;
+
+        // Cabeçalho da tabela
+        System.out.print("+");
+        for (int i = 0; i < tamanhoTotal + 4; i++) System.out.print("-");
+        System.out.println("+");
+
+        System.out.print("|");
+        espacosEsquerda = (tamanhoTotal - "Histórico De Pagamentos".length()) / 2;
+        for (int i = 0; i < espacosEsquerda; i++) System.out.print(" ");
+        System.out.print("Histórico De Pagamentos");
+        espacosDireita = tamanhoTotal - "Histórico De Pagamentos".length() - espacosEsquerda;
+        for (int i = 0; i < espacosDireita + 4; i++) System.out.print(" ");
+        System.out.println("|");
+
+        System.out.print("+");
+        for (int i = 0; i < tamanhoTotal + 4; i++) System.out.print("-");
+        System.out.println("+");
+
+        // Cabeçalho da tabela
+        System.out.print("|");
+        for (int i = 0; i < (tamanhoGroupId + 2 - "Group ID".length()) / 2; i++) System.out.print(" ");
+        System.out.print("Group ID");
+        for (int i = 0; i < (tamanhoGroupId + 2 - "Group ID".length()) / 2; i++) System.out.print(" ");
+        System.out.print("|");
+
+        for (int i = 0; i < (tamanhoData + 2 - "DATA".length()) / 2; i++) System.out.print(" ");
+        System.out.print("DATA");
+        for (int i = 0; i < (tamanhoData + 2 - "DATA".length()) / 2; i++) System.out.print(" ");
+        System.out.print("|");
+
+        for (int i = 0; i < (tamanhoValor + 3 - "Valor".length()) / 2; i++) System.out.print(" ");
+        System.out.print("Valor");
+        for (int i = 0; i < (tamanhoValor + 3 - "Valor".length()) / 2; i++) System.out.print(" ");
+        System.out.print("|");
+
+        for (int i = 0; i < (tamanhoPagaPor + 2 - "Pago Por".length()) / 2; i++) System.out.print(" ");
+        System.out.print("Pago Por");
+        for (int i = 0; i < (tamanhoPagaPor + 2 - "Pago Por".length()) / 2; i++) System.out.print(" ");
+        System.out.print("|");
+
+        for (int i = 0; i < (tamanhoRecebidoPor + 2 - "Recebido Por".length()) / 2; i++) System.out.print(" ");
+        System.out.print("Recebido Por");
+        for (int i = 0; i < (tamanhoRecebidoPor + 2 - "Recebido Por".length()) / 2; i++) System.out.print(" ");
+        System.out.print("|");
+
+        System.out.print("+");
+        for (int i = 0; i < tamanhoTotal + 4; i++) System.out.print("-");
+        System.out.println("+");
+
+        // Listar pagamentos
+        for (Pagamento p : listaPagamentos) {
+            System.out.print("| " + p.getGroupId());
+            for (int i = 0; i < tamanhoGroupId - p.getGroupId().length() + 1; i++) System.out.print(" ");
+            System.out.print("| ");
+
+            System.out.print(p.getData() + " | ");
+
+            System.out.print(p.getValor() + "€");
+            for (int i = 0; i < tamanhoValor - String.valueOf(p.getValor()).length() + 1; i++) System.out.print(" ");
+            System.out.print("| ");
+
+            System.out.print(p.getPagaPor());
+            for (int i = 0; i < tamanhoPagaPor - p.getPagaPor().length() + 1; i++) System.out.print(" ");
+            System.out.print("| ");
+
+            System.out.print(p.getRecebidoPor());
+            for (int i = 0; i < tamanhoRecebidoPor - p.getRecebidoPor().length() + 1; i++) System.out.print(" ");
+            System.out.print("|");
+
+            System.out.println();
+            System.out.print("+");
+            for (int i = 0; i < tamanhoTotal + 4; i++) System.out.print("-");
+            System.out.println("+");
         }
     }
 }
