@@ -5,20 +5,18 @@ import java.io.Serializable;
 public class EliminaPagamento implements Serializable {
     private static final long serialVersionUID = 1L;
 
-    private String paymentId; 
     private String groupId;
+    private String data;
+    private double valor;
+    private String pagaPor;
+    private String recebidoPor;
 
-    public EliminaPagamento(String paymentId, String groupId) {
-        this.paymentId = paymentId;
+    public EliminaPagamento(String groupId, String data, double valor, String pagaPor, String recebidoPor) {
         this.groupId = groupId;
-    }
-
-    public String getPaymentId() {
-        return paymentId;
-    }
-
-    public void setPaymentId(String paymentId) {
-        this.paymentId = paymentId;
+        this.data = data;
+        this.valor = valor;
+        this.pagaPor = pagaPor;
+        this.recebidoPor = recebidoPor;
     }
 
     public String getGroupId() {
@@ -29,11 +27,46 @@ public class EliminaPagamento implements Serializable {
         this.groupId = groupId;
     }
 
+    public String getData() {
+        return data;
+    }
+
+    public void setData(String data) {
+        this.data = data;
+    }
+
+    public double getValor() {
+        return valor;
+    }
+
+    public void setValor(double valor) {
+        this.valor = valor;
+    }
+
+    public String getPagaPor() {
+        return pagaPor;
+    }
+
+    public void setPagaPor(String pagaPor) {
+        this.pagaPor = pagaPor;
+    }
+
+    public String getRecebidoPor() {
+        return recebidoPor;
+    }
+
+    public void setRecebidoPor(String recebidoPor) {
+        this.recebidoPor = recebidoPor;
+    }
+
     @Override
     public String toString() {
         return "EliminaPagamento{" +
-                "paymentId='" + paymentId + '\'' +
-                ", groupId='" + groupId + '\'' +
+                "groupId='" + groupId + '\'' +
+                ", data='" + data + '\'' +
+                ", valor=" + valor +
+                ", pagaPor='" + pagaPor + '\'' +
+                ", recebidoPor='" + recebidoPor + '\'' +
                 '}';
     }
 }

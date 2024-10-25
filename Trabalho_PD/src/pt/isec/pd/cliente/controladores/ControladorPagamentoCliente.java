@@ -3,8 +3,13 @@ package pt.isec.pd.cliente.controladores;
 import pt.isec.pd.cliente.ligacao.Ligacao;
 import pt.isec.pd.comum.enumeracoes.Tipomensagemenum;
 import pt.isec.pd.comum.modelos.Mensagem;
+import pt.isec.pd.comum.modelos.Pagamento;
 import pt.isec.pd.comum.modelos.mensagens.EliminaPagamento;
 import pt.isec.pd.comum.modelos.mensagens.InserePagamento;
+import pt.isec.pd.comum.modelos.mensagens.ListarPagamentos;
+import pt.isec.pd.db.Bd;
+
+import java.util.List;
 
 public class ControladorPagamentoCliente {
 
@@ -20,15 +25,37 @@ public class ControladorPagamentoCliente {
         System.out.println("Pagamento enviado: " + mensagem);
     }
 
-    public static void eliminaPagamento(Ligacao ligacao, String emailLogado, String grupoSelecionado, String paymentId) {
-        if (paymentId == null || paymentId.isEmpty()) {
-            System.out.println("ID do pagamento deve ser fornecido.");
+    public static void eliminaPagamento(Ligacao ligacao, String emailLogado, String grupoSelecionado, String data, double valor, String pagaPor, String recebidoPor) {
+
+        if (grupoSelecionado == null || grupoSelecionado.isEmpty()) {
+            System.out.println("ID do grupo deve ser fornecido.");
             return;
         }
-        EliminaPagamento elpagamento = new EliminaPagamento(paymentId, grupoSelecionado);
-        Mensagem mensagem = new Mensagem(Tipomensagemenum.USER_ELIMINA_PAGAMENTO_EFECTUADO, elpagamento);
+
+        EliminaPagamento elpagamento = new EliminaPagamento(grupoSelecionado, data, valor, pagaPor, recebidoPor);
+        Mensagem mensagem = new Mensagem(Tipomensagemenum.USER_ELIMINA_PAGAMENTO, elpagamento);
         ligacao.enviaMensagem(mensagem);
-        System.out.println("Pagamento eliminado: " + mensagem);
+        System.out.println("Pedido de eliminação de pagamento enviado: " + mensagem);
     }
+
+
+    public static List<Pagamento> listarPagamento(Ligacao ligacao, String emailLogado, String grupoSelecionado) {
+        if (grupoSelecionado == null || grupoSelecionado.isEmpty()) {
+            System.out.println("ID do grupo deve ser fornecido.");
+            return null;
+        }
+        if (emailLogado == null || emailLogado.isEmpty()) {
+            System.out.println("Email do usuário deve ser fornecido.");
+            return null;
+        }
+        ListarPagamentos listarPagamentos = new ListarPagamentos(emailLogado, grupoSelecionado);
+        Mensagem mensagem = new Mensagem(Tipomensagemenum.USER_LISTA_PAGAMENTOS, listarPagamentos);
+        ligacao.enviaMensagem(mensagem);
+        System.out.println("Listagem de pagamentos enviada: " + grupoSelecionado);
+
+        List<Pagamento> pagamentos = Bd.listarPagamentosDB(grupoSelecionado);
+        return pagamentos;
+    }
+
 
 }

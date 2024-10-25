@@ -8,7 +8,6 @@ import pt.isec.pd.cliente.vistas.Vista;
 import pt.isec.pd.comum.modelos.*;
 
 import java.util.List;
-import java.util.Scanner;
 
 public class ControladorPrincipal {
 
@@ -186,12 +185,41 @@ public class ControladorPrincipal {
         ControladorPagamentoCliente.inserirPagamento(ligacao, dados.getUtilizadorLogado().getEmail(), grupoSelecionado, pagaPor, recebidoPor, valor, data);
         recebeMensagem();
     }
-    public void eliminaPagamento(String grupoSelecionado, String paymentId) {
-        ControladorPagamentoCliente.eliminaPagamento(ligacao, dados.getUtilizadorLogado().getEmail(), grupoSelecionado, paymentId);
+    public void eliminaPagamento(String grupoSelecionado, String data, double valor, String pagaPor, String recebidoPor) {
+        ControladorPagamentoCliente.eliminaPagamento(
+                ligacao,
+                dados.getUtilizadorLogado().getEmail(),
+                grupoSelecionado,
+                data,
+                valor,
+                pagaPor,
+                recebidoPor
+        );
         recebeMensagem();
-
     }
-    public void listaPagamentos(){} /*TODO*/
+
+
+
+    public List<Pagamento> listarPagamento(String grupoSelecionado) {
+        ControladorPagamentoCliente.listarPagamento(ligacao, dados.getUtilizadorLogado().getEmail(), grupoSelecionado);
+        Pagamento pagamentosRecebidos = (Pagamento) recebeMensagem();
+        if (pagamentosRecebidos != null && pagamentosRecebidos.getPagamentosList() != null) {
+            List<Pagamento> listaDePagamentos = pagamentosRecebidos.getPagamentosList();
+
+            if (listaDePagamentos.isEmpty()) {
+                System.out.println("Não há pagamentos para o grupo selecionado.");
+            } else {
+                System.out.println("Pagamentos do grupo " + grupoSelecionado + ":");
+                for (Pagamento pagamento : listaDePagamentos) {
+                    System.out.println(pagamento.toString());
+                }
+            }
+        } else {
+            System.out.println("Erro ao listar pagamentos. Verifique a conexão ou o grupo selecionado.");
+        }
+        return null;
+    }
+
 
     /*TODO
     *  falta compor isto... está a aparecer aqui e não pode ser*/

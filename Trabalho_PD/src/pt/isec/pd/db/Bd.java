@@ -397,21 +397,38 @@ public class Bd {
         }
     }
 
-    public static List<Pagamento> listarPagamentosDB(String solicitadoPor) {
+    public static Estados eliminarPagamento(String groupId, String data, double valor, String pagaPor, String recebidoPor) {
+        String sql = "DELETE FROM PAGAMENTO WHERE GROUP_ID = ? AND DATA = ? AND VALOR = ? AND PAGA_POR = ? AND RECEBIDO_POR = ?";
+
+        try (PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setString(1, groupId);
+            stmt.setString(2, data);
+            stmt.setDouble(3, valor);
+            stmt.setString(4, pagaPor);
+            stmt.setString(5, recebidoPor);
+
+            int rowsAffected = stmt.executeUpdate();
+
+            return rowsAffected > 0 ? Estados.PAGAMENTO_ELIMINADO_COM_SUCESSO: Estados.ERRO_ELIMINAR_PAGAMENTO;
+        } catch (SQLException e) {
+            System.err.println("Erro ao eliminar pagamento: " + e.getMessage());
+            return Estados.ERRO_ELIMINAR_PAGAMENTO;
+        }
+    }
+
+
+
+    public static List<Pagamento> listarPagamentosDB(String groupId) {
         List<Pagamento> pagamentoList = new ArrayList<>();
         String sql = "SELECT p.VALOR, p.DATA, p.PAGA_POR, p.RECEBIDO_POR " +
                 "FROM PAGAMENTO p " +
-                "JOIN GRUPO g ON p.GROUP_ID = g.ID " +
-                "JOIN INTEGRA i ON g.ID = i.GROUP_ID " +
-                "JOIN USERS u ON i.USER_ID = u.ID " +
-                "WHERE u.EMAIL = ?";
+                "WHERE p.GROUP_ID = ?";
 
         try (PreparedStatement pstmt = conn.prepareStatement(sql)) {
-            pstmt.setString(1, solicitadoPor);
+            pstmt.setString(1, groupId);
 
             try (ResultSet rs = pstmt.executeQuery()) {
                 while (rs.next()) {
-                    String groupId = rs.getString("GROUP_ID");
                     double valor = rs.getDouble("VALOR");
                     String data = rs.getString("DATA");
                     String pagaPor = rs.getString("PAGA_POR");
@@ -427,6 +444,7 @@ public class Bd {
 
         return pagamentoList;
     }
+
 
     public static Estados setUserDB(String nome, int nTelefone, String Email, String password){
         try{

@@ -14,16 +14,16 @@ public class ClienteConsolaUI {
     private Scanner scanner;
     String grupoSelecionado = null;
 
-    public ClienteConsolaUI(ControladorPrincipal cp){
+    public ClienteConsolaUI(ControladorPrincipal cp) {
         this.cp = cp;
         this.scanner = new Scanner(System.in);
     }
 
-    public void iniciar(){
+    public void iniciar() {
         String escolha;
         boolean userAutenticado = false;
         do {
-            if(!userAutenticado) {
+            if (!userAutenticado) {
                 System.out.println(userAutenticado);
                 Vista.menuPrincipal();
                 escolha = scanner.nextLine();
@@ -37,10 +37,10 @@ public class ClienteConsolaUI {
                     default:
                         System.out.println("Escolha Invalida.");
                 }
-            }else{
+            } else {
                 Vista.menuPrincipalCliente();
                 escolha = scanner.nextLine();
-                switch (escolha){
+                switch (escolha) {
                     case "1":
                         menuGrupos();
                         break;
@@ -68,26 +68,27 @@ public class ClienteConsolaUI {
                 }
             }
 
-        }while (true);
+        } while (true);
     }
 
-    public boolean login(){
+    public boolean login() {
         boolean login;
         Scanner scanner = new Scanner(System.in);
         System.out.print("Login E-mail: ");
         String email = scanner.nextLine();
         System.out.print("Password: ");
         String password = scanner.nextLine();
-        login = cp.login(email,password);
-        if (login){
+        login = cp.login(email, password);
+        if (login) {
             System.out.println("Login efectuado com sucesso");
             return true;
-        }else {
+        } else {
             System.out.println("Falha no login");
             return false;
         }
     }
-    public void registo(){
+
+    public void registo() {
         int registo;
         String email, nome, password, nTelefoneString;
         System.out.print("Login E-mail: ");
@@ -98,7 +99,7 @@ public class ClienteConsolaUI {
         password = scanner.nextLine();
         System.out.print("Número de Telefone: ");
         nTelefoneString = scanner.nextLine();
-        registo = cp.registo(nome ,email, password, nTelefoneString);
+        registo = cp.registo(nome, email, password, nTelefoneString);
         if (registo == 0)
             System.out.println("Tem de ter o seguinte formato: exemplo@exemplo.com");
         else if (registo == 1)
@@ -108,23 +109,24 @@ public class ClienteConsolaUI {
         else
             System.out.println("Registo efectuado com sucesso.");
     }
-    public void alteraDados(){
+
+    public void alteraDados() {
         String numeroTelefone, pass;
         System.out.println("Deixar vazio o que não é para alterar.");
         System.out.print("Número de Telefone: ");
         numeroTelefone = scanner.nextLine();
         System.out.print("\nPassword:");
         pass = scanner.nextLine();
-        cp.editaDados(numeroTelefone,pass);
+        cp.editaDados(numeroTelefone, pass);
     }
 
-    public void menuGrupos(){
+    public void menuGrupos() {
         String escolha;
 
         do {
             Vista.menuGrupo();
             escolha = scanner.nextLine();
-            switch (escolha){
+            switch (escolha) {
                 case "1":
                     criarGrupo();
                     break;
@@ -147,17 +149,19 @@ public class ClienteConsolaUI {
                     if (!escolha.equalsIgnoreCase("7"))
                         System.out.println("Opção Inválida!");
             }
-        }while (!escolha.equalsIgnoreCase("7"));
+        } while (!escolha.equalsIgnoreCase("7"));
 
     }
-    public void criarGrupo(){
+
+    public void criarGrupo() {
         String nomeGrupo;
         System.out.print("Nome do grupo: ");
         nomeGrupo = scanner.nextLine();
         cp.criarGrupo(nomeGrupo);
 
     }
-    public void selecionarGrupo(){
+
+    public void selecionarGrupo() {
         String nomeGrupo;
         System.out.print("Nome do Grupo que pretende selecionar: ");
         nomeGrupo = scanner.nextLine();
@@ -165,32 +169,35 @@ public class ClienteConsolaUI {
         System.out.println(grupoSelecionado);
     }
 
-    public void editarNomeGrupo(){
+    public void editarNomeGrupo() {
         String nomeGrupo;
         boolean confirmacao;
         System.out.print("Nome do Grupo que pretende alterar: ");
         nomeGrupo = scanner.nextLine();
-        confirmacao = cp.editarGrupo(nomeGrupo,grupoSelecionado);
-            if (confirmacao)
-                System.out.println("Nome do grupo alterado com sucesso");
-            else
-                System.out.println("Tem de selecionar um grupo primeiro");
+        confirmacao = cp.editarGrupo(nomeGrupo, grupoSelecionado);
+        if (confirmacao)
+            System.out.println("Nome do grupo alterado com sucesso");
+        else
+            System.out.println("Tem de selecionar um grupo primeiro");
 
         grupoSelecionado = nomeGrupo;
 
 
     }
-    public void listarGrupos(){
+
+    public void listarGrupos() {
         Grupos grupos = cp.listarGrupos();
         Vista.tabelaGrupos(grupos);
     }
-    public void eliminarGrupo(){
+
+    public void eliminarGrupo() {
         String nomeGrupo;
         System.out.print("Nome do grupo a eliminar:");
         nomeGrupo = scanner.nextLine();
-        grupoSelecionado = cp.eliminarGrupo(nomeGrupo,grupoSelecionado);
+        grupoSelecionado = cp.eliminarGrupo(nomeGrupo, grupoSelecionado);
     }
-    public void sairGrupo(){
+
+    public void sairGrupo() {
         String nomeGrupo;
         System.out.print("Nome do grupo do qual deseja sair: ");
         nomeGrupo = scanner.nextLine();
@@ -198,13 +205,13 @@ public class ClienteConsolaUI {
 
     }
 
-    public void despesasMenu(){
+    public void despesasMenu() {
         String escolha;
 
         do {
             Vista.menuDespesa();
             escolha = scanner.nextLine();
-            switch (escolha){
+            switch (escolha) {
                 case "1":
                     criarDespesa();
                     break;
@@ -227,7 +234,7 @@ public class ClienteConsolaUI {
                     if (!escolha.equalsIgnoreCase("7"))
                         System.out.println("Opção Inválida!");
             }
-        }while (!escolha.equalsIgnoreCase("7"));
+        } while (!escolha.equalsIgnoreCase("7"));
     }
 
     public void criarDespesa() {
@@ -243,13 +250,15 @@ public class ClienteConsolaUI {
         descricao = scanner.nextLine();
         System.out.println("\nPago em (DD-MM-YYYY): ");
         data = scanner.nextLine();
-        cp.insereDespesa(grupoSelecionado,despesa,quemPagou,descricao,data);
+        cp.insereDespesa(grupoSelecionado, despesa, quemPagou, descricao, data);
 
     }
-    public void consultarGastoTotal(){
-        System.out.println("Gasto total do grupo: "+grupoSelecionado+ " é de: "+cp.consultaGastoTotal(grupoSelecionado) + "€");
+
+    public void consultarGastoTotal() {
+        System.out.println("Gasto total do grupo: " + grupoSelecionado + " é de: " + cp.consultaGastoTotal(grupoSelecionado) + "€");
 
     }
+
     public void editarDespesa() {
         String valor;
         String quemPagou;
@@ -269,24 +278,29 @@ public class ClienteConsolaUI {
         descricao = scanner.nextLine();
         System.out.print("Modificar a data (DD-MM-YYYY): ");
         data = scanner.nextLine();
-        cp.editaDespesa(grupoSelecionado,ID_despesa,valor,quemPagou,descricao,data);
+        cp.editaDespesa(grupoSelecionado, ID_despesa, valor, quemPagou, descricao, data);
     } /*TODO*/
-    public void eliminarDespesa() {} /*TODO*/
-    public void listarDespesas(){
+
+    public void eliminarDespesa() {
+    } /*TODO*/
+
+    public void listarDespesas() {
         Despesa despesa = cp.mostrarDespesas(grupoSelecionado);
         Vista.tabelaDespesas(despesa);
 
     }
-    public void exportarCSV(){
+
+    public void exportarCSV() {
         cp.exportaFicheiro(grupoSelecionado);
     }
-    public void convitesMenu(){
+
+    public void convitesMenu() {
         String escolha;
 
         do {
             Vista.menuConvites();
             escolha = scanner.nextLine();
-            switch (escolha){
+            switch (escolha) {
                 case "1":
                     convidarGrupo();
                     break;
@@ -300,20 +314,22 @@ public class ClienteConsolaUI {
                     if (!escolha.equalsIgnoreCase("4"))
                         System.out.println("Opção Inválida!");
             }
-        }while (!escolha.equalsIgnoreCase("4"));
+        } while (!escolha.equalsIgnoreCase("4"));
     }
-    public void convidarGrupo(){
+
+    public void convidarGrupo() {
         String emailDestinatario;
         boolean confirmacao;
         System.out.print("Para quem quer enviar o convite (email):");
         emailDestinatario = scanner.nextLine();
-        confirmacao = cp.criarConvite(emailDestinatario,grupoSelecionado);
+        confirmacao = cp.criarConvite(emailDestinatario, grupoSelecionado);
         if (confirmacao)
             System.out.println("Convite enviado com sucesso");
         else
             System.out.println("Tem de selecionar um grupo primeiro");
     }
-    public void decidirConvite(){
+
+    public void decidirConvite() {
         String grupoNome, decisao;
         cp.mostrarConvites();
         System.out.print("\nGRUPO: ");
@@ -323,16 +339,18 @@ public class ClienteConsolaUI {
         decisao = scanner.nextLine();
         cp.respondeConvite(grupoNome, decisao);
     }
-    public void ListarConvites(){
+
+    public void ListarConvites() {
         cp.mostrarConvites();
     }
-    public void pagamentosMenu(){
+
+    public void pagamentosMenu() {
         String escolha;
 
         do {
             Vista.menuPagamentos();
             escolha = scanner.nextLine();
-            switch (escolha){
+            switch (escolha) {
                 case "1":
                     efectuarPagamento();
                     break;
@@ -346,8 +364,9 @@ public class ClienteConsolaUI {
                     if (!escolha.equalsIgnoreCase("4"))
                         System.out.println("Opção Inválida!");
             }
-        }while (!escolha.equalsIgnoreCase("4"));
+        } while (!escolha.equalsIgnoreCase("4"));
     }
+
     public void efectuarPagamento() {
 
         String pagaPor, recebidoPor, data;
@@ -362,45 +381,59 @@ public class ClienteConsolaUI {
         data = scanner.nextLine();
         cp.efectuaPagamento(grupoSelecionado, pagaPor, recebidoPor, valor, data);
     }
+
     public void eliminarPagamento() {
         System.out.print("\nPara eliminar um pagamento, forneça o ID do pagamento:\n");
 
-        System.out.print("ID do pagamento: ");
-        String paymentId = scanner.nextLine();
+        String grupoSelecionado = this.grupoSelecionado;
 
-        if (paymentId == null || paymentId.trim().isEmpty()) {
-            System.out.println("O ID do pagamento deve ser fornecido.");
+        System.out.print("Data do pagamento (formato: DD-MM-YYYY): ");
+        String data = scanner.nextLine();
+
+        System.out.print("Valor do pagamento: ");
+        double valor;
+        try {
+            valor = Double.parseDouble(scanner.nextLine());
+        } catch (NumberFormatException e) {
+            System.out.println("Valor inválido. Por favor, insira um número.");
             return;
         }
 
+        System.out.print("Pago por: ");
+        String pagaPor = scanner.nextLine();
+
+        System.out.print("Recebido por: ");
+        String recebidoPor = scanner.nextLine();
+
+
         try {
-            cp.eliminaPagamento(grupoSelecionado, paymentId);
+            cp.eliminaPagamento(grupoSelecionado, data, valor, pagaPor, recebidoPor);
             System.out.println("Pagamento eliminado com sucesso.");
         } catch (Exception e) {
             System.out.println("Erro ao eliminar pagamento: " + e.getMessage());
         }
     }
 
+
+
     public void listarPagamentos() {
-
-        /*
-
-        List<Pagamento> pagamentos = cp.listarPagamentos(grupoSelecionado); // O controlador retorna a lista
+        List<Pagamento> pagamentos = cp.listarPagamento(grupoSelecionado);
 
         if (pagamentos.isEmpty()) {
             System.out.println("Não há pagamentos para mostrar neste grupo.");
             return;
         }
+
         System.out.println("Pagamentos no grupo: " + grupoSelecionado);
+
         for (Pagamento pagamento : pagamentos) {
-            System.out.println("ID: " + pagamento.getId());
+            System.out.println("ID: " + pagamento.getGroupId());
             System.out.println("Pago por: " + pagamento.getPagaPor());
             System.out.println("Recebido por: " + pagamento.getRecebidoPor());
             System.out.println("Valor: " + pagamento.getValor() + "€");
             System.out.println("Data: " + pagamento.getData());
             System.out.println("-----------------------------------");
-
-         */
         }
     }
+}
 

@@ -20,7 +20,6 @@ public class InserePagamento implements Serializable {
         this.data = data;
     }
 
-    // Getters e Setters
     public String getGroupId() {
         return groupId;
     }

@@ -19,11 +19,14 @@ public enum Estados {
 
 
     PAGAMENTO_LISTADO_COM_SUCESSO("Pagamento Listado com sucesso"),
+
+    PAGAMENTO_ELIMINADO_COM_SUCESSO("Pagamento Eliminado com sucesso"),
     GRUPO_NOME_ALTERADO_COM_SUCESSO("Nome do Grupo Alterado com Sucesso"),
     GRUPO_ELIMINADO_COM_SUCESSO("Grupo Eliminado com sucesso"),
     GRUPO_CONVITE_COM_SUCESSO("Convite creado com sucesso"),
     VER_CONVITES_COM_SUCESSO("Convites encontrados"),
     GRUPO_ACEITE_CONVITE_COM_SUCESSO("Convite aceite com sucesso"),
+
 
     USER_CRIA_DESPESA_COM_SUCESSO("Utilizador cria despesa com sucesso"),
     USER_EDITA_DESPESA_COM_SUCESSO("Utilizador edita despesa com sucesso"),
@@ -48,9 +51,14 @@ public enum Estados {
     ERRO_OBTER_HISTORICO("ERRO grupo não tem histórico para mostrar"),
     ERRO_CONSULTA_DESPESA_TOTAL("ERRO AO CONSULTAR VALOR DA DESPESA TOTAL"),
 
+    ERRO_LISTAR_PAGAMENTO("Erro Listar Pagamento"),
+
+    ERRO_ELIMINAR_PAGAMENTO("Erro Eliminar Pagamento"),
+
     ERRO_SEM_PAGAMENTOS("Nao Existem Pagamentos"),
     ERRO_AO_EXPORTAR_CSV("ERAR O FICHEIRO CSV"),
-    ERRO_EDITAR_DESPESA("Erro ao editar Despesa");
+    ERRO_EDITAR_DESPESA("Erro ao editar Despesa"),
+    ;
     String mensagem;
     Serializable dados;
 

@@ -89,7 +89,7 @@ public class ControladorMensagemServidor {
                 Estados estado = ControladorGrupoServidor.sairGrupo(grupoNome, emailUser);
 
 
-                resposta = new RespostaServidorMensagem(estado, null);
+                resposta = new RespostaServidorMensagem(estado, estado.getDados());
                 break;
             }
 
@@ -106,6 +106,25 @@ public class ControladorMensagemServidor {
                 System.out.println("Insere Pagamento...");
                 System.out.println(mensagem);
                 Estados estado = ControladorPagamentoServidor.InserirPagamento((InserePagamento) mensagem.getConteudo());
+                resposta = new RespostaServidorMensagem(estado, estado.getDados());
+                break;
+            }
+
+            case USER_ELIMINA_PAGAMENTO:{
+                System.out.println("Elimina Pagamento...");
+                System.out.println(mensagem);
+                Estados estado = ControladorPagamentoServidor.eliminarPagamento((EliminaPagamento) mensagem.getConteudo());
+                resposta = new RespostaServidorMensagem(estado, estado.getDados());
+                break;
+                }
+
+            case USER_LISTA_PAGAMENTOS: {
+                System.out.println("Listar Pagamento...");
+                System.out.println(mensagem);
+
+                ListarPagamentos listarPagamentos = (ListarPagamentos) mensagem.getConteudo();
+                Estados estado = ControladorPagamentoServidor.ListarPagamentos(listarPagamentos);
+
                 resposta = new RespostaServidorMensagem(estado, null);
                 break;
             }

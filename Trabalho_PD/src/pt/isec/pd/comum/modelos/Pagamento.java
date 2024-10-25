@@ -1,6 +1,7 @@
 package pt.isec.pd.comum.modelos;
 
 import java.io.Serializable;
+import java.util.List;
 
 public class Pagamento implements Serializable {
     private static final long serialVersionUID = 1L;
@@ -11,8 +12,9 @@ public class Pagamento implements Serializable {
     private String recebidoPor;
     private String groupId;
 
+    private List<Pagamento> pagamentosList;
 
-    public Pagamento(double valor, String data, String pagaPor, String recebidoPor,String groupId) {
+    public Pagamento(double valor, String data, String pagaPor, String recebidoPor, String groupId) {
         this.valor = valor;
         this.data = data;
         this.pagaPor = pagaPor;
@@ -20,6 +22,15 @@ public class Pagamento implements Serializable {
         this.groupId = groupId;
     }
 
+    public List<Pagamento> getPagamentosList() {
+        return pagamentosList;
+    }
+
+    public void setPagamentosList(List<Pagamento> pagamentosList) {
+        this.pagamentosList = pagamentosList;
+    }
+
+    // Getters e Setters restantes
     public double getValor() {
         return valor;
     }
@@ -52,6 +63,14 @@ public class Pagamento implements Serializable {
         this.recebidoPor = recebidoPor;
     }
 
+    public String getGroupId() {
+        return groupId;
+    }
+
+    public void setGroupId(String groupId) {
+        this.groupId = groupId;
+    }
+
     @Override
     public String toString() {
         return "Pagamento{" +
@@ -59,6 +78,7 @@ public class Pagamento implements Serializable {
                 ", data='" + data + '\'' +
                 ", pagaPor='" + pagaPor + '\'' +
                 ", recebidoPor='" + recebidoPor + '\'' +
+                ", groupId='" + groupId + '\'' +
                 '}';
     }
 }
