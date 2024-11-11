@@ -3,6 +3,7 @@ package pt.isec.pd.db;
 import pt.isec.pd.comum.enumeracoes.Estados;
 import pt.isec.pd.comum.modelos.*;
 
+import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.sql.*;
@@ -15,17 +16,34 @@ public class Bd {
 
     private static Connection conn = null;
     private static boolean estaConectado = false;
-    private static final Object lock = new Object();
+    //private static final Object lock = new Object();
+
+    public static boolean verificaExistenciaBD(String bd){
+        File ficheiroBD = new File(bd);
+        return ficheiroBD.exists();
+    }
+
     public static void ligaBD(String bd) {
         try {
             String link = "jdbc:sqlite:";
             System.out.println("A ligar à base de dados...");
             bd = "src/pt/isec/pd/db/" + bd + ".db";
-            conn = DriverManager.getConnection(link + bd);
-            //conn.setAutoCommit(false);
-            //System.out.println(conn);
-            System.out.println("Ligação efectuada com sucesso!");
-            setEstaConectado(true);
+            if (verificaExistenciaBD(bd)) {
+                conn = DriverManager.getConnection(link + bd);
+                //conn.setAutoCommit(false);
+                //System.out.println("->" + conn);
+                System.out.println("Ligação efectuada com sucesso!");
+                setEstaConectado(true);
+            }
+            else{
+                conn = DriverManager.getConnection(link + bd);
+                criaTabelas();
+                //conn.setAutoCommit(false);
+                //System.out.println("->" + conn);
+                System.out.println("Ligação efectuada com sucesso!");
+                setEstaConectado(true);
+                versaoUpdate();
+            }
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
@@ -40,15 +58,85 @@ public class Bd {
     }
 
     //TERMINAR ISTO DEPOIS
-    private static void criaTabelas(String bd) {
+    private static void criaTabelas(/*String bd*/) {
         try {
             Statement stmt = conn.createStatement();
-            stmt.executeUpdate("");
-            stmt.executeUpdate("");
-            stmt.executeUpdate("");
-            stmt.executeUpdate("");
-            stmt.executeUpdate("");
-            stmt.executeUpdate("");
+            stmt.executeUpdate("CREATE TABLE CONVITES (\n" +
+                    "    ID              INTEGER  PRIMARY KEY AUTOINCREMENT\n" +
+                    "                             UNIQUE,\n" +
+                    "    GROUP_ID        INTEGER  NOT NULL,\n" +
+                    "    USER_ID         INTEGER,\n" +
+                    "    DESTINATARIO_ID INTEGER,\n" +
+                    "    ESTADO          TEXT,\n" +
+                    "    DATA_ENVIO      DATETIME DEFAULT (DATETIME(CURRENT_TIMESTAMP, '+1 hour') ),\n" +
+                    "    FOREIGN KEY (\n" +
+                    "        USER_ID\n" +
+                    "    )\n" +
+                    "    REFERENCES USERS (ID),\n" +
+                    "    FOREIGN KEY (\n" +
+                    "        GROUP_ID\n" +
+                    "    )\n" +
+                    "    REFERENCES GRUPO (ID),\n" +
+                    "    FOREIGN KEY (\n" +
+                    "        DESTINATARIO_ID\n" +
+                    "    )\n" +
+                    "    REFERENCES USERS (ID) \n" +
+                    ");");
+            stmt.executeUpdate("CREATE TABLE DESPESA (\n" +
+                    "    ID            INTEGER PRIMARY KEY AUTOINCREMENT\n" +
+                    "                          UNIQUE,\n" +
+                    "    GROUP_ID      INTEGER,\n" +
+                    "    VALOR,\n" +
+                    "    DESCRICAO     TEXT,\n" +
+                    "    DATA,\n" +
+                    "    PAGA_POR      INTEGER REFERENCES USERS (ID),\n" +
+                    "    REGISTADA_POR INTEGER REFERENCES USERS (ID),\n" +
+                    "    FOREIGN KEY (\n" +
+                    "        GROUP_ID\n" +
+                    "    )\n" +
+                    "    REFERENCES GRUPO (ID) ON DELETE CASCADE\n" +
+                    ");");
+            stmt.executeUpdate("CREATE TABLE DIVIDE_DESPESA (\n" +
+                    "    DESPESA_ID  REFERENCES DESPESA (ID),\n" +
+                    "    USER_ID     REFERENCES USERS (ID),\n" +
+                    "    PRIMARY KEY (\n" +
+                    "        DESPESA_ID,\n" +
+                    "        USER_ID\n" +
+                    "    )\n" +
+                    ");");
+            stmt.executeUpdate("CREATE TABLE GRUPO (\n" +
+                    "    ID         INTEGER PRIMARY KEY AUTOINCREMENT\n" +
+                    "                       NOT NULL\n" +
+                    "                       UNIQUE,\n" +
+                    "    NOME       TEXT    NOT NULL,\n" +
+                    "    CRIADO_POR         REFERENCES USERS (EMAIL) \n" +
+                    ");");
+            stmt.executeUpdate("CREATE TABLE INTEGRA (\n" +
+                    "    USER_ID   REFERENCES USERS (ID),\n" +
+                    "    GROUP_ID  REFERENCES GRUPO (ID),\n" +
+                    "    PRIMARY KEY (\n" +
+                    "        USER_ID,\n" +
+                    "        GROUP_ID\n" +
+                    "    )\n" +
+                    ");");
+            stmt.executeUpdate("CREATE TABLE PAGAMENTO (\n" +
+                    "    ID           INTEGER PRIMARY KEY AUTOINCREMENT,\n" +
+                    "    GROUP_ID             REFERENCES GRUPO (ID),\n" +
+                    "    DATA,\n" +
+                    "    VALOR,\n" +
+                    "    PAGA_POR             REFERENCES USERS (ID),\n" +
+                    "    RECEBIDO_POR         REFERENCES USERS (ID) \n" +
+                    ");");
+            stmt.executeUpdate("CREATE TABLE USERS (\n" +
+                    "    ID         INTEGER NOT NULL\n" +
+                    "                       UNIQUE\n" +
+                    "                       PRIMARY KEY AUTOINCREMENT,\n" +
+                    "    NOME       TEXT    NOT NULL,\n" +
+                    "    N_TELEFONE NUMERIC NOT NULL,\n" +
+                    "    EMAIL      TEXT    NOT NULL\n" +
+                    "                       UNIQUE,\n" +
+                    "    PASSWORD   TEXT    NOT NULL\n" +
+                    ");");
             stmt.executeUpdate("CREATE TABLE VERSAO (NUMERO_VERSAO INTEGER NOT NULL PRIMARY KEY);");
         } catch (SQLException e) {
             throw new RuntimeException(e);
