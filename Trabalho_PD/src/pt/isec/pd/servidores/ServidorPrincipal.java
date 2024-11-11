@@ -1,5 +1,6 @@
 package pt.isec.pd.servidores;
 import pt.isec.pd.db.Bd;
+import pt.isec.pd.servidorBackup.heartBeat.HeartBeatThread;
 import pt.isec.pd.servidores.threads.ClienteThread;
 
 
@@ -55,7 +56,7 @@ public class ServidorPrincipal {
 
         String EnderecoMulticast = "230.44.44.44";
         int portoMulticast = 4444;
-        InetAddress group;
+        InetAddress grupo;
         NetworkInterface nif;
 
         try {
@@ -65,23 +66,23 @@ public class ServidorPrincipal {
         }
 
         try{
-            group = InetAddress.getByName(EnderecoMulticast);
+            grupo = InetAddress.getByName(EnderecoMulticast);
 
 
             MulticastSocket multicastSocket = new MulticastSocket(portoMulticast);
 
-            InetSocketAddress endereco = new InetSocketAddress(group,portoMulticast);
+            InetSocketAddress endereco = new InetSocketAddress(grupo,portoMulticast);
 
             multicastSocket.joinGroup(endereco,nif);
 
-        } catch (UnknownHostException e) {
-            throw new RuntimeException(e);
+            new HeartBeatThread(portoMulticast,grupo,multicastSocket).start();
+
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
     }
 
-    public static void main(String[] args) throws SQLException, SocketException {
+    public static void main(String[] args) throws SocketException {
 
         int argc = args.length;
         int serverPort;
@@ -101,6 +102,7 @@ public class ServidorPrincipal {
             socketServidor = new ServerSocket(serverPort);//cria o socket para o servidor
             System.out.println("O Servidor Principal foi inciado com sucesso!");
             Bd.ligaBD(args[1]); // ligar à base de dados
+            System.out.println("BD Versão: " + Bd.obtemVersao());
             while (true) {
                     if(Bd.isEstaConectado()){ //usar em threads
                         if (i!=0)

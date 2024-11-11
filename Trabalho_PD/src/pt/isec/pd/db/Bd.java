@@ -649,6 +649,25 @@ public class Bd {
         }
     }
 
+    public static int obtemVersao() {
+        int versao = 0;
+        String query = "SELECT MAX(NUMERO_VERSAO) as NUMERO_VERSAO FROM VERSAO";
+
+        try {
+            Statement stmt = conn.createStatement();
+            ResultSet rs = stmt.executeQuery(query);
+
+            versao = rs.getInt("NUMERO_VERSAO");
+
+            rs.close();
+            stmt.close();
+        } catch (SQLException e) {
+            System.out.println("O Utilizador não existe!");
+        }
+
+        return versao;
+    }
+
     public static Estados criaDespesa(String email,String grupo ,double despesa, String quemPagou, String descricao, String data ){
         String query = "INSERT INTO DESPESA (GROUP_ID, VALOR, DESCRICAO, DATA, PAGA_POR, REGISTADA_POR) " +
                 "SELECT G.ID, " + despesa + ", '" + descricao + "', '" + data + "', U1.ID, U2.ID " +
