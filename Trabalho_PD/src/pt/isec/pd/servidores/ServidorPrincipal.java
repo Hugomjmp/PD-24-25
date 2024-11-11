@@ -4,9 +4,7 @@ import pt.isec.pd.servidores.threads.ClienteThread;
 
 
 import java.io.IOException;
-import java.net.InetAddress;
-import java.net.ServerSocket;
-import java.net.UnknownHostException;
+import java.net.*;
 import java.sql.*;
 
 import static java.lang.Integer.parseInt;
@@ -53,7 +51,37 @@ public class ServidorPrincipal {
             throw new RuntimeException(e);
         }
     }
-    public static void main(String[] args) throws SQLException {
+    public static void multicast() throws SocketException {
+
+        String EnderecoMulticast = "230.44.44.44";
+        int portoMulticast = 4444;
+        InetAddress group;
+        NetworkInterface nif;
+
+        try {
+            nif = NetworkInterface.getByInetAddress(InetAddress.getByName(EnderecoMulticast)); //e.g., 127.0.0.1, 192.168.10.1, ...
+        } catch (SocketException | NullPointerException | UnknownHostException | SecurityException ex) {
+            nif = NetworkInterface.getByName("ethernet_32769"); //e.g., lo, eth0, wlan0, en0, ...
+        }
+
+        try{
+            group = InetAddress.getByName(EnderecoMulticast);
+
+
+            MulticastSocket multicastSocket = new MulticastSocket(portoMulticast);
+
+            InetSocketAddress endereco = new InetSocketAddress(group,portoMulticast);
+
+            multicastSocket.joinGroup(endereco,nif);
+
+        } catch (UnknownHostException e) {
+            throw new RuntimeException(e);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public static void main(String[] args) throws SQLException, SocketException {
 
         int argc = args.length;
         int serverPort;
@@ -64,6 +92,10 @@ public class ServidorPrincipal {
         }
         serverPort = parseInt(args[0]);
         mostraServidorDados(serverPort,args[0]);
+        //Sistema multicast para os servidores backup
+        multicast();
+
+
         int i = 0;
         try {
             socketServidor = new ServerSocket(serverPort);//cria o socket para o servidor
