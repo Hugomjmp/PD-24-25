@@ -7,16 +7,15 @@ import java.util.List;
 public class Pagamento implements Serializable {
     private static final long serialVersionUID = 1L;
 
-    private String groupId;
+    private String groupId; // provavelmente vais ter que passar isto int groupID
     private String data;
     private double valor;
     private String pagaPor;
     private String recebidoPor;
 
-
     private List<Pagamento> pagamentos;
 
-    // Construtor
+
     public Pagamento(String groupId, String data, double valor, String pagaPor, String recebidoPor) {
         this.groupId = groupId;
         this.data = data;
@@ -29,7 +28,7 @@ public class Pagamento implements Serializable {
     public List<Pagamento> getPagamentos() {
         return pagamentos;
     }
-    // Métodos Getters e Setters
+
     public String getGroupId() {
         return groupId;
     }

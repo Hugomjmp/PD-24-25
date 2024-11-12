@@ -506,44 +506,34 @@ public class Bd {
 
     public static List<Pagamento> listarPagamentosDB(String nomeGrupo) {
         List<Pagamento> pagamentoList = new ArrayList<>();
-        String groupId = null;
+        String sqlGroupId = "SELECT ID FROM GRUPO WHERE NOME = ?";
+        String sqlPagamentos = "SELECT p.VALOR, p.DATA, p.PAGA_POR, p.RECEBIDO_POR " +
+                "FROM PAGAMENTO p WHERE p.GROUP_ID = ?";
 
-        // Primeira consulta: Obter o ID do grupo com base no nome do grupo
-        String queryGrupoID = "SELECT ID FROM GRUPO WHERE NOME = ?";
+        try (PreparedStatement pstmtGroup = conn.prepareStatement(sqlGroupId)) {
 
-        try (PreparedStatement pstmtGrupo = conn.prepareStatement(queryGrupoID)) {
-            pstmtGrupo.setString(1, nomeGrupo);  // Passamos o nome do grupo para buscar o ID
-            try (ResultSet rsGrupo = pstmtGrupo.executeQuery()) {
-                if (rsGrupo.next()) {
-                    groupId = rsGrupo.getString("ID");  // Obtemos o ID do grupo
-                }
-            }
+            pstmtGroup.setString(1, nomeGrupo);
+            try (ResultSet rsGroup = pstmtGroup.executeQuery()) {
+                if (rsGroup.next()) {
+                    String groupId = rsGroup.getString("ID");
+                    
+                    try (PreparedStatement pstmtPagamentos = conn.prepareStatement(sqlPagamentos)) {
+                        pstmtPagamentos.setString(1, groupId);
+                        try (ResultSet rsPagamentos = pstmtPagamentos.executeQuery()) {
+                            while (rsPagamentos.next()) {
+                                double valor = rsPagamentos.getDouble("VALOR");
+                                String data = rsPagamentos.getString("DATA");
+                                String pagaPor = rsPagamentos.getString("PAGA_POR");
+                                String recebidoPor = rsPagamentos.getString("RECEBIDO_POR");
 
-            // Se o grupo foi encontrado, usamos o ID para buscar os pagamentos
-            if (groupId != null) {
-                // Segunda consulta: Buscar pagamentos associados ao group_ID
-                String queryPagamentos = "SELECT p.VALOR, p.DATA, p.PAGA_POR, p.RECEBIDO_POR " +
-                        "FROM PAGAMENTO p " +
-                        "WHERE p.GROUP_ID = ?";  // Buscamos com base no ID do grupo
-
-                try (PreparedStatement pstmtPagamentos = conn.prepareStatement(queryPagamentos)) {
-                    pstmtPagamentos.setString(1, groupId);  // Passamos o ID do grupo na consulta de pagamentos
-
-                    try (ResultSet rsPagamentos = pstmtPagamentos.executeQuery()) {
-                        while (rsPagamentos.next()) {
-                            double valor = rsPagamentos.getDouble("VALOR");
-                            String data = rsPagamentos.getString("DATA");
-                            String pagaPor = rsPagamentos.getString("PAGA_POR");
-                            String recebidoPor = rsPagamentos.getString("RECEBIDO_POR");
-
-                            // Criamos os objetos Pagamento
-                            Pagamento pagamento = new Pagamento(groupId, data, valor, pagaPor, recebidoPor);
-                            pagamentoList.add(pagamento);
+                                Pagamento pagamento = new Pagamento(groupId, data, valor, pagaPor, recebidoPor);
+                                pagamentoList.add(pagamento);
+                            }
                         }
                     }
+                } else {
+                    System.out.println("Grupo não encontrado com o nome: " + nomeGrupo);
                 }
-            } else {
-                System.out.println("Grupo não encontrado com o nome: " + nomeGrupo);
             }
         } catch (SQLException e) {
             System.err.println("Erro ao listar pagamentos: " + e.getMessage());
@@ -551,6 +541,7 @@ public class Bd {
 
         return pagamentoList;
     }
+
 
 
     public static Estados setUserDB(String nome, int nTelefone, String Email, String password){

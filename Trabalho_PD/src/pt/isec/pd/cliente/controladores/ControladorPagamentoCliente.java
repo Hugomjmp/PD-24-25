@@ -47,7 +47,6 @@ public class ControladorPagamentoCliente {
             System.out.println("Email do usuário deve ser fornecido.");
         }
 
-        // A ordem dos parâmetros no construtor de ListarPagamentos deve ser grupoNome (grupoSelecionado) e depois o emailLogado
         ListarPagamentos listarPagamentos = new ListarPagamentos(grupoSelecionado, emailLogado);
         Mensagem mensagem = new Mensagem(Tipomensagemenum.USER_LISTA_PAGAMENTOS, listarPagamentos);
         ligacao.enviaMensagem(mensagem);
