@@ -52,10 +52,16 @@ public class ControladorPagamentoServidor {
     public static Estados ListarPagamentos(ListarPagamentos listarPagamentos) {
         try {
             List<Pagamento> pagamentos = Bd.listarPagamentosDB(listarPagamentos.getSolicitadoPor());
-            return pagamentos.isEmpty() ? Estados.ERRO_SEM_PAGAMENTOS : Estados.PAGAMENTO_LISTADO_COM_SUCESSO.setDados((Serializable) pagamentos);
+
+            if (!pagamentos.isEmpty()) {
+                return Estados.PAGAMENTO_LISTADO_COM_SUCESSO.setDados((Serializable) pagamentos);
+            } else {
+                return Estados.ERRO_SEM_PAGAMENTOS;
+            }
         } catch (Exception e) {
             System.err.println("Erro ao listar pagamentos: " + e.getMessage());
             return Estados.ERRO_LISTAR_PAGAMENTO;
         }
     }
+
 }

@@ -193,7 +193,14 @@ public class ControladorPrincipal {
     }
     public Pagamento listarPagamento(String grupoSelecionado) {
         ControladorPagamentoCliente.listarPagamento(ligacao, dados.getUtilizadorLogado().getEmail(), grupoSelecionado);
-        return(Pagamento) recebeMensagem();
+        Object resposta = recebeMensagem();
+
+        if (resposta instanceof Pagamento) {
+            return (Pagamento) resposta;
+        } else {
+            System.err.println("Erro: A resposta recebida não é do tipo Pagamento. Tipo recebido: " + resposta.getClass().getSimpleName());
+            return null;
+        }
     }
 
 

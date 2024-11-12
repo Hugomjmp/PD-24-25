@@ -1,6 +1,7 @@
 package pt.isec.pd.servidores.controladores;
 
 import pt.isec.pd.comum.enumeracoes.Estados;
+import pt.isec.pd.comum.modelos.Pagamento;
 import pt.isec.pd.comum.modelos.RespostaListagemGrupos;
 import pt.isec.pd.comum.modelos.RespostaServidorMensagem;
 import pt.isec.pd.comum.modelos.mensagens.*;
@@ -120,10 +121,15 @@ public class ControladorMensagemServidor {
 
             case USER_LISTA_PAGAMENTOS: {
                 System.out.println("Listar Pagamento...");
-                System.out.println(mensagem);
-
                 ListarPagamentos listarPagamentos = (ListarPagamentos) mensagem.getConteudo();
                 Estados estado = ControladorPagamentoServidor.ListarPagamentos(listarPagamentos);
+
+                if (estado == Estados.PAGAMENTO_LISTADO_COM_SUCESSO && estado.getDados() instanceof List<?>) {
+                    System.out.println("Pagamentos listados com sucesso.");
+                } else {
+                    System.out.println("Erro ao listar pagamentos: " + estado);
+                }
+
                 resposta = new RespostaServidorMensagem(estado, estado.getDados());
                 break;
             }

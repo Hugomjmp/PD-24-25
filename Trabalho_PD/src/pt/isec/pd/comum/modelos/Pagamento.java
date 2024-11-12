@@ -26,6 +26,9 @@ public class Pagamento implements Serializable {
         this.pagamentos = new ArrayList<>();
     }
 
+    public List<Pagamento> getPagamentos() {
+        return pagamentos;
+    }
     // Métodos Getters e Setters
     public String getGroupId() {
         return groupId;
@@ -73,7 +76,5 @@ public class Pagamento implements Serializable {
     }
 
 
-    public List<Pagamento> getPagamentos() {
-        return pagamentos;
-    }
+
 }

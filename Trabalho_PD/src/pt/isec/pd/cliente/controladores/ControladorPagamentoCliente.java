@@ -46,11 +46,12 @@ public class ControladorPagamentoCliente {
         if (emailLogado == null || emailLogado.isEmpty()) {
             System.out.println("Email do usuário deve ser fornecido.");
         }
-        ListarPagamentos listarPagamentos = new ListarPagamentos(emailLogado, grupoSelecionado);
+
+        // A ordem dos parâmetros no construtor de ListarPagamentos deve ser grupoNome (grupoSelecionado) e depois o emailLogado
+        ListarPagamentos listarPagamentos = new ListarPagamentos(grupoSelecionado, emailLogado);
         Mensagem mensagem = new Mensagem(Tipomensagemenum.USER_LISTA_PAGAMENTOS, listarPagamentos);
         ligacao.enviaMensagem(mensagem);
-        System.out.println("Listagem de pagamentos enviada: " + grupoSelecionado);
-
+        System.out.println("Listagem de pagamentos enviada para o servidor: " + grupoSelecionado);
     }
 
 

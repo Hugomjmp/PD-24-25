@@ -504,27 +504,46 @@ public class Bd {
         }
     }
 
-
-
-    public static List<Pagamento> listarPagamentosDB(String groupId) {
+    public static List<Pagamento> listarPagamentosDB(String nomeGrupo) {
         List<Pagamento> pagamentoList = new ArrayList<>();
-        String sql = "SELECT p.VALOR, p.DATA, p.PAGA_POR, p.RECEBIDO_POR " +
-                "FROM PAGAMENTO p " +
-                "WHERE p.GROUP_ID = ?";
+        String groupId = null;
 
-        try (PreparedStatement pstmt = conn.prepareStatement(sql)) {
-            pstmt.setString(1, groupId);
+        // Primeira consulta: Obter o ID do grupo com base no nome do grupo
+        String queryGrupoID = "SELECT ID FROM GRUPO WHERE NOME = ?";
 
-            try (ResultSet rs = pstmt.executeQuery()) {
-                while (rs.next()) {
-                    double valor = rs.getDouble("VALOR");
-                    String data = rs.getString("DATA");
-                    String pagaPor = rs.getString("PAGA_POR");
-                    String recebidoPor = rs.getString("RECEBIDO_POR");
-
-                    Pagamento pagamento = new Pagamento(groupId, data, valor, pagaPor, recebidoPor);
-                    pagamentoList.add(pagamento);
+        try (PreparedStatement pstmtGrupo = conn.prepareStatement(queryGrupoID)) {
+            pstmtGrupo.setString(1, nomeGrupo);  // Passamos o nome do grupo para buscar o ID
+            try (ResultSet rsGrupo = pstmtGrupo.executeQuery()) {
+                if (rsGrupo.next()) {
+                    groupId = rsGrupo.getString("ID");  // Obtemos o ID do grupo
                 }
+            }
+
+            // Se o grupo foi encontrado, usamos o ID para buscar os pagamentos
+            if (groupId != null) {
+                // Segunda consulta: Buscar pagamentos associados ao group_ID
+                String queryPagamentos = "SELECT p.VALOR, p.DATA, p.PAGA_POR, p.RECEBIDO_POR " +
+                        "FROM PAGAMENTO p " +
+                        "WHERE p.GROUP_ID = ?";  // Buscamos com base no ID do grupo
+
+                try (PreparedStatement pstmtPagamentos = conn.prepareStatement(queryPagamentos)) {
+                    pstmtPagamentos.setString(1, groupId);  // Passamos o ID do grupo na consulta de pagamentos
+
+                    try (ResultSet rsPagamentos = pstmtPagamentos.executeQuery()) {
+                        while (rsPagamentos.next()) {
+                            double valor = rsPagamentos.getDouble("VALOR");
+                            String data = rsPagamentos.getString("DATA");
+                            String pagaPor = rsPagamentos.getString("PAGA_POR");
+                            String recebidoPor = rsPagamentos.getString("RECEBIDO_POR");
+
+                            // Criamos os objetos Pagamento
+                            Pagamento pagamento = new Pagamento(groupId, data, valor, pagaPor, recebidoPor);
+                            pagamentoList.add(pagamento);
+                        }
+                    }
+                }
+            } else {
+                System.out.println("Grupo não encontrado com o nome: " + nomeGrupo);
             }
         } catch (SQLException e) {
             System.err.println("Erro ao listar pagamentos: " + e.getMessage());
@@ -532,7 +551,6 @@ public class Bd {
 
         return pagamentoList;
     }
-
 
 
     public static Estados setUserDB(String nome, int nTelefone, String Email, String password){

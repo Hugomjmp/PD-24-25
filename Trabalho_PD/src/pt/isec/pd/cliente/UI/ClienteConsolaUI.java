@@ -416,7 +416,13 @@ public class ClienteConsolaUI {
 
     public void listarPagamentos() {
         Pagamento pagamentos = cp.listarPagamento(grupoSelecionado);
-        Vista.tabelaPagamentos (pagamentos);
+
+        if (pagamentos != null) {
+            Vista.tabelaPagamentos(pagamentos);
+        } else {
+            System.out.println("Erro: Não foi possível obter os pagamentos.");
+        }
     }
+
 }
 
