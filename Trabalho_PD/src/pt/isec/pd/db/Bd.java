@@ -516,7 +516,7 @@ public class Bd {
             try (ResultSet rsGroup = pstmtGroup.executeQuery()) {
                 if (rsGroup.next()) {
                     String groupId = rsGroup.getString("ID");
-                    
+
                     try (PreparedStatement pstmtPagamentos = conn.prepareStatement(sqlPagamentos)) {
                         pstmtPagamentos.setString(1, groupId);
                         try (ResultSet rsPagamentos = pstmtPagamentos.executeQuery()) {
@@ -801,24 +801,31 @@ public class Bd {
 
 
 
-    public static String verGasto(String email,String grupoNome){
-        String valorTotal = null;
+    public static String verGasto(String email, String grupoNome) {
+        String valorTotal = "0";
         String sql = "SELECT SUM(VALOR) AS DESPESATOTAL FROM DESPESA " +
-                    "JOIN GRUPO G ON G.ID = DESPESA.GROUP_ID " +
-                    "JOIN INTEGRA I ON g.ID = I.GROUP_ID " +
-                    "JOIN USERS U ON U.ID = I.USER_ID " +
-                    "WHERE G.NOME = '" + grupoNome + "'" + " AND U.EMAIL = '" + email + "'";
+                "JOIN GRUPO G ON G.ID = DESPESA.GROUP_ID " +
+                "JOIN INTEGRA I ON g.ID = I.GROUP_ID " +
+                "JOIN USERS U ON U.ID = I.USER_ID " +
+                "WHERE G.NOME = '" + grupoNome + "' AND U.EMAIL = '" + email + "'";
 
         try (Statement stmt = conn.createStatement();
-             ResultSet rs = stmt.executeQuery(sql)){
-                valorTotal = rs.getString("DESPESATOTAL");
-                System.out.println(valorTotal);
+             ResultSet rs = stmt.executeQuery(sql)) {
 
+            if (rs.next()) {
+                valorTotal = rs.getString("DESPESATOTAL");
+                if (valorTotal == null) {
+                    valorTotal = "0";
+                }
+            }
         } catch (SQLException e) {
             System.err.println("Erro ao consultar os gastos totais: " + e.getMessage());
+            valorTotal = "0";
         }
+
         return valorTotal;
     }
+
 
     public static Estados export(String grupoNome,String nome) throws SQLException {
 

@@ -33,19 +33,34 @@ public class ControladorPrincipal {
         return dados.getUtilizadores();
     }
 
+    /*
     public User getUserAutenticado(){
         return this.userAutenticado;
-    }
+    }*/
 
-    public boolean login(String email, String password){
-        String[] dadosLogin = {email,password};
-        ControladorAutenticacaoCliente.login(ligacao,dadosLogin);
+    public boolean login(String email, String password) {
+        String[] dadosLogin = {email, password};
+        ControladorAutenticacaoCliente.login(ligacao, dadosLogin);
         recebeMensagem();
-        if(dados.getUtilizadorLogado() != null)
-            return true;
-        return false;
 
+        User usuarioLogado = dados.getUtilizadorLogado();
+        if (usuarioLogado != null) {
+            this.userAutenticado = usuarioLogado;
+            return true;
+        }
+        return false;
     }
+
+
+    public void logout() {
+        userAutenticado = null;
+        dados.setUtilizadorLogado(null);
+    }
+
+    public boolean isUserAuthenticated() {
+        return userAutenticado != null;
+    }
+
 
     public int registo(String nome, String email, String password, String nTelefone) {
 
@@ -218,7 +233,6 @@ public class ControladorPrincipal {
         ControladorGrupoCliente.decisaoConvites(ligacao, decisao, grupoNome, dados.getUtilizadorLogado().getEmail());
         recebeMensagem();
     }
-
 
 
 /*    public static void enviaMensagem(String escolha){

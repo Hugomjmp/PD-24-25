@@ -21,15 +21,17 @@ public class ClienteConsolaUI {
 
     public void iniciar() {
         String escolha;
-        boolean userAutenticado = false;
         do {
-            if (!userAutenticado) {
-                System.out.println(userAutenticado);
+            if (!cp.isUserAuthenticated()) { 
                 Vista.menuPrincipal();
                 escolha = scanner.nextLine();
                 switch (escolha) {
                     case "1":
-                        userAutenticado = login();
+                        if (login()) {
+                            System.out.println("Login efetuado com sucesso.");
+                        } else {
+                            System.out.println("Falha no login.");
+                        }
                         break;
                     case "2":
                         registo();
@@ -44,15 +46,12 @@ public class ClienteConsolaUI {
                     case "1":
                         menuGrupos();
                         break;
-
                     case "2":
                         despesasMenu();
                         break;
-
                     case "3":
                         pagamentosMenu();
                         break;
-
                     case "4":
                         convitesMenu();
                         break;
@@ -60,16 +59,17 @@ public class ClienteConsolaUI {
                         alteraDados();
                         break;
                     case "6":
-                        userAutenticado = false; // isto não está bem... fazer em condições
+                        cp.logout();
+                        grupoSelecionado = null;
+                        System.out.println("Logout efetuado com sucesso.");
                         break;
                     default:
-                        if (!escolha.equalsIgnoreCase("6"))
-                            System.out.println("Opção Inválida!");
+                        System.out.println("Opção Inválida!");
                 }
             }
-
         } while (true);
     }
+
 
     public boolean login() {
         boolean login;
@@ -253,10 +253,9 @@ public class ClienteConsolaUI {
         cp.insereDespesa(grupoSelecionado, despesa, quemPagou, descricao, data);
 
     }
-
     public void consultarGastoTotal() {
-        System.out.println("Gasto total do grupo: " + grupoSelecionado + " é de: " + cp.consultaGastoTotal(grupoSelecionado) + "€");
-
+        String gastoTotal = cp.consultaGastoTotal(grupoSelecionado);
+        System.out.println("Gasto total do grupo " + grupoSelecionado + " é de: " + gastoTotal + "€");
     }
 
     public void editarDespesa() {
