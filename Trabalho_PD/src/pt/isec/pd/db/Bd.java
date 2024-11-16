@@ -704,10 +704,22 @@ public class Bd {
 
     }
 
-    public static void divideDespesa(String){
+    public static void divideDespesa(String grupo){
+        int nElementos;
         String queryNElementos = "SELECT COUNT(USER_ID) AS NUMERO_UTILIZADORES\n" +
                                 "FROM INTEGRA\n" +
-                                "WHERE GROUP_ID = 24;";
+                                "WHERE GROUP_ID = +'"+ grupo +"'";
+
+        try {
+            Statement stmt = conn.createStatement();
+            ResultSet rs = stmt.executeQuery(queryNElementos);
+            while (rs.next()){
+                nElementos = rs.getInt("NUMERO_UTILIZADORES");
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
     }
     public static Despesa historio(String grupo){
         List <Despesa> despesaList = new ArrayList<>();
