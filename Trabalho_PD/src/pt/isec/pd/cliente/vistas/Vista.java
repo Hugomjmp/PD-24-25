@@ -372,7 +372,6 @@ public class Vista {
 
     public static void tabelaPagamentos(Pagamento pagamento) {
         //List<Pagamento> listaPagamentos = pagamento.getPagamentos();
-        int tamanhoNome = 0;
         int tamanhoTotal = 0;
         int tamanhoPagoPor = 0;
         int tamanhoRecebidoPor = 0;
@@ -383,16 +382,16 @@ public class Vista {
         int espacos = 0;
         //calcular o maior dos nomes possíveis para adaptar a tabela
         for (Pagamento pagamentos : pagamento.getPagamentos()) {
-            tamanhoNome = Math.max(tamanhoNome, pagamentos.getPagaPor().length());
+            tamanhoData = Math.max(tamanhoData, pagamentos.getData().length());
             tamanhoValor = Math.max(tamanhoValor, String.valueOf(pagamentos.getValor()).length());
             tamanhoPagoPor = Math.max(tamanhoPagoPor, pagamentos.getPagaPor().length());
             tamanhoRecebidoPor = Math.max(tamanhoRecebidoPor, pagamentos.getRecebidoPor().length());
-            tamanhoData = Math.max(tamanhoData, pagamentos.getData().length());
+
 
 
         }
         System.out.println(tamanhoValor);
-        tamanhoTotal = tamanhoNome + tamanhoValor + tamanhoPagoPor + tamanhoRecebidoPor + tamanhoData + 5;
+        tamanhoTotal = tamanhoValor + tamanhoPagoPor + tamanhoRecebidoPor + tamanhoData + 12;
         //linha 1
         System.out.print("+");
         for (int i = 0; i < tamanhoTotal + 1; i++)
@@ -421,7 +420,7 @@ public class Vista {
         for (int i = 0; i < (tamanhoData + 2 - "DATA".length()) / 2; i++)
             System.out.print(" ");
         System.out.print("|");
-        for (int i = 0; i < (tamanhoValor + 2 - "VALOR".length()) / 2; i++)
+        for (int i = 0; i < (tamanhoValor + 4 - "VALOR".length()) / 2; i++)
             System.out.print(" ");
         System.out.print("VALOR");
         for (int i = 0; i < (tamanhoValor + 4 - "VALOR".length()) / 2; i++)
