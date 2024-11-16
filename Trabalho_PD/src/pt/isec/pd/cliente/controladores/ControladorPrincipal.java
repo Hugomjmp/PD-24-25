@@ -197,25 +197,35 @@ public class ControladorPrincipal {
         return (String) recebeMensagem();
     }
 
-    public void efectuaPagamento(String grupoSelecionado,String pagaPor,String recebidoPor,double valor, String data ){
+    public void efectuaPagamento(String grupoSelecionado/*,String pagaPor*/,String recebidoPor,double valor, String data ){
 
-        ControladorPagamentoCliente.inserirPagamento(ligacao, dados.getUtilizadorLogado().getEmail(), grupoSelecionado, pagaPor, recebidoPor, valor, data);
+        ControladorPagamentoCliente.inserirPagamento(ligacao, dados.getUtilizadorLogado().getEmail(), grupoSelecionado/*, pagaPor*/, recebidoPor, valor, data);
         recebeMensagem();
     }
-    public void eliminaPagamento(String grupoSelecionado, String data, double valor, String pagaPor, String recebidoPor) {
-        ControladorPagamentoCliente.eliminaPagamento(ligacao, dados.getUtilizadorLogado().getEmail(), grupoSelecionado, data, valor, pagaPor, recebidoPor);
+    public void eliminaPagamento(String grupoSelecionado/*, String data*/, double valor/*, String pagaPor*/, String recebidoPor) {
+        ControladorPagamentoCliente.eliminaPagamento(ligacao, dados.getUtilizadorLogado().getEmail(), grupoSelecionado/*, data*/, valor/*, pagaPor*/, recebidoPor);
         recebeMensagem();
     }
+
+
+/*    public Grupos listarGrupos(){
+
+        ControladorGrupoCliente.listarGrupos(ligacao, dados.getUtilizadorLogado().getEmail());
+        return (Grupos) recebeMensagem();
+    }*/
+
+
     public Pagamento listarPagamento(String grupoSelecionado) {
         ControladorPagamentoCliente.listarPagamento(ligacao, dados.getUtilizadorLogado().getEmail(), grupoSelecionado);
-        Object resposta = recebeMensagem();
-
-        if (resposta instanceof Pagamento) {
+        //System.out.println("AQUI --> " + recebeMensagem());
+        //Object resposta = recebeMensagem();
+        return (Pagamento) recebeMensagem();
+/*        if (resposta instanceof Pagamento) {
             return (Pagamento) resposta;
         } else {
             System.err.println("Erro: A resposta recebida não é do tipo Pagamento. Tipo recebido: " + resposta.getClass().getSimpleName());
             return null;
-        }
+        }*/
     }
 
 
@@ -495,6 +505,10 @@ public class ControladorPrincipal {
                     return grupos;
                     //return resposta.getEstado();
 
+                }
+                case PAGAMENTO_LISTADO_COM_SUCESSO -> {
+                    Pagamento pagamento = (Pagamento) resposta.getConteudo();
+                    return pagamento;
                 }
                 case USER_OBTEM_HISTORICO_DESPESA_COM_SUCESSO ->{
 

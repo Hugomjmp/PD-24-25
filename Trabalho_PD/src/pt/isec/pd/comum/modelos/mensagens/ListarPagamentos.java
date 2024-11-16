@@ -11,7 +11,7 @@ public class ListarPagamentos implements Serializable {
         this.grupoId = grupoId;
     }
 
-    // Getters e Setters
+
     public String getSolicitadoPor() {
         return solicitadoPor;
     }

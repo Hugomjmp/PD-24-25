@@ -36,7 +36,7 @@ public class ControladorPagamentoServidor {
         try {
             Estados estado = Bd.eliminarPagamento(
                     eliminarPagamento.getGroupId(),
-                    eliminarPagamento.getData(),
+                    //eliminarPagamento.getData(),
                     eliminarPagamento.getValor(),
                     eliminarPagamento.getPagaPor(),
                     eliminarPagamento.getRecebidoPor()
@@ -48,8 +48,17 @@ public class ControladorPagamentoServidor {
             return Estados.ERRO_ELIMINAR_PAGAMENTO;
         }
     }
-
     public static Estados ListarPagamentos(ListarPagamentos listarPagamentos) {
+        Serializable pagamentos = null;
+        try {
+            pagamentos = Bd.listarPagamentosDB(listarPagamentos.getSolicitadoPor());
+        } catch (Exception e) {
+            System.err.println("Erro ao listar pagamentos: " + e.getMessage());
+        }
+        return pagamentos == null ? Estados.ERRO_LISTAR_PAGAMENTO : Estados.PAGAMENTO_LISTADO_COM_SUCESSO.setDados(pagamentos);
+    }
+
+/*    public static Estados ListarPagamentos(ListarPagamentos listarPagamentos) {
         try {
             List<Pagamento> pagamentos = Bd.listarPagamentosDB(listarPagamentos.getSolicitadoPor());
 
@@ -62,6 +71,6 @@ public class ControladorPagamentoServidor {
             System.err.println("Erro ao listar pagamentos: " + e.getMessage());
             return Estados.ERRO_LISTAR_PAGAMENTO;
         }
-    }
+    }*/
 
 }

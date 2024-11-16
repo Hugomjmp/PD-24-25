@@ -370,24 +370,24 @@ public class ClienteConsolaUI {
 
         String pagaPor, recebidoPor, data;
         double valor;
-        System.out.print("\nPago por (email): ");
-        pagaPor = scanner.nextLine();
+/*        System.out.print("\nPago por (email): ");
+        pagaPor = scanner.nextLine();*/
         System.out.print("\nRecebido por (email): ");
         recebidoPor = scanner.nextLine();
         System.out.print("\nValor do pagamento: ");
         valor = Double.parseDouble(scanner.nextLine());
         System.out.print("\nData do pagamento (DD-MM-YYYY): ");
         data = scanner.nextLine();
-        cp.efectuaPagamento(grupoSelecionado, pagaPor, recebidoPor, valor, data);
+        cp.efectuaPagamento(grupoSelecionado/*, pagaPor*/, recebidoPor, valor, data);
     }
 
     public void eliminarPagamento() {
         System.out.print("\nPara eliminar um pagamento, forneça o ID do pagamento:\n");
 
         String grupoSelecionado = this.grupoSelecionado;
-
+/*
         System.out.print("Data do pagamento (formato: DD-MM-YYYY): ");
-        String data = scanner.nextLine();
+        String data = scanner.nextLine();*/
 
         System.out.print("Valor do pagamento: ");
         double valor;
@@ -398,29 +398,33 @@ public class ClienteConsolaUI {
             return;
         }
 
-        System.out.print("Pago por: ");
-        String pagaPor = scanner.nextLine();
+        /*System.out.print("Pago por: ");
+        String pagaPor = scanner.nextLine();*/
 
         System.out.print("Recebido por: ");
         String recebidoPor = scanner.nextLine();
 
 
         try {
-            cp.eliminaPagamento(grupoSelecionado, data, valor, pagaPor, recebidoPor);
+            cp.eliminaPagamento(grupoSelecionado/*data*/, valor/*, pagaPor*/, recebidoPor);
             System.out.println("Pagamento eliminado com sucesso.");
         } catch (Exception e) {
             System.out.println("Erro ao eliminar pagamento: " + e.getMessage());
         }
     }
-
+/*    public void listarGrupos() {
+        Grupos grupos = cp.listarGrupos();
+        Vista.tabelaGrupos(grupos);
+    }*/
     public void listarPagamentos() {
         Pagamento pagamentos = cp.listarPagamento(grupoSelecionado);
-
-        if (pagamentos != null) {
+        Vista.tabelaPagamentos(pagamentos);
+        //System.out.println(pagamentos);
+        /*if (pagamentos != null) {
             Vista.tabelaPagamentos(pagamentos);
         } else {
             System.out.println("Erro: Não foi possível obter os pagamentos.");
-        }
+        }*/
     }
 
 }

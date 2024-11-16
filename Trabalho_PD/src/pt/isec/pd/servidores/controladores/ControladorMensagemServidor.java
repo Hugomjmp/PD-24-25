@@ -124,11 +124,11 @@ public class ControladorMensagemServidor {
                 ListarPagamentos listarPagamentos = (ListarPagamentos) mensagem.getConteudo();
                 Estados estado = ControladorPagamentoServidor.ListarPagamentos(listarPagamentos);
 
-                if (estado == Estados.PAGAMENTO_LISTADO_COM_SUCESSO && estado.getDados() instanceof List<?>) {
+                /*if (estado == Estados.PAGAMENTO_LISTADO_COM_SUCESSO && estado.getDados() instanceof List<?>) {
                     System.out.println("Pagamentos listados com sucesso.");
                 } else {
                     System.out.println("Erro ao listar pagamentos: " + estado);
-                }
+                }*/
 
                 resposta = new RespostaServidorMensagem(estado, estado.getDados());
                 break;

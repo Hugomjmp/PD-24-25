@@ -16,17 +16,21 @@ public class Pagamento implements Serializable {
     private List<Pagamento> pagamentos;
 
 
-    public Pagamento(String groupId, String data, double valor, String pagaPor, String recebidoPor) {
+/*    public Pagamento(String groupId, String data, double valor, String pagaPor, String recebidoPor) {
         this.groupId = groupId;
         this.data = data;
         this.valor = valor;
         this.pagaPor = pagaPor;
         this.recebidoPor = recebidoPor;
         this.pagamentos = new ArrayList<>();
-    }
+    }*/
 
     public List<Pagamento> getPagamentos() {
         return pagamentos;
+    }
+
+    public void setPagamentos(List<Pagamento> pagamentos) {
+        this.pagamentos = pagamentos;
     }
 
     public String getGroupId() {
@@ -74,6 +78,14 @@ public class Pagamento implements Serializable {
         pagamentos.add(pagamento);
     }
 
-
-
+    @Override
+    public String toString() {
+        return "Pagamento{" +
+                "groupId='" + groupId + '\'' +
+                ", data='" + data + '\'' +
+                ", valor=" + valor +
+                ", pagaPor='" + pagaPor + '\'' +
+                ", recebidoPor='" + recebidoPor + '\'' +
+                '}';
+    }
 }

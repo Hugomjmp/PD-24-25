@@ -11,9 +11,9 @@ public class EliminaPagamento implements Serializable {
     private String pagaPor;
     private String recebidoPor;
 
-    public EliminaPagamento(String groupId, String data, double valor, String pagaPor, String recebidoPor) {
+    public EliminaPagamento(String groupId/*, String data*/, double valor, String pagaPor, String recebidoPor) {
         this.groupId = groupId;
-        this.data = data;
+        //this.data = data;
         this.valor = valor;
         this.pagaPor = pagaPor;
         this.recebidoPor = recebidoPor;

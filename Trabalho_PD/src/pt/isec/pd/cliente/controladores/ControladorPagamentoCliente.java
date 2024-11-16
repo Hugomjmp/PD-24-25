@@ -13,26 +13,26 @@ import java.util.List;
 
 public class ControladorPagamentoCliente {
 
-    public static void inserirPagamento(Ligacao ligacao, String emailLogado, String grupoSelecionado, String pagaPor, String recebidoPor, double valor, String data) {
+    public static void inserirPagamento(Ligacao ligacao, String emailLogado, String grupoSelecionado/*, String pagaPor*/, String recebidoPor, double valor, String data) {
 
         if (valor <= 0) {
             System.out.println("Valor deve ser positivo.");
             return;
         }
-        InserePagamento pagamento = new InserePagamento(grupoSelecionado, pagaPor, recebidoPor, valor, data);
+        InserePagamento pagamento = new InserePagamento(grupoSelecionado, emailLogado, recebidoPor, valor, data);
         Mensagem mensagem = new Mensagem(Tipomensagemenum.USER_INSERE_PAGAMENTO, pagamento);
         ligacao.enviaMensagem(mensagem);
         System.out.println("Pagamento enviado: " + mensagem);
     }
 
-    public static void eliminaPagamento(Ligacao ligacao, String emailLogado, String grupoSelecionado, String data, double valor, String pagaPor, String recebidoPor) {
+    public static void eliminaPagamento(Ligacao ligacao, String emailLogado, String grupoSelecionado/*, String data*/, double valor/*, String pagaPor*/, String recebidoPor) {
 
         if (grupoSelecionado == null || grupoSelecionado.isEmpty()) {
             System.out.println("ID do grupo deve ser fornecido.");
             return;
         }
 
-        EliminaPagamento elpagamento = new EliminaPagamento(grupoSelecionado, data, valor, pagaPor, recebidoPor);
+        EliminaPagamento elpagamento = new EliminaPagamento(grupoSelecionado/*, data*/, valor, emailLogado, recebidoPor);
         Mensagem mensagem = new Mensagem(Tipomensagemenum.USER_ELIMINA_PAGAMENTO, elpagamento);
         ligacao.enviaMensagem(mensagem);
         System.out.println("Pedido de eliminação de pagamento enviado: " + mensagem);
@@ -40,17 +40,11 @@ public class ControladorPagamentoCliente {
 
 
     public static void listarPagamento(Ligacao ligacao, String emailLogado, String grupoSelecionado) {
-        if (grupoSelecionado == null || grupoSelecionado.isEmpty()) {
-            System.out.println("ID do grupo deve ser fornecido.");
-        }
-        if (emailLogado == null || emailLogado.isEmpty()) {
-            System.out.println("Email do usuário deve ser fornecido.");
-        }
 
         ListarPagamentos listarPagamentos = new ListarPagamentos(grupoSelecionado, emailLogado);
         Mensagem mensagem = new Mensagem(Tipomensagemenum.USER_LISTA_PAGAMENTOS, listarPagamentos);
         ligacao.enviaMensagem(mensagem);
-        System.out.println("Listagem de pagamentos enviada para o servidor: " + grupoSelecionado);
+
     }
 
 

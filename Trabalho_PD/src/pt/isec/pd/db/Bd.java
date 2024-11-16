@@ -120,12 +120,12 @@ public class Bd {
                     "    )\n" +
                     ");");
             stmt.executeUpdate("CREATE TABLE PAGAMENTO (\n" +
-                    "    ID           INTEGER PRIMARY KEY AUTOINCREMENT,\n" +
-                    "    GROUP_ID             REFERENCES GRUPO (ID),\n" +
-                    "    DATA,\n" +
-                    "    VALOR,\n" +
-                    "    PAGA_POR             REFERENCES USERS (ID),\n" +
-                    "    RECEBIDO_POR         REFERENCES USERS (ID) \n" +
+                    "   ID           INTEGER PRIMARY KEY AUTOINCREMENT,\n" +
+                    "   GROUP_ID     INTEGER REFERENCES GRUPO (ID),\n" +
+                    "   DATA,\n" +
+                    "   VALOR,\n" +
+                    "   PAGA_POR             REFERENCES USERS (ID),\n" +
+                    "   RECEBIDO_POR         REFERENCES USERS (ID)\n" +
                     ");");
             stmt.executeUpdate("CREATE TABLE USERS (\n" +
                     "    ID         INTEGER NOT NULL\n" +
@@ -458,23 +458,21 @@ public class Bd {
         return grupo;
     }
 
-
-
-
-    public static Estados inserirPagamento(String groupId, String pagaPor, String recebidoPor, double valor, String data) {
-        String queryInsertPagamento = "INSERT INTO PAGAMENTO (GROUP_ID, PAGA_POR, RECEBIDO_POR, VALOR, DATA) VALUES (?, ?, ?, ?, ?)";
-
+    public static Estados inserirPagamento(String grupoNome, String pagaPor, String recebidoPor, double valor, String data) {
+        String query = "INSERT INTO PAGAMENTO (GROUP_ID, DATA, VALOR, PAGA_POR, RECEBIDO_POR)" +
+                    " SELECT" +
+                   " g.ID,'" + data + "', " + valor + ", " +
+                                    "(SELECT ID FROM USERS WHERE EMAIL = '" + pagaPor +"'), " +
+                    "(SELECT ID FROM USERS WHERE EMAIL = '" + recebidoPor + "') " +
+                    "FROM GRUPO g " +
+                    "WHERE g.ID = (SELECT GROUP_ID " +
+                    "FROM INTEGRA " +
+                    "WHERE USER_ID = (SELECT ID FROM USERS WHERE EMAIL = '" + recebidoPor + "') " +
+                    "AND GROUP_ID = (SELECT ID FROM GRUPO WHERE NOME = '" + grupoNome + "'));";
         try {
-            PreparedStatement pstmtInsert = conn.prepareStatement(queryInsertPagamento);
-
-            pstmtInsert.setString(1, groupId);
-            pstmtInsert.setString(2, pagaPor);
-            pstmtInsert.setString(3, recebidoPor);
-            pstmtInsert.setDouble(4, valor);
-            pstmtInsert.setString(5, data);
-
-            pstmtInsert.executeUpdate();
-            pstmtInsert.close();
+            Statement stmt = conn.createStatement();
+            stmt.executeUpdate(query);
+            stmt.close();
 
             versaoUpdate();
             return Estados.USER_PAGAMENTO_INSERIDO_COM_SUCESSO;
@@ -485,26 +483,160 @@ public class Bd {
         }
     }
 
-    public static Estados eliminarPagamento(String groupId, String data, double valor, String pagaPor, String recebidoPor) {
-        String sql = "DELETE FROM PAGAMENTO WHERE GROUP_ID = ? AND DATA = ? AND VALOR = ? AND PAGA_POR = ? AND RECEBIDO_POR = ?";
+    public static Estados eliminarPagamento(String grupoNome/*, String data*/, double valor, String pagaPor, String recebidoPor) {
+        String sql = "DELETE FROM PAGAMENTO " +
+                    "WHERE ID = ( " +
+                            "SELECT p.ID " +
+                    "FROM PAGAMENTO p " +
+                    "INNER JOIN INTEGRA i ON p.GROUP_ID = i.GROUP_ID " +
+                    "WHERE i.USER_ID = (SELECT ID FROM USERS WHERE EMAIL = '"+ pagaPor +"') " +
+                    "AND p.GROUP_ID = (SELECT ID FROM GRUPO WHERE NOME = '" + grupoNome + "') " +
+                    "AND p.VALOR = " + valor +
+                    " AND p.PAGA_POR = (SELECT ID FROM USERS WHERE EMAIL = '" + pagaPor + "') " +
+                    "AND p.RECEBIDO_POR = (SELECT ID FROM USERS WHERE EMAIL = '" + recebidoPor + "') " +
+                    "LIMIT 1 " +
+            ");";
+        System.out.println(sql);
+        try {
+            Statement stmt = conn.createStatement();
+            stmt.executeUpdate(sql);
+            stmt.close();
 
-        try (PreparedStatement stmt = conn.prepareStatement(sql)) {
-            stmt.setString(1, groupId);
-            stmt.setString(2, data);
-            stmt.setDouble(3, valor);
-            stmt.setString(4, pagaPor);
-            stmt.setString(5, recebidoPor);
-
-            int rowsAffected = stmt.executeUpdate();
-
-            return rowsAffected > 0 ? Estados.PAGAMENTO_ELIMINADO_COM_SUCESSO: Estados.ERRO_ELIMINAR_PAGAMENTO;
         } catch (SQLException e) {
             System.err.println("Erro ao eliminar pagamento: " + e.getMessage());
             return Estados.ERRO_ELIMINAR_PAGAMENTO;
         }
+        return Estados.PAGAMENTO_ELIMINADO_COM_SUCESSO;
     }
 
-    public static List<Pagamento> listarPagamentosDB(String nomeGrupo) {
+/*TODO
+*  ACABAR ISTO...*/
+    public static Pagamento listarPagamentosDB(String nomeGrupo) {
+        List<Pagamento> pagamentoList = new ArrayList<>();
+        Pagamento pagamento = null;
+        String sql = "SELECT p.ID, " +
+                            "p.DATA, " +
+                            "p.VALOR, " +
+                            "u1.EMAIL AS PAGA_POR, " +
+                    "u2.EMAIL AS RECEBIDO_POR " +
+                    "FROM PAGAMENTO p " +
+                    "INNER JOIN GRUPO g ON p.GROUP_ID = g.ID " +
+                    "INNER JOIN USERS u1 ON p.PAGA_POR = u1.ID " +
+                    "INNER JOIN USERS u2 ON p.RECEBIDO_POR = u2.ID " +
+                    "WHERE g.NOME = '" + nomeGrupo + "';";
+
+        try {
+            Statement stmt = conn.createStatement();
+            ResultSet rs = stmt.executeQuery(sql);
+            while (rs.next()){
+                String DATA = rs.getString("DATA");
+                String VALOR = rs.getString("VALOR");
+                String PAGA_POR = rs.getString("PAGA_POR");
+                String RECEBIDO_POR = rs.getString("RECEBIDO_POR");
+                pagamento = new Pagamento();
+                pagamento.setPagaPor(PAGA_POR);
+                pagamento.setData(DATA);
+                pagamento.setValor(Double.parseDouble(VALOR));
+                pagamento.setRecebidoPor(RECEBIDO_POR);
+                pagamentoList.add(pagamento);
+                pagamento.setPagamentos(pagamentoList);
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        System.out.println(pagamento);
+
+        return pagamento;
+    }
+    /*public static Pagamento listarPagamentosDB(String nomeGrupo) {
+        List<Pagamento> pagamentoList = new ArrayList<>();
+        Pagamento pagamento = null;
+        String sqlGroupId = "SELECT ID FROM GRUPO WHERE NOME = ?";
+        String sqlPagamentos = "SELECT p.VALOR, p.DATA, p.PAGA_POR, p.RECEBIDO_POR " +
+                "FROM PAGAMENTO p WHERE p.GROUP_ID = ?";
+
+        try (PreparedStatement pstmtGroup = conn.prepareStatement(sqlGroupId)) {
+            System.out.println("OLA");
+            pstmtGroup.setString(1, nomeGrupo);
+            try (ResultSet rsGroup = pstmtGroup.executeQuery()) {
+                if (rsGroup.next()) {
+                    String groupId = rsGroup.getString("ID");
+
+                    try (PreparedStatement pstmtPagamentos = conn.prepareStatement(sqlPagamentos)) {
+                        pstmtPagamentos.setString(1, groupId);
+                        try (ResultSet rsPagamentos = pstmtPagamentos.executeQuery()) {
+                            while (rsPagamentos.next()) {
+                                pagamento = new Pagamento();
+                                double valor = rsPagamentos.getDouble("VALOR");
+                                String data = rsPagamentos.getString("DATA");
+                                String pagaPor = rsPagamentos.getString("PAGA_POR");
+                                String recebidoPor = rsPagamentos.getString("RECEBIDO_POR");
+                                pagamento.setValor(valor);
+                                pagamento.setData(data);
+                                pagamento.setPagaPor(pagaPor);
+                                pagamento.setRecebidoPor(recebidoPor);
+                                pagamentoList.add(pagamento);
+                                pagamento.setPagamentos(pagamentoList);
+                                System.out.println(valor + data + pagaPor + recebidoPor);
+                            }
+                        }
+                    }
+                } else {
+                    System.out.println("Grupo não encontrado com o nome: " + nomeGrupo);
+                }
+            }
+        } catch (SQLException e) {
+            System.err.println("Erro ao listar pagamentos: " + e.getMessage());
+        }
+
+        return pagamento;
+    }*/
+
+    /*
+        public static Despesa historio(String grupo){
+        List <Despesa> despesaList = new ArrayList<>();
+        Despesa despesa = null;
+        String GRUPODB = null;
+        String queryGrupoID = "SELECT ID " +
+                "FROM GRUPO " +
+                "WHERE NOME = '"+ grupo +"'";
+
+        try {
+            Statement stmt = conn.createStatement();
+            ResultSet rsID = stmt.executeQuery(queryGrupoID);
+            if(rsID.next())
+                GRUPODB = rsID.getString("ID");
+
+            String query = "SELECT D.ID, D.DATA, D.VALOR, D.DESCRICAO, U1.NOME AS REGISTADA_POR, U.NOME AS PAGO_POR " +
+                    "FROM DESPESA D " +
+                    "JOIN USERS U ON D.PAGA_POR = U.ID " +
+                    "JOIN USERS U1 ON D.REGISTADA_POR = U1.ID " +
+                    "WHERE D.GROUP_ID = "+ GRUPODB + " " +
+                    "ORDER BY D.DATA ASC";
+            ResultSet rs = stmt.executeQuery(query);
+            while (rs.next()){
+                String ID = rs.getString("ID");
+                String DATA = rs.getString("DATA");
+                String VALOR = rs.getString("VALOR");
+                String DESCRICAO = rs.getString("DESCRICAO");
+                String REGISTADA_POR = rs.getString("REGISTADA_POR");
+                String PAGO_POR = rs.getString("PAGO_POR");
+                despesa = new Despesa();
+                despesa.setIdDespesa(ID);
+                despesa.setData(DATA);
+                despesa.setDespesa(Double.parseDouble(VALOR));
+                despesa.setDescricao(DESCRICAO);
+                despesa.setEmail(REGISTADA_POR);
+                despesa.setQuemPagou(PAGO_POR);
+                despesaList.add(despesa);
+                despesa.setDespesaList(despesaList);
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return despesa;
+    }*/
+    /*public static List<Pagamento> listarPagamentosDB(String nomeGrupo) {
         List<Pagamento> pagamentoList = new ArrayList<>();
         String sqlGroupId = "SELECT ID FROM GRUPO WHERE NOME = ?";
         String sqlPagamentos = "SELECT p.VALOR, p.DATA, p.PAGA_POR, p.RECEBIDO_POR " +
@@ -540,7 +672,7 @@ public class Bd {
         }
 
         return pagamentoList;
-    }
+    }*/
 
 
 
