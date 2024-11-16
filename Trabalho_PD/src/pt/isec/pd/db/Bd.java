@@ -112,8 +112,8 @@ public class Bd {
                     "    CRIADO_POR         REFERENCES USERS (EMAIL) \n" +
                     ");");
             stmt.executeUpdate("CREATE TABLE INTEGRA (\n" +
-                    "    USER_ID   REFERENCES USERS (ID),\n" +
-                    "    GROUP_ID  REFERENCES GRUPO (ID),\n" +
+                    "    USER_ID   INTEGER REFERENCES USERS (ID),\n" +
+                    "    GROUP_ID  INTEGER REFERENCES GRUPO (ID),\n" +
                     "    PRIMARY KEY (\n" +
                     "        USER_ID,\n" +
                     "        GROUP_ID\n" +
@@ -704,6 +704,11 @@ public class Bd {
 
     }
 
+    public static void divideDespesa(String){
+        String queryNElementos = "SELECT COUNT(USER_ID) AS NUMERO_UTILIZADORES\n" +
+                                "FROM INTEGRA\n" +
+                                "WHERE GROUP_ID = 24;";
+    }
     public static Despesa historio(String grupo){
         List <Despesa> despesaList = new ArrayList<>();
         Despesa despesa = null;
