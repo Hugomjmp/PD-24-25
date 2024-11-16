@@ -33,6 +33,7 @@ public enum Estados {
     CONSULTA_DESPESA_TOTAL_COM_SUCESSO("Consulta da despesa com sucesso"),
     USER_EXPORTA_COM_SUCESSO("Ficheiro CSV exportado com sucesso"),
     USER_OBTEM_HISTORICO_DESPESA_COM_SUCESSO("Utilizador obtem histórico com sucesso"),
+    DESPESA_ELIMINADA_COM_SUCESSO("Despesa eliminada com sucesso"),
 
     ERRO_AUTENTICACAO("O Utilizador não existe"),
     ERRO_EDITAR_USER("Erro ao atualizar os dados do utilizador"),
@@ -50,7 +51,7 @@ public enum Estados {
     ERRO_CRIAR_DESPESA("ERRO AO CRIAR DESPESA"),
     ERRO_OBTER_HISTORICO("ERRO grupo não tem histórico para mostrar"),
     ERRO_CONSULTA_DESPESA_TOTAL("ERRO AO CONSULTAR VALOR DA DESPESA TOTAL"),
-
+    ERRO_ELIMINAR_DESPESA("Erro ao eliminar Despesa"),
     ERRO_LISTAR_PAGAMENTO("Erro Listar Pagamento"),
 
     ERRO_ELIMINAR_PAGAMENTO("Erro Eliminar Pagamento"),

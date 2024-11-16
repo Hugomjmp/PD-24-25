@@ -66,24 +66,15 @@ public class ControladorDespesaServidor {
 
     }
 
-
-
-
-   // verGastoTotal(ligacao, dados.getUtilizadorLogado().getEmail(), grupo);
-/*
-    public static Estados editaGrupo(EditarGrupo editarGrupo){
-        Serializable edita = null;
+    public static Estados eliminaDespesa(EliminaDespesa eliminaDespesa){
+        Serializable elimina = null;
         try {
-            edita = Bd.editarNomeGrupoDB(editarGrupo.getEmail(), editarGrupo.getGrupoNome(), editarGrupo.getGrupoNovoNome());
+            elimina = Bd.eliminarDespesa(eliminaDespesa.getEmail(),eliminaDespesa.getGrupoNome(),eliminaDespesa.getID());
         } catch (Exception e) {
-            System.err.println("Erro ao editar grupo: " + e.getMessage());
+            System.err.println("Erro ao eliminar despesa do grupo: " + e.getMessage());
         }
-        //System.out.println("ControladorGrupoServidor ->" + edita);
-        return edita == null ? Estados.ERRO_GRUPO_NAO_ENCONTRADO : Estados.GRUPO_NOME_ALTERADO_COM_SUCESSO.setDados(edita);
+        return elimina == null ? Estados.ERRO_ELIMINAR_DESPESA : Estados.DESPESA_ELIMINADA_COM_SUCESSO.setDados(elimina);
     }
-*/
-
-
 
 
 }

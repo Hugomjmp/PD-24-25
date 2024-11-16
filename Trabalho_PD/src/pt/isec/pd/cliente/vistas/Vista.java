@@ -174,6 +174,29 @@ public class Vista {
         for (int i = 0; i < tamanhoTotal; i++)
             System.out.print("-");
         System.out.println("+");
+
+
+        System.out.print("|");
+        for (int i = 0; i < (tamanhoNome + 2 - "CONVITE DE".length()) / 2; i++)
+            System.out.print(" ");
+        System.out.print("CONVITE DE");
+        for (int i = 0; i < (tamanhoNome + 2 - "CONVITE DE".length()) / 2; i++)
+            System.out.print(" ");
+        System.out.print("|");
+        for (int i = 0; i < (tamanhoNomeGrupo + 2 - "GRUPO".length()) / 2; i++)
+            System.out.print(" ");
+        System.out.print("GRUPO");
+        for (int i = 0; i < (tamanhoNomeGrupo + 2 - "GRUPO".length()) / 2; i++)
+            System.out.print(" ");
+        System.out.print("|");
+        for (int i = 0; i < (tamanhoEstado + 3 - "PAGO POR".length()) / 2; i++)
+            System.out.print(" ");
+        System.out.print("PAGO POR");
+        for (int i = 0; i < (tamanhoEstado + 3 - "PAGO POR".length()) / 2; i++)
+            System.out.print(" ");
+        System.out.println("|");
+
+
         //linha 2
         System.out.print("+");
         for (int i = 0; i < tamanhoTotal; i++)
@@ -181,8 +204,18 @@ public class Vista {
         System.out.println("+");
 
         for (Convites convite : convites.getConvitesLista()) {
-            System.out.println("| " + convite.getnomeRemetente() + " | " + convite.getGrupoNome() + " | " + convite.getEstado() + " |");
-
+            System.out.print("| " + convite.getnomeRemetente());
+            for (int i = 0; i < tamanhoNome - String.valueOf(convite.getnomeRemetente()).length() + 1; i++)
+                System.out.print(" ");
+            System.out.print("| ");
+            System.out.print(convite.getGrupoNome());
+            for (int i = 0; i < tamanhoNomeGrupo - String.valueOf(convite.getGrupoNome()).length() + 1; i++)
+                System.out.print(" ");
+            System.out.print("| ");
+            System.out.print(convite.getEstado());
+            for (int i = 0; i < tamanhoEstado - String.valueOf(convite.getEstado()).length() + 1; i++)
+                System.out.print(" ");
+            System.out.print("|\n");
             System.out.print("+");
             for (int i = 0; i < tamanhoTotal; i++)
                 System.out.print("-");

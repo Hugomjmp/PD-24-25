@@ -176,8 +176,10 @@ public class ControladorPrincipal {
         ControladorDespesaCliente.editarDespesa(ligacao,dados.getUtilizadorLogado().getEmail(),grupoSelecionado,despesa,quemPagou,descricao,data, ID_despesa);
         recebeMensagem();
     }
-    public void eliminaDespesa(){
+    public void eliminaDespesa(String grupoSelecionado, String ID_despesa){
 
+        ControladorDespesaCliente.eliminarDespesa(ligacao,dados.getUtilizadorLogado().getEmail(),grupoSelecionado,ID_despesa);
+        recebeMensagem();
     }
     public Despesa mostrarDespesas(String grupoSelecionado){
         ControladorDespesaCliente.historicoDespesa(ligacao,grupoSelecionado);
@@ -206,238 +208,22 @@ public class ControladorPrincipal {
         ControladorPagamentoCliente.eliminaPagamento(ligacao, dados.getUtilizadorLogado().getEmail(), grupoSelecionado/*, data*/, valor/*, pagaPor*/, recebidoPor);
         recebeMensagem();
     }
-
-
-/*    public Grupos listarGrupos(){
-
-        ControladorGrupoCliente.listarGrupos(ligacao, dados.getUtilizadorLogado().getEmail());
-        return (Grupos) recebeMensagem();
-    }*/
-
-
     public Pagamento listarPagamento(String grupoSelecionado) {
         ControladorPagamentoCliente.listarPagamento(ligacao, dados.getUtilizadorLogado().getEmail(), grupoSelecionado);
-        //System.out.println("AQUI --> " + recebeMensagem());
-        //Object resposta = recebeMensagem();
         return (Pagamento) recebeMensagem();
-/*        if (resposta instanceof Pagamento) {
-            return (Pagamento) resposta;
-        } else {
-            System.err.println("Erro: A resposta recebida não é do tipo Pagamento. Tipo recebido: " + resposta.getClass().getSimpleName());
-            return null;
-        }*/
+
     }
-
-
-    /*TODO
-    *  falta compor isto... está a aparecer aqui e não pode ser*/
-    public void mostrarConvites(){
+    public Convites mostrarConvites(){
         ControladorGrupoCliente.verConvites(ligacao, dados.getUtilizadorLogado().getEmail());
-        recebeMensagem();
+        return (Convites) recebeMensagem();
     }
     /*TODO
     *  falta meter aqui proteção para o caso de o user introduzir mal a palavra*/
     public void respondeConvite(String grupoNome, String decisao){
-
-
         ControladorGrupoCliente.decisaoConvites(ligacao, decisao, grupoNome, dados.getUtilizadorLogado().getEmail());
         recebeMensagem();
     }
 
-
-/*    public static void enviaMensagem(String escolha){
-        String [] dadosLogin;
-        String [] dadosRegisto;
-        String grupo , grupoNovoNome;
-        String decisao;
-        String emailDestinatario;
-        String numeroTelefone;
-        Integer Telf = null;
-        String pass;
-        Scanner scanner = new Scanner(System.in);
-        System.out.println("escolha -> " + escolha);
-
-            if (dados.getUtilizadorLogado() == null) {
-                switch (escolha) {
-                    case "login": { //login
-                        System.out.println("Envia: Login");
-                        dadosLogin = ControladorPrincipal.login();
-                        ControladorAutenticacaoCliente.login(ligacao, dadosLogin);
-                        recebeMensagem();
-                        break;
-                    }
-                    case "registo": { //Registo
-                        System.out.println("Envia: Registo");
-                        dadosRegisto = ControladorPrincipal.registo();
-                        ControladorAutenticacaoCliente.registo(ligacao, dadosRegisto);
-                        break;
-                        // ControladorAutenticacaoCliente.registo(ligacao, user);
-                        // ControladorPrincipal.registo(user);
-                    }
-                }
-            } else {
-                if (dados.getGrupoSelecionado() != null)
-                    System.out.println("GRUPO SELECIONADO: " + dados.getGrupoSelecionado().getNomeGrupo());
-                switch (escolha) {
-                    case "cria_grupo":
-                        System.out.println("Envia Cria Grupo:");
-                        System.out.print("Nome do grupo:");
-
-                        grupo = scanner.nextLine();
-                        ControladorGrupoCliente.criaGrupo(ligacao, grupo, dados.getUtilizadorLogado().getEmail());
-                        //recebeMensagem();
-                        ControladorGrupoCliente.insereGrupo(ligacao, grupo, dados.getUtilizadorLogado().getEmail());
-                        //recebeMensagem();
-
-                        break;
-
-                    case "elimina_grupo":
-                        System.out.println("Envia Elimina Grupo:");
-                        System.out.print("Nome do grupo a eliminar:");
-
-                        grupo = scanner.nextLine();
-                        ControladorGrupoCliente.eliminaGrupo(ligacao, grupo, dados.getUtilizadorLogado().getEmail());
-                        //recebeMensagem();
-                        break;
-                    case "edita_grupo":
-                        System.out.println("Envia Edita Grupo");
-                        //ControladorGrupoCliente.listarGrupos(ligacao, dados.getUtilizadorLogado().getEmail());
-                        System.out.print("Nome do Grupo que pretende alterar: ");
-                        grupo = scanner.nextLine();
-                        System.out.print("Novo nome:");
-                        grupoNovoNome = scanner.nextLine();
-                        ControladorGrupoCliente.editaGrupo(ligacao, dados.getUtilizadorLogado().getEmail(), grupo, grupoNovoNome);
-                        //recebeMensagem();
-                        break;
-                    case "seleciona_grupo":
-                        System.out.print("Nome do Grupo que pretende selecionar: ");
-                        grupo = scanner.nextLine();
-                        ControladorGrupoCliente.selecionaGrupo(ligacao, dados.getUtilizadorLogado().getEmail(), grupo);
-                        //recebeMensagem();
-                        break;
-                    case "lista_grupo":
-                        //System.out.println("Envia Listar Grupos:");
-                        ControladorGrupoCliente.listarGrupos(ligacao, dados.getUtilizadorLogado().getEmail());
-                        //recebeMensagem();
-                        break;
-
-                    case "sair_grupo":
-                        System.out.println("Envia Sair do Grupo:");
-                        System.out.print("Nome do grupo do qual deseja sair: ");
-
-                        grupo = scanner.nextLine();
-                        ControladorGrupoCliente.sairGrupo(ligacao, grupo, dados.getUtilizadorLogado().getEmail());
-                        //recebeMensagem();
-                        break;
-
-                    case "efetuar_pagamento": {
-                        double valorPagamento;
-                        String quemRecebeu;
-                        String grupoNome;
-                        String dataPagamentoStr;
-
-                        System.out.println("Envia Efetuar Pagamento:");
-
-                        System.out.print("Grupo: ");
-                        grupoNome = scanner.nextLine();
-                        System.out.print("\nValor do Pagamento: ");
-                        valorPagamento = Double.parseDouble(scanner.nextLine());
-                        System.out.print("\nPago para (email): ");
-                        quemRecebeu = scanner.nextLine();
-                        System.out.print("\nData do Pagamento (formato DD-MM-YYYY): ");
-                        dataPagamentoStr = scanner.nextLine();
-                        String pagaPor = dados.getUtilizadorLogado().getEmail();
-
-                        ControladorPagamentoCliente.inserirPagamento(ligacao, pagaPor, quemRecebeu, grupoNome, valorPagamento, dataPagamentoStr);
-                        //recebeMensagem();
-                        break;
-                    }
-                    case "cria_convite":
-                        System.out.println("Envia Cria Convite");
-                        System.out.print("Nome do grupo:");
-
-                        grupo = scanner.nextLine();
-                        System.out.print("Para quem quer enviar o convite (email):");
-                        emailDestinatario = scanner.nextLine();
-                        ControladorGrupoCliente.criaConvite(ligacao, dados.getUtilizadorLogado().getEmail(), emailDestinatario, grupo);
-                        //recebeMensagem();
-                        break;
-                    case "ver_convites":
-                        System.out.println("Ver Convites");
-                        ControladorGrupoCliente.verConvites(ligacao, dados.getUtilizadorLogado().getEmail());
-                        //recebeMensagem();
-                        break;
-                    case "decisao-convites":
-                        System.out.println("Ver decisao");
-                        ControladorGrupoCliente.verConvites(ligacao, dados.getUtilizadorLogado().getEmail());
-                        //recebeMensagem();
-                        System.out.print("\nGRUPO: ");
-
-                        grupo = scanner.nextLine();
-                        System.out.println("Decisao: aceitar\\ recusar");
-                        System.out.print("Decisao: ");
-
-                        decisao = scanner.nextLine();
-                        ControladorGrupoCliente.decisaoConvites(ligacao, decisao, grupo, dados.getUtilizadorLogado().getEmail());
-                        //recebeMensagem();
-                        break;
-                    case "altera-dados":
-                        System.out.println("Ver Altera Dados");
-                        System.out.println("Deixar vazio o que não é para alterar.");
-                        System.out.print("Número de Telefone: ");
-                        numeroTelefone = scanner.nextLine();
-                        if (!numeroTelefone.isEmpty())
-                            try {
-                                Telf = Integer.parseInt(numeroTelefone);
-                            } catch (NumberFormatException e) {
-                                throw new RuntimeException(e);
-                            }
-                        System.out.print("\nPassword:");
-                        pass = scanner.nextLine();
-                        ControladorAutenticacaoCliente.edita(ligacao, Telf, dados.getUtilizadorLogado().getEmail(), pass);
-                        //recebeMensagem();
-                        break;
-                    case "insere_despesa":
-                        double despesa;
-                        String quemPagou;
-                        String descricao;
-                        String data;
-                        System.out.println("Ver Inserir despesas");
-                        System.out.print("Grupo: ");
-                        grupo = scanner.nextLine();
-                        System.out.print("\nDespesa: ");
-                        despesa = Double.parseDouble(scanner.nextLine());
-                        System.out.print("\nPago por (email): ");
-                        quemPagou = scanner.nextLine();
-                        System.out.print("\nDescricao: ");
-                        descricao = scanner.nextLine();
-                        System.out.println("\nPago em (DD-MM-YYYY): ");
-                        data = scanner.nextLine();
-                        ControladorDespesaCliente.inserirDespesa(ligacao, dados.getUtilizadorLogado().getEmail(), grupo, despesa, quemPagou, descricao, data);
-                        //recebeMensagem();
-                        break;
-                    case "gasto_total":
-                        System.out.println("Ver Inserir despesas");
-                        System.out.print("Grupo: ");
-                        grupo = scanner.nextLine();
-                        ControladorDespesaCliente.verDespesaTotal(ligacao, dados.getUtilizadorLogado().getEmail(), grupo);
-                        //recebeMensagem();
-                        break;
-                    case "exportar_despesas":
-                        System.out.println("Guardar Despesas");
-                        System.out.print("Grupo: ");
-                        grupo = scanner.nextLine();
-                        ControladorDespesaCliente.exportarDespesas(ligacao, grupo, dados.getUtilizadorLogado().getEmail());
-                        //recebeMensagem();
-                        break;
-                    default:
-                        System.out.println("Opção inválida. Por favor, tente novamente.");
-                        break;
-                }
-            }
-
-
-    }*/
 
    public static Object recebeMensagem(){
 
@@ -493,8 +279,7 @@ public class ControladorPrincipal {
                 }
                 case VER_CONVITES_COM_SUCESSO -> {
                     Convites convites = (Convites) resposta.getConteudo();
-                    Vista.tabelaConvites(convites);
-                    return resposta.getEstado();
+                    return convites;
                 }
 
                 case GRUPO_LISTADO_COM_SUCESSO -> { //tratar deste warnig depois

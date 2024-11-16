@@ -2,6 +2,7 @@ package pt.isec.pd.cliente.UI;
 
 import pt.isec.pd.cliente.controladores.ControladorPrincipal;
 import pt.isec.pd.cliente.vistas.Vista;
+import pt.isec.pd.comum.modelos.Convites;
 import pt.isec.pd.comum.modelos.Despesa;
 import pt.isec.pd.comum.modelos.Grupos;
 import pt.isec.pd.comum.modelos.Pagamento;
@@ -278,9 +279,15 @@ public class ClienteConsolaUI {
         System.out.print("Modificar a data (DD-MM-YYYY): ");
         data = scanner.nextLine();
         cp.editaDespesa(grupoSelecionado, ID_despesa, valor, quemPagou, descricao, data);
-    } /*TODO*/
+    }
 
     public void eliminarDespesa() {
+        String ID_despesa;
+        Despesa despesa = cp.mostrarDespesas(grupoSelecionado);
+        Vista.tabelaDespesas(despesa);
+        System.out.print("ID: ");
+        ID_despesa = scanner.nextLine();
+        cp.eliminaDespesa(grupoSelecionado, ID_despesa);
     } /*TODO*/
 
     public void listarDespesas() {
@@ -340,7 +347,8 @@ public class ClienteConsolaUI {
     }
 
     public void ListarConvites() {
-        cp.mostrarConvites();
+        Convites convites = cp.mostrarConvites();
+        Vista.tabelaConvites(convites);
     }
 
     public void pagamentosMenu() {
@@ -368,10 +376,8 @@ public class ClienteConsolaUI {
 
     public void efectuarPagamento() {
 
-        String pagaPor, recebidoPor, data;
+        String recebidoPor, data;
         double valor;
-/*        System.out.print("\nPago por (email): ");
-        pagaPor = scanner.nextLine();*/
         System.out.print("\nRecebido por (email): ");
         recebidoPor = scanner.nextLine();
         System.out.print("\nValor do pagamento: ");
@@ -383,12 +389,7 @@ public class ClienteConsolaUI {
 
     public void eliminarPagamento() {
         System.out.print("\nPara eliminar um pagamento, forneça o ID do pagamento:\n");
-
         String grupoSelecionado = this.grupoSelecionado;
-/*
-        System.out.print("Data do pagamento (formato: DD-MM-YYYY): ");
-        String data = scanner.nextLine();*/
-
         System.out.print("Valor do pagamento: ");
         double valor;
         try {
@@ -397,10 +398,6 @@ public class ClienteConsolaUI {
             System.out.println("Valor inválido. Por favor, insira um número.");
             return;
         }
-
-        /*System.out.print("Pago por: ");
-        String pagaPor = scanner.nextLine();*/
-
         System.out.print("Recebido por: ");
         String recebidoPor = scanner.nextLine();
 
@@ -412,19 +409,11 @@ public class ClienteConsolaUI {
             System.out.println("Erro ao eliminar pagamento: " + e.getMessage());
         }
     }
-/*    public void listarGrupos() {
-        Grupos grupos = cp.listarGrupos();
-        Vista.tabelaGrupos(grupos);
-    }*/
+
     public void listarPagamentos() {
         Pagamento pagamentos = cp.listarPagamento(grupoSelecionado);
         Vista.tabelaPagamentos(pagamentos);
-        //System.out.println(pagamentos);
-        /*if (pagamentos != null) {
-            Vista.tabelaPagamentos(pagamentos);
-        } else {
-            System.out.println("Erro: Não foi possível obter os pagamentos.");
-        }*/
+
     }
 
 }

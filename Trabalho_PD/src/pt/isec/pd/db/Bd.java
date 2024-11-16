@@ -496,7 +496,7 @@ public class Bd {
                     "AND p.RECEBIDO_POR = (SELECT ID FROM USERS WHERE EMAIL = '" + recebidoPor + "') " +
                     "LIMIT 1 " +
             ");";
-        System.out.println(sql);
+        //System.out.println(sql);
         try {
             Statement stmt = conn.createStatement();
             stmt.executeUpdate(sql);
@@ -747,6 +747,30 @@ public class Bd {
         }
         return despesa;
     }
+
+
+    public static Estados eliminarDespesa(String email, String nomeGrupo, String ID){
+        String query = "DELETE FROM DESPESA\n" +
+                "WHERE ID = (SELECT D.ID\n" +
+                "    FROM DESPESA D\n" +
+                "    INNER JOIN INTEGRA I ON D.GROUP_ID = I.GROUP_ID\n" +
+                "    WHERE I.USER_ID = (SELECT ID FROM USERS WHERE EMAIL = '" + email + "')\n" +
+                "    AND D.GROUP_ID = (SELECT ID FROM GRUPO WHERE NOME = '"+nomeGrupo+"')\n" +
+                "    AND D.ID = "+ ID +"\n" +
+                "    LIMIT 1);";
+        System.out.println(query);
+        try {
+            Statement stmt = conn.createStatement();
+            stmt.executeUpdate(query);
+            stmt.close();
+
+        } catch (SQLException e) {
+            System.err.println("Erro ao eliminar pagamento: " + e.getMessage());
+            return Estados.ERRO_ELIMINAR_DESPESA;
+        }
+        return Estados.DESPESA_ELIMINADA_COM_SUCESSO;
+    }
+
 
     /*TODO
     *  ACABAR O EDITA DESPESA:...*/

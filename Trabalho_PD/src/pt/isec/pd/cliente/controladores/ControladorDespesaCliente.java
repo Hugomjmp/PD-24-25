@@ -31,4 +31,10 @@ public class ControladorDespesaCliente {
         Mensagem mensagem = new Mensagem(Tipomensagemenum.USER_HISTORICO_DESPESAS, historicoDespesa);
         ligacao.enviaMensagem(mensagem);
     }
+    public static void eliminarDespesa(Ligacao ligacao, String email,String grupoSelecionado, String ID_despesa){
+
+        EliminaDespesa eliminaDespesa = new EliminaDespesa(email, grupoSelecionado,ID_despesa);
+        Mensagem mensagem = new Mensagem(Tipomensagemenum.USER_ELIMINA_DESPESA, eliminaDespesa);
+        ligacao.enviaMensagem(mensagem);
+    }
 }

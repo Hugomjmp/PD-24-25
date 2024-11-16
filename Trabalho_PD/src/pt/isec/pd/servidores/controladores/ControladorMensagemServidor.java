@@ -189,10 +189,15 @@ public class ControladorMensagemServidor {
                 resposta = new RespostaServidorMensagem(estado,estado.getDados());
                 break;
             }
+            case USER_ELIMINA_DESPESA:
+            {
+                Estados estado = ControladorDespesaServidor.eliminaDespesa((EliminaDespesa) mensagem.getConteudo());
+                resposta = new RespostaServidorMensagem(estado,estado.getDados());
+                break;
+            }
 
 
         }
-        ///System.out.println("->Controlador Mensagem Servidor " + resposta);
         return resposta;
     }
 }
