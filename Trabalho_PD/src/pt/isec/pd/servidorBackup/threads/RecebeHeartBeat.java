@@ -3,10 +3,7 @@ package pt.isec.pd.servidorBackup.threads;
 import pt.isec.pd.comum.modelos.HeartBeat;
 import pt.isec.pd.servidorBackup.BackupBd;
 
-import java.io.ByteArrayInputStream;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.ObjectInputStream;
+import java.io.*;
 import java.net.DatagramPacket;
 import java.net.MulticastSocket;
 import java.net.SocketException;
@@ -30,7 +27,7 @@ public class RecebeHeartBeat extends Thread{
         Object object;
         DatagramPacket datagramPacket;
         boolean BDExiste = false;
-
+        File ficheiro = new File("src/pt/isec/pd/db/Base_de_dados.db");
         try {
             multicastSocket.setSoTimeout(30 * 1000); /** Timer especificado pelo Enunciado do trabalho */
 
@@ -49,9 +46,12 @@ public class RecebeHeartBeat extends Thread{
                                 HeartBeat heartBeat = (HeartBeat) object;
 
                                 if (!BDExiste){
-                                    byte[] dadosBD = heartBeat.getFicheiroDB();
-                                    try {
-                                        FileOutputStream fos = new FileOutputStream(directoriaBD);
+                                    //byte[] dadosBD = heartBeat.getFicheiroDB();
+                                    FileInputStream fich = new FileInputStream(ficheiro);
+                                    byte[] dadosBD = new byte[(int) ficheiro.length()];
+                                    fich.read(dadosBD);
+
+                                    try (FileOutputStream fos = new FileOutputStream(directoriaBD+ "/Base_de_dados_backup.db")){
                                         fos.write(dadosBD);
                                         BackupBd.ligacao(directoriaBD + "/Base_de_dados_backup.db");
                                         BDExiste = true;
