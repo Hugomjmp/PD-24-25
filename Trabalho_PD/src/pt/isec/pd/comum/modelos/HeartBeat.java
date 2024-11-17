@@ -6,6 +6,7 @@ public class HeartBeat  implements Serializable {
 
     private int bdVersao;
     private int porto;
+    private byte[] ficheiroDB;
 
     public HeartBeat(int bdVersao, int porto) {
         this.bdVersao = bdVersao;
@@ -19,4 +20,6 @@ public class HeartBeat  implements Serializable {
     public int getPorto() {
         return porto;
     }
+
+    public byte[] getFicheiroDB(){return ficheiroDB;}
 }
