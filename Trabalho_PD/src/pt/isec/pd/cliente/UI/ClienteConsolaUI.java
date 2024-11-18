@@ -6,14 +6,19 @@ import pt.isec.pd.comum.modelos.Convites;
 import pt.isec.pd.comum.modelos.Despesa;
 import pt.isec.pd.comum.modelos.Grupos;
 import pt.isec.pd.comum.modelos.Pagamento;
+import pt.isec.pd.db.Bd;
 
 import java.util.List;
 import java.util.Scanner;
+
+import static pt.isec.pd.db.Bd.*;
 
 public class ClienteConsolaUI {
     ControladorPrincipal cp;
     private Scanner scanner;
     String grupoSelecionado = null;
+
+    String emailUtilizador = null;
 
     public ClienteConsolaUI(ControladorPrincipal cp) {
         this.cp = cp;
@@ -146,11 +151,13 @@ public class ClienteConsolaUI {
                 case "6":
                     sairGrupo();
                     break;
+                case "7":
+                    consultarSaldos();
                 default:
-                    if (!escolha.equalsIgnoreCase("7"))
+                    if (!escolha.equalsIgnoreCase("8"))
                         System.out.println("Opção Inválida!");
             }
-        } while (!escolha.equalsIgnoreCase("7"));
+        } while (!escolha.equalsIgnoreCase("8"));
 
     }
 
@@ -257,6 +264,13 @@ public class ClienteConsolaUI {
     public void consultarGastoTotal() {
         String gastoTotal = cp.consultaGastoTotal(grupoSelecionado);
         System.out.println("Gasto total do grupo " + grupoSelecionado + " é de: " + gastoTotal + "€");
+    }
+    public void consultarSaldos() {
+        String gastoTotal = cp.consultarSaldos(grupoSelecionado);
+        System.out.println("Gasto total do grupo teste " + grupoSelecionado + ": " + gastoTotal + "€");
+
+        String totalDeve = cp.consultarDeve(grupoSelecionado);
+        System.out.println("Você deve no total: " + totalDeve + "€");
     }
 
     public void editarDespesa() {

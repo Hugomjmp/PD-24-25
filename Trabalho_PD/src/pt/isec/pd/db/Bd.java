@@ -7,9 +7,9 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.sql.*;
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.time.LocalDate;
 
 public class Bd {
 
@@ -844,8 +844,6 @@ public class Bd {
     }
 
 
-
-
     public static String verGasto(String email, String grupoNome) {
         String valorTotal = "0";
         String sql = "SELECT SUM(VALOR) AS DESPESATOTAL FROM DESPESA " +
@@ -870,6 +868,114 @@ public class Bd {
 
         return valorTotal;
     }
+
+    public static String valorTotalDeve(String email, String grupoNome) {
+        String valorTotal = "10";
+        String sql = "SELECT SUM(D.VALOR) AS TOTAL_DEVE " +
+                "FROM DESPESA D " +
+                "JOIN GRUPO G ON D.GROUP_ID = G.ID " +
+                "JOIN USERS U ON G.ID = U.GRUPO_ID " +
+                "WHERE G.NOME = ? " +
+                "AND D.PAGA_POR != (SELECT ID FROM USERS WHERE EMAIL = ?) " +
+                "AND D.GROUP_ID = G.ID";
+
+        try (PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setString(1, grupoNome);
+            stmt.setString(2, email);
+
+            try (ResultSet rs = stmt.executeQuery()) {
+                if (rs.next()) {
+                    valorTotal = rs.getString("TOTAL_DEVE");
+                    if (valorTotal == null) {
+                        valorTotal = "0";
+                    }
+                }
+            }
+        } catch (SQLException e) {
+            System.err.println("Erro ao consultar o valor total que deve: " + e.getMessage());
+        }
+
+        return valorTotal;
+    }
+
+
+
+
+    public static List<String> valorDevePorMembro(String email, String grupoNome) {
+        List<String> valores = new ArrayList<>();
+        String sql = "SELECT U2.NOME AS NOME_DEVEDOR, SUM(D.VALOR / (SELECT COUNT(*) FROM DIVIDE_DESPESA DD WHERE DD.DESPESA_ID = D.ID)) AS VALOR_DEVE " +
+                "FROM DESPESA D " +
+                "JOIN DIVIDE_DESPESA DD ON D.ID = DD.DESPESA_ID " +
+                "JOIN USERS U ON DD.USER_ID = U.ID " +
+                "JOIN USERS U2 ON D.PAGA_POR = U2.ID " +
+                "JOIN GRUPO G ON D.GROUP_ID = G.ID " +
+                "WHERE U.EMAIL = '" + email + "' AND G.NOME = '" + grupoNome + "' AND D.PAGA_POR != U.ID " +
+                "GROUP BY U2.NOME";
+
+        try (Statement stmt = conn.createStatement();
+             ResultSet rs = stmt.executeQuery(sql)) {
+            while (rs.next()) {
+                String nomeDevedor = rs.getString("NOME_DEVEDOR");
+                String valorDeve = rs.getString("VALOR_DEVE");
+                valores.add(nomeDevedor + " deve: " + (valorDeve != null ? valorDeve : "0") + "€");
+            }
+        } catch (SQLException e) {
+            System.err.println("Erro ao consultar os valores devidos por membro: " + e.getMessage());
+        }
+
+        return valores;
+    }
+
+
+    public static String valorTotalReceber(String email, String grupoNome) {
+        String valorTotal = "0";
+        String sql = "SELECT SUM(D.VALOR / (SELECT COUNT(*) FROM DIVIDE_DESPESA DD WHERE DD.DESPESA_ID = D.ID)) AS TOTAL_RECEBER " +
+                "FROM DESPESA D " +
+                "JOIN USERS U ON D.PAGA_POR = U.ID " +
+                "JOIN GRUPO G ON D.GROUP_ID = G.ID " +
+                "WHERE U.EMAIL = '" + email + "' AND G.NOME = '" + grupoNome + "'";
+
+        try (Statement stmt = conn.createStatement();
+             ResultSet rs = stmt.executeQuery(sql)) {
+            if (rs.next()) {
+                valorTotal = rs.getString("TOTAL_RECEBER");
+                if (valorTotal == null) {
+                    valorTotal = "0";
+                }
+            }
+        } catch (SQLException e) {
+            System.err.println("Erro ao consultar o valor total a receber: " + e.getMessage());
+        }
+
+        return valorTotal;
+    }
+
+
+    public static List<String> valorReceberPorMembro(String email, String grupoNome) {
+        List<String> valores = new ArrayList<>();
+        String sql = "SELECT U2.NOME AS NOME_CREDOR, SUM(D.VALOR / (SELECT COUNT(*) FROM DIVIDE_DESPESA DD WHERE DD.DESPESA_ID = D.ID)) AS VALOR_RECEBER " +
+                "FROM DESPESA D " +
+                "JOIN DIVIDE_DESPESA DD ON D.ID = DD.DESPESA_ID " +
+                "JOIN USERS U ON D.PAGA_POR = U.ID " +
+                "JOIN USERS U2 ON DD.USER_ID = U2.ID " +
+                "JOIN GRUPO G ON D.GROUP_ID = G.ID " +
+                "WHERE U.EMAIL = '" + email + "' AND G.NOME = '" + grupoNome + "' AND DD.USER_ID != U.ID " +
+                "GROUP BY U2.NOME";
+
+        try (Statement stmt = conn.createStatement();
+             ResultSet rs = stmt.executeQuery(sql)) {
+            while (rs.next()) {
+                String nomeCredor = rs.getString("NOME_CREDOR");
+                String valorReceber = rs.getString("VALOR_RECEBER");
+                valores.add(nomeCredor + " deve-lhe: " + (valorReceber != null ? valorReceber : "0") + "€");
+            }
+        } catch (SQLException e) {
+            System.err.println("Erro ao consultar os valores a receber por membro: " + e.getMessage());
+        }
+
+        return valores;
+    }
+
 
 
     public static Estados export(String grupoNome,String nome) throws SQLException {

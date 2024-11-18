@@ -44,6 +44,21 @@ public class ControladorDespesaServidor {
         return gasto == null ? Estados.ERRO_CONSULTA_DESPESA_TOTAL : Estados.CONSULTA_DESPESA_TOTAL_COM_SUCESSO.setDados(gasto);
 
     }
+    public static Estados verTotalDeve(VerTotalDeve verTotalDeve){
+        String valorTotal = "0";
+
+        try {
+
+            valorTotal = Bd.valorTotalDeve(verTotalDeve.getEmail(), verTotalDeve.getGrupoNome());
+        } catch (Exception e) {
+            System.err.println("Erro ao consultar o total que deve: " + e.getMessage());
+        }
+
+
+        return valorTotal == null ? Estados.ERRO_GRUPO_NAO_ENCONTRADO : Estados.CONSULTA_DESPESA_TOTAL_COM_SUCESSO.setDados(valorTotal);
+    }
+
+
 
     public static Estados exportCSV(ExportarDespesas exportarDespesas){
         Serializable exportar = null;

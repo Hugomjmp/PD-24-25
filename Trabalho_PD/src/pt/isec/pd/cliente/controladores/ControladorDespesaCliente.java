@@ -37,6 +37,30 @@ public class ControladorDespesaCliente {
         Mensagem mensagem = new Mensagem(Tipomensagemenum.USER_ELIMINA_DESPESA, eliminaDespesa);
         ligacao.enviaMensagem(mensagem);
     }
+    public static void verTotalDeve(Ligacao ligacao, String email, String grupoNome){
+        VerTotalDeve verTotalDeve = new VerTotalDeve(grupoNome, email);
+        Mensagem mensagem = new Mensagem(Tipomensagemenum.USER_VISUALIZA_TOTAL_DEVE, verTotalDeve);
+        ligacao.enviaMensagem(mensagem);
+    }
+    public static void verDevePorMembro(Ligacao ligacao, String email, String grupoNome){
+        VerDevePorMembro verDevePorMembro = new VerDevePorMembro(grupoNome, email);
+        Mensagem mensagem = new Mensagem(Tipomensagemenum.USER_VISUALIZA_DEVE_POR_MEMBRO, verDevePorMembro);
+        ligacao.enviaMensagem(mensagem);
+    }
+    public static void verTotalReceber(Ligacao ligacao, String email, String grupoNome){
+        VerTotalReceber verTotalReceber = new VerTotalReceber(grupoNome, email);
+        Mensagem mensagem = new Mensagem(Tipomensagemenum.USER_VISUALIZA_TOTAL_RECEBER, verTotalReceber);
+        ligacao.enviaMensagem(mensagem);
+    }
+    public static void verReceberPorMembro(Ligacao ligacao, String email, String grupoNome){
+        VerReceberPorMembro verReceberPorMembro = new VerReceberPorMembro(grupoNome, email);
+        Mensagem mensagem = new Mensagem(Tipomensagemenum.USER_VISUALIZA_RECEBER_POR_MEMBRO, verReceberPorMembro);
+        ligacao.enviaMensagem(mensagem);
+    }
+
+
+
+
 
 
 }

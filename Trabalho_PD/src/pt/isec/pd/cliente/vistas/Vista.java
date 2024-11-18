@@ -97,7 +97,8 @@ public class Vista {
         System.out.println("|  4  - Listar Grupos.                     |");
         System.out.println("|  5  - Eliminar um Grupo.                 |");
         System.out.println("|  6  - Sair de um Grupo.                  |");
-        System.out.println("|  7  - Back                               |");
+        System.out.println("|  7  - Consultar Saldos                   |");
+        System.out.println("|  8  - Back                               |");
         System.out.println("+------------------------------------------+");
         System.out.print("#>");
     }

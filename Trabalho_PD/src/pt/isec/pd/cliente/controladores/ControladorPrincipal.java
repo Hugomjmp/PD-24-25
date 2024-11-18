@@ -3,7 +3,6 @@ package pt.isec.pd.cliente.controladores;
 
 import pt.isec.pd.cliente.ligacao.Ligacao;
 import pt.isec.pd.cliente.modelos.Dados;
-import pt.isec.pd.cliente.vistas.Vista;
 
 import pt.isec.pd.comum.modelos.*;
 
@@ -198,6 +197,17 @@ public class ControladorPrincipal {
         ControladorDespesaCliente.verDespesaTotal(ligacao, dados.getUtilizadorLogado().getEmail(), grupoSelecionado);
         return (String) recebeMensagem();
     }
+    public String consultarSaldos(String grupoSelecionado) {
+
+        ControladorDespesaCliente.verDespesaTotal(ligacao, dados.getUtilizadorLogado().getEmail(), grupoSelecionado);
+       return (String) recebeMensagem();
+    }
+    public String consultarDeve(String grupoSelecionado) {
+        ControladorDespesaCliente.verTotalDeve(ligacao, dados.getUtilizadorLogado().getEmail(), grupoSelecionado);
+        return (String) recebeMensagem();
+    }
+
+
 
     public void efectuaPagamento(String grupoSelecionado/*,String pagaPor*/,String recebidoPor,double valor, String data ){
 
@@ -300,6 +310,7 @@ public class ControladorPrincipal {
                     Despesa despesa = (Despesa) resposta.getConteudo();
                     return despesa;
                 }
+
             }
         } catch (Exception e) {
             throw new RuntimeException(e);
