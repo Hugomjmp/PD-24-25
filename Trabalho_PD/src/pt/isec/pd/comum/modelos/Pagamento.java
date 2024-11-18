@@ -7,7 +7,7 @@ import java.util.List;
 public class Pagamento implements Serializable {
     private static final long serialVersionUID = 1L;
 
-    private String groupId; // provavelmente vais ter que passar isto int groupID
+    private String groupId;
     private String data;
     private double valor;
     private String pagaPor;
