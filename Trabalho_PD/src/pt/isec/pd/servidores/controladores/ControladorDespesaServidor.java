@@ -54,22 +54,38 @@ public class ControladorDespesaServidor {
             System.err.println("Erro ao consultar o total que deve: " + e.getMessage());
         }
 
-
         return valorTotal == null ? Estados.ERRO_GRUPO_NAO_ENCONTRADO : Estados.CONSULTA_DESPESA_TOTAL_COM_SUCESSO.setDados(valorTotal);
     }
-    public static Estados verTotalDeveDividido(VerDevePorMembro verDevePorMembro){
-        String valorTotal = null;
+    public static Estados verTotalDeveDividido(VerDevePorMembro verDevePorMembro) {
+        TotalDevidoInfo valores = null;
         try {
-
-            valorTotal = Bd.valorTotalDeveDividido(verDevePorMembro.getEmail(), verDevePorMembro.getGrupoNome());
+            valores = Bd.valorTotalDeveDividido(verDevePorMembro.getEmail(), verDevePorMembro.getGrupoNome());
         } catch (Exception e) {
             System.err.println("Erro ao consultar o total que deve: " + e.getMessage());
         }
 
-        return valorTotal == null ? Estados.ERRO_GRUPO_NAO_ENCONTRADO : Estados.CONSULTA_DESPESA_TOTAL_COM_SUCESSO.setDados(valorTotal);
+        if (valores == null || valores.getTotalDevido() == 0 || valores.getNumeroPessoas() == 0) {
+            return Estados.ERRO_GRUPO_NAO_ENCONTRADO;
+        }
+
+        double totalDevido = valores.getTotalDevido();
+        int numeroPessoas = valores.getNumeroPessoas();
+        double valorPagoPorMembro = valores.getValorPagoPorMembro();
+        double valorPorPessoa = totalDevido / numeroPessoas;
+        double valorQueTemAReceber = valorPagoPorMembro - valorPorPessoa;
+
+        if (valorQueTemAReceber < 0) {
+            valorQueTemAReceber = -valorQueTemAReceber;
+        }
+        double valorPorPessoaRestante = valorQueTemAReceber / (numeroPessoas - 1);
+        String dados = String.format("""
+                    Valor por pessoa: %.2f€,
+                    Valor que você tem a receber: %.2f€,
+                    Cada um dos outros membros deve te pagar: %.2f€""",
+                valorPorPessoa, valorQueTemAReceber, valorPorPessoaRestante);
+
+        return Estados.CONSULTA_DESPESA_TOTAL_COM_SUCESSO.setDados(dados);
     }
-
-
 
     public static Estados exportCSV(ExportarDespesas exportarDespesas){
         Serializable exportar = null;

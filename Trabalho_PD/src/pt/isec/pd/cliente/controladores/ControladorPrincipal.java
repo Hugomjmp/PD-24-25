@@ -213,7 +213,6 @@ public class ControladorPrincipal {
     }
 
 
-
     public void efectuaPagamento(String grupoSelecionado/*,String pagaPor*/,String recebidoPor,double valor, String data ){
 
         ControladorPagamentoCliente.inserirPagamento(ligacao, dados.getUtilizadorLogado().getEmail(), grupoSelecionado/*, pagaPor*/, recebidoPor, valor, data);

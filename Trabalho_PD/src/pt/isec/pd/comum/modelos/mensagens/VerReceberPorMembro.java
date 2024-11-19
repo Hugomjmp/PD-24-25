@@ -2,7 +2,7 @@ package pt.isec.pd.comum.modelos.mensagens;
 
 import java.io.Serializable;
 
-public class VerReceberPorMembro implements Serializable {
+public class VerReceberPorMembro implements Serializable { // // Não está a ser usado
     private String grupoNome;
     private String email;
 

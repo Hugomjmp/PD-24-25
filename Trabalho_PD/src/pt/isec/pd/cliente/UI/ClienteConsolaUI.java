@@ -18,8 +18,6 @@ public class ClienteConsolaUI {
     private Scanner scanner;
     String grupoSelecionado = null;
 
-    String emailUtilizador = null;
-
     public ClienteConsolaUI(ControladorPrincipal cp) {
         this.cp = cp;
         this.scanner = new Scanner(System.in);
@@ -268,13 +266,13 @@ public class ClienteConsolaUI {
     }
     public void consultarSaldos() {
         String gastoTotal = cp.consultarSaldos(grupoSelecionado);
-        System.out.println("Gasto total do grupo teste " + grupoSelecionado + ": " + gastoTotal + "€");
+        System.out.println("Gasto total do grupo " + grupoSelecionado + ": " + gastoTotal + "€");
 
         String totalDeve = cp.consultarDeve(grupoSelecionado);
         System.out.println("Você deve no total: " + totalDeve + "€");
 
         String totalDeveMembro = cp.consultaDeveMembro(grupoSelecionado);
-        System.out.println("Cada um deve: " + totalDeveMembro + "€");
+        System.out.println(totalDeveMembro);
 
     }
 

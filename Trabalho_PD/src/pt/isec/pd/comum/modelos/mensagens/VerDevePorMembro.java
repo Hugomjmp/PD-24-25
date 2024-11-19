@@ -19,3 +19,4 @@ public class VerDevePorMembro implements Serializable {
         return email;
     }
 }
+
