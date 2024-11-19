@@ -45,7 +45,7 @@ public class ControladorDespesaServidor {
 
     }
     public static Estados verTotalDeve(VerTotalDeve verTotalDeve){
-        String valorTotal = "0";
+        String valorTotal = null;
 
         try {
 
@@ -54,6 +54,17 @@ public class ControladorDespesaServidor {
             System.err.println("Erro ao consultar o total que deve: " + e.getMessage());
         }
 
+
+        return valorTotal == null ? Estados.ERRO_GRUPO_NAO_ENCONTRADO : Estados.CONSULTA_DESPESA_TOTAL_COM_SUCESSO.setDados(valorTotal);
+    }
+    public static Estados verTotalDeveDividido(VerDevePorMembro verDevePorMembro){
+        String valorTotal = null;
+        try {
+
+            valorTotal = Bd.valorTotalDeveDividido(verDevePorMembro.getEmail(), verDevePorMembro.getGrupoNome());
+        } catch (Exception e) {
+            System.err.println("Erro ao consultar o total que deve: " + e.getMessage());
+        }
 
         return valorTotal == null ? Estados.ERRO_GRUPO_NAO_ENCONTRADO : Estados.CONSULTA_DESPESA_TOTAL_COM_SUCESSO.setDados(valorTotal);
     }

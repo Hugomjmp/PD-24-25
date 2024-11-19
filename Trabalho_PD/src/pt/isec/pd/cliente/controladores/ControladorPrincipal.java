@@ -207,6 +207,11 @@ public class ControladorPrincipal {
         return (String) recebeMensagem();
     }
 
+    public String consultaDeveMembro(String grupoSelecionado){
+        ControladorDespesaCliente.verDevePorMembro(ligacao, dados.getUtilizadorLogado().getEmail(), grupoSelecionado);
+        return (String) recebeMensagem();
+    }
+
 
 
     public void efectuaPagamento(String grupoSelecionado/*,String pagaPor*/,String recebidoPor,double valor, String data ){

@@ -153,6 +153,7 @@ public class ClienteConsolaUI {
                     break;
                 case "7":
                     consultarSaldos();
+                    break;
                 default:
                     if (!escolha.equalsIgnoreCase("8"))
                         System.out.println("Opção Inválida!");
@@ -271,7 +272,13 @@ public class ClienteConsolaUI {
 
         String totalDeve = cp.consultarDeve(grupoSelecionado);
         System.out.println("Você deve no total: " + totalDeve + "€");
+
+        String totalDeveMembro = cp.consultaDeveMembro(grupoSelecionado);
+        System.out.println("Cada um deve: " + totalDeveMembro + "€");
+
     }
+
+
 
     public void editarDespesa() {
         String valor;
