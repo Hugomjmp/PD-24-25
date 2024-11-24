@@ -16,15 +16,8 @@ public class Cliente {
             System.out.println("java Cliente IPAdress PORT");
         }
         Ligacao ligacao = new Ligacao(args[0],args[1]);
-        /*ControladorPrincipal controladorPrincipal = new ControladorPrincipal(ligacao);
-        controladorPrincipal.main();
-*/
         ControladorPrincipal controladorPrincipal = new ControladorPrincipal(ligacao);
         ClienteConsolaUI clienteConsolaUI = new ClienteConsolaUI(controladorPrincipal);
         clienteConsolaUI.iniciar();
-
-
-
-
     }
 }

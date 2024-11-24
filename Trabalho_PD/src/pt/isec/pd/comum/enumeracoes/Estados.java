@@ -10,7 +10,7 @@ public enum Estados {
     USER_REMOVIDO_COM_SUCESSO("User removido do Grupo com sucesso"),
     USER_MODIFICADO_COM_SUCESSO("User modificado com sucesso"),
     USER_PAGAMENTO_INSERIDO_COM_SUCESSO("Utilizador inseriu o pagamento com sucesso"),
-
+    USER_TEM_DIVIDAS("Utilizador tem dividas no grupo, não pode sair do grupo até as dividas estarem saudadas"),
     USER_GRUPO_SELECIONADO_COM_SUCESSO("Grupo selecionado com sucesso"),
 
     GRUPO_REGISTADO_COM_SUCESSO("Grupo registado com sucesso"),

@@ -20,6 +20,7 @@ public class ControladorGrupoServidor {
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
+        System.out.println("ESTADOOOOSSSS " + grupoRegisto);
         return grupoRegisto == null ? Estados.ERRO_GRUPO : Estados.GRUPO_REGISTADO_COM_SUCESSO;
 
 
@@ -52,9 +53,9 @@ public class ControladorGrupoServidor {
 
         if (estado == Estados.USER_REMOVIDO_COM_SUCESSO) {
             System.out.println("Utilizador removido do grupo com sucesso.");
-        } else {
+        } /*else {
             System.out.println("Erro ao remover o usuário do grupo.");
-        }
+        }*/
         return estado;
     }
     public static Estados editaGrupo(EditarGrupo editarGrupo){
@@ -90,20 +91,6 @@ public class ControladorGrupoServidor {
         //System.out.println("ControladorGrupoServidor ->" + grupo);
         return selecionaGrupo == null ? Estados.ERRO_AO_SELECIONAR_GRUPO : Estados.USER_GRUPO_SELECIONADO_COM_SUCESSO.setDados(selecionaGrupo);
     }
-
-    /*    public static Estados listarGrupos(ListarGrupo listarGrupo) {
-            Serializable grupo = null;
-
-                //grupo = Bd.listarGruposDB(listarGrupo.getSolicitadoPor());
-                List<Grupos> gruposList = Bd.listarGruposDB(listarGrupo.getSolicitadoPor());
-                if (gruposList.isEmpty()){
-                    return Estados.ERRO_SEM_GRUPOS;
-                }
-
-            System.out.println("ControladorGrupoServidor ->" + gruposList );
-            return Estados.GRUPO_LISTADO_COM_SUCESSO.setDados((Serializable) gruposList);
-        }*/
-
 
     public static Estados criaConvite(CriaConvite criaConvite){
         try {

@@ -86,7 +86,7 @@ public class ServidorPrincipal {
 
         int argc = args.length;
         int serverPort;
-        Thread t;
+        Thread t,t2;
         if (argc != 2){
             System.out.println("java ServidorPrincipal PORT DATA_BASE_FILE");
             return;
@@ -95,8 +95,6 @@ public class ServidorPrincipal {
         mostraServidorDados(serverPort,args[0]);
         //Sistema multicast para os servidores backup
         multicast();
-
-
         int i = 0;
         try {
             socketServidor = new ServerSocket(serverPort);//cria o socket para o servidor
@@ -120,7 +118,6 @@ public class ServidorPrincipal {
         } catch (IOException e) {
             System.out.println("Erro ao criar o socket.\n[ERRO]: " + e);
         }
-
 
     }
 }

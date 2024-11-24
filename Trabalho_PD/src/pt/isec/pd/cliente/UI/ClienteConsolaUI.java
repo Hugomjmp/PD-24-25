@@ -307,7 +307,7 @@ public class ClienteConsolaUI {
         System.out.print("ID: ");
         ID_despesa = scanner.nextLine();
         cp.eliminaDespesa(grupoSelecionado, ID_despesa);
-    } /*TODO*/
+    }
 
     public void listarDespesas() {
         Despesa despesa = cp.mostrarDespesas(grupoSelecionado);

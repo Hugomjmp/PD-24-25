@@ -8,6 +8,7 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
+import java.net.SocketException;
 
 public class ClienteThread extends Thread{
     Socket socketCliente;
@@ -19,7 +20,7 @@ public class ClienteThread extends Thread{
     @Override
     public void run(){
         try{
-            while (true){
+            while (!socketCliente.isClosed()){
                 ObjectInputStream oin = new ObjectInputStream(socketCliente.getInputStream());
                 Mensagem mensagem = (Mensagem) oin.readObject();
                 System.out.println("Servidor Recebe -> " + mensagem);
@@ -30,8 +31,19 @@ public class ClienteThread extends Thread{
                 oout.flush();
                 System.out.println("Servidor Envia -> " + resposta);
             }
+        } catch (SocketException e){
+          System.out.println("Cliente disconnected");
         } catch (IOException | ClassNotFoundException e) {
-            throw new RuntimeException(e);
+            System.out.println("Erro na comunicação com o cliente");
+        } finally {
+            try {
+                if (!socketCliente.isClosed()){
+                    socketCliente.close();
+                }
+                System.out.println("Cliente saiu");
+            } catch (IOException e) {
+                System.out.println("Erro ao fechar o socket.");
+            }
         }
     }
 

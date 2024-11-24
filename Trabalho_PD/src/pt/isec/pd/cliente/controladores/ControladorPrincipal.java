@@ -101,9 +101,10 @@ public class ControladorPrincipal {
 
     public void criarGrupo(String nomeGrupo){
         ControladorGrupoCliente.criaGrupo(ligacao, nomeGrupo, dados.getUtilizadorLogado().getEmail());
-        recebeMensagem();
-        ControladorGrupoCliente.insereGrupo(ligacao, nomeGrupo, dados.getUtilizadorLogado().getEmail());
-        recebeMensagem();
+        if(!recebeMensagem().toString().equals("ERRO_GRUPO")) {
+            ControladorGrupoCliente.insereGrupo(ligacao, nomeGrupo, dados.getUtilizadorLogado().getEmail());
+            recebeMensagem();
+        }
     }
 
 
@@ -254,19 +255,15 @@ public class ControladorPrincipal {
 
 
                 }
+                case ERRO_GRUPO -> {
+                    return resposta.getEstado();
+                }
                 case USER_GRUPO_SELECIONADO_COM_SUCESSO -> {
                     dados.setGrupoSelecionado((Grupos) resposta.getConteudo());
                     return resposta.getEstado();
                 }
-/*              case ERRO_CRIA_CONVITE -> {
-
-
-                }*/
                 case CONSULTA_DESPESA_TOTAL_COM_SUCESSO -> {
                     String total;
-                    /*System.out.println(" HELLO DESPESA TOTAL " + resposta.getEstado());
-                    System.out.println("O gasto total no grupo foi de: " +  resposta.getConteudo() + "€");
-                    return resposta.getEstado();*/
                     total = (String) resposta.getConteudo();
                     return total;
                 }
@@ -298,11 +295,7 @@ public class ControladorPrincipal {
 
                 case GRUPO_LISTADO_COM_SUCESSO -> { //tratar deste warnig depois
                     Grupos grupos = (Grupos) resposta.getConteudo();
-                    //converteLista((Grupos) resposta.getConteudo());
-                    //Vista.tabelaGrupos(grupos);
-                    //System.out.println(" HELLO "+resposta.getEstado());
                     return grupos;
-                    //return resposta.getEstado();
 
                 }
                 case PAGAMENTO_LISTADO_COM_SUCESSO -> {
@@ -323,257 +316,8 @@ public class ControladorPrincipal {
 
     }
 
-
-
-
-
-   /* private static String[] registo(*//*User user*//*){
-        boolean nTefValido = false;
-        String [] dados = {nome, String.valueOf(nTelefone), email,password};
-        Scanner scanner = new Scanner(System.in);
-        System.out.print("Login E-mail: ");
-        email = scanner.nextLine();
-        while (!email.contains("@") && !email.contains(".com")){ //obriga o Cliente a introduzir o email no formato completo
-            System.out.println("Tem de ter o seguinte formato: exemplo@exemplo.com");
-            System.out.print("Login E-mail: ");
-            email = scanner.nextLine();
-
-        }
-        dados[0] = email;
-        //user.setEmail(email);
-        System.out.print("NOME: ");
-        dados[1] = scanner.nextLine();
-        //user.setNome(scanner.nextLine());
-        System.out.print("Password: ");
-        password = scanner.nextLine();
-        dados[2] = password;
-        //user.setPassword(password);
-        while (!nTefValido) { //obriga o user a meter um número válido
-            try {
-                System.out.print("Número de Telefone: ");
-                nTelefoneString = scanner.nextLine();
-                if (nTelefoneString.length() != 9){ //obriga o user a meter 9 dígitos
-                    Integer.parseInt(nTelefoneString);
-                    System.out.println("O número de telefone deve conter 9 dígitos.");
-                    continue;
-                }
-                nTelefone = Integer.parseInt(nTelefoneString);
-                nTefValido = true;
-            } catch (NumberFormatException e) {
-                System.out.println("O número do telefone deve conter apenas números.");
-            }
-        }
-        dados[3] = String.valueOf(nTelefone);
-        //user.setnTelefone(nTelefone);
-        return dados;
-    }*/
-
-/*    private static String[] login(){
-        Scanner scanner = new Scanner(System.in);
-        String [] dados = {email,password};
-        System.out.print("Login E-mail: ");
-        dados[0] = scanner.nextLine();
-        System.out.print("Password: ");
-        dados[1] = scanner.nextLine();
-
-        //System.out.println(dados[0]+dados[1]);
-        return dados;
-    }*/
-
-
     public static void main() throws InterruptedException {
-/*
 
-        String escolhaMenuPrincipal;
-        int escolhaCliente;
-
-
-
-        User user = new User();
-
-        *//*RecebeMensagensThread recebeMensagensThread = new RecebeMensagensThread(ligacao, dados);
-        Thread recebeThread = new Thread(recebeMensagensThread);
-        recebeThread.start();*//*
-        //System.out.println(escolhaMenuPrincipal);
-        while (true) {
-
-            if (dados.getUtilizadorLogado() == null) {
-                escolhaMenuPrincipal = Vista.menuPrincipal();
-
-                switch (escolhaMenuPrincipal) {
-                    case "registo": {
-                        enviaMensagem("registo");
-                        //recebeMensagem();
-                        break;
-                    }
-                    case "login": {
-
-                        enviaMensagem("login");
-                        //recebeMensagem();
-                        //System.out.println(recebeMensagem());
-
-                        System.out.println("DADOS--> " + dados.getUtilizadorLogado());
-
-
-                        break;
-                    }
-                }
-
-
-            }else{
-                escolhaCliente = Vista.menuCliente();
-                //System.out.println("RECEBI:" + escolhaCliente);
-                switch (escolhaCliente){
-                    case 1: //CRIAR GRUPO
-                    {
-                        System.out.println("CRIAR GRUPO");
-                        enviaMensagem("cria_grupo");
-
-                        break;
-                    }
-                    case 2: //Selecionar um GRUPO
-                    {
-                        System.out.println("SELECIONAR O GRUPO");
-                        enviaMensagem("seleciona_grupo");
-
-                        break;
-                    }
-                    case 3: //CONVIDAR PARA GRUPO
-                    {
-                        System.out.println("CONVIDAR PARA GRUPO");
-                        enviaMensagem("cria_convite");
-
-                        break;
-                    }
-                    case 4: //Editar nome Grupo
-                    {
-                        System.out.println("EDITAR GRUPO");
-                        enviaMensagem("edita_grupo");
-
-                        break;
-                    }
-                    case 5: //LISTAR CONVITES
-                    {
-                        System.out.println("LISTAR CONVITES");
-                        enviaMensagem("ver_convites");
-
-                        break;
-                    }
-                    case 6: //decisao de aceitar/recusar convites
-                    {
-                        System.out.println("DECISAO CONVITES");
-                        enviaMensagem("decisao-convites");
-
-                        break;
-                    }
-                    case 7: // LISTAR GRUPOS
-                    {
-                        System.out.println("LISTAR GRUPOS");
-                        enviaMensagem("lista_grupo");
-
-                        //recebeMensagem();
-                        break;
-                    }
-                    case 8: //ELIMINAR GRUPOS
-                    {
-                        System.out.println("ELIMINAR GRUPOS");
-                        enviaMensagem("elimina_grupo");
-
-                        //recebeMensagem();
-                        break;
-                    }
-                    case 9: //SAIR DE UM GRUPO
-                    {
-                        System.out.println("SAIR DE UM GRUPO");
-                        enviaMensagem("sair_grupo");
-
-                        //recebeMensagem();
-                        break;
-                    }
-                    case 10: //VER GASTO TOTAL DE UM GRUPO
-                    {
-                        System.out.println("VER GASTO TOTAL DE UM GRUPO");
-                        enviaMensagem("gasto_total");
-
-
-                        break;
-                    }
-                    case 11: //VER HISTÓRICO DE UM GRUPO
-                    {
-                        System.out.println("VER HISTÓRICO DE UM GRUPO");
-
-                        break;
-                    }
-                    case 12: //INSERIR UMA DESPESA
-                    {
-                        System.out.println("INSERIR UMA DESPESA");
-                        enviaMensagem("insere_despesa");
-
-                        break;
-                    }
-                    case 13: //GUARDAR DESPESAS PARA UM FICHEIRO
-                    {
-                        System.out.println("GUARDAR DESPESAS PARA UM FICHEIRO");
-                        enviaMensagem("exportar_despesas");
-
-                        break;
-                    }
-                    case 14: //EDITAR DESPESAS
-                    {
-                        System.out.println("EDITAR DESPESAS");
-                        //Thread.sleep(500);
-                        break;
-                    }
-                    case 15: //ELIMINAR DESPESAS
-                    {
-                        System.out.println("ELIMINAR DESPESAS");
-
-                        break;
-                    }
-                    case 16: //EFECTUAR PAGAMENTO
-                    {
-                        System.out.println("EFECTUAR PAGAMENTO");
-                        enviaMensagem("efetuar_pagamento");
-                        //recebeMensagem();
-
-                        break;
-                    }
-                    case 17: //LISTAR TODOS OS PAGAMENTOS
-                    {
-                        System.out.println("LISTAR TODOS OS PAGAMENTOS");
-
-                        break;
-                    }
-                    case 18: //ELIMINAR PAGAMENTO EFETUADO
-                    {
-                        System.out.println("ELIMINAR PAGAMENTO EFETUADO");
-
-                        break;
-                    }
-                    case 19: //CONSULTAR SALDO
-                    {
-                        System.out.println("CONSULTAR SALDO");
-
-                        break;
-                    }
-                    case 20: //ALTERA DADOS USER
-                    {
-                        System.out.println("ALTERA DADOS DO USER");
-                        enviaMensagem("altera-dados");
-
-                        break;
-                    }
-                    case 21: //LOGOUT
-                    {
-                        System.out.println("LOGOUT");
-
-                        break;
-                    }
-
-                }
-            }
-
-        }*/
     }
 
 }

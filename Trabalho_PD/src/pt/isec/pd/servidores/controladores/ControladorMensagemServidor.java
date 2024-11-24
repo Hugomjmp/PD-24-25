@@ -46,7 +46,9 @@ public class ControladorMensagemServidor {
                 System.out.println("OLA");
                 System.out.println(mensagem);
                 Estados estado = ControladorGrupoServidor.grupoRegisto((CriaGrupo) mensagem.getConteudo());
+                System.out.println("ESTADINHO " + estado);
                 resposta = new RespostaServidorMensagem(estado, estado.getDados());
+                System.out.println("RESPOSTA..... -> "+ resposta);
                 break;
                 //Estados estado =
             }
@@ -88,9 +90,9 @@ public class ControladorMensagemServidor {
                 String emailUser = sairGrupo.getEmailUser();
 
                 Estados estado = ControladorGrupoServidor.sairGrupo(grupoNome, emailUser);
-
-
-                resposta = new RespostaServidorMensagem(estado, estado.getDados());
+                //System.out.println("ESTADO -> " + estado.getMensagem());
+                resposta = new RespostaServidorMensagem(estado, estado.getMensagem());
+                //System.out.println("RESPOSTA -> " + resposta);
                 break;
             }
 
